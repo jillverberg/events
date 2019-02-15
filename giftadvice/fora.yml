@@ -1,0 +1,17 @@
+---
+:project: giftadvice
+:author: Efimenko George
+:app_configuration: dev
+:hockey_app_configuration: ''
+:app_name: giftadvice
+:folder_name: giftadvice
+:app_prefix: GA
+:app_routers: Login,Auth,Feed,Profile,Shops,Advice
+:app_view_controllers: Launch,Login,SignUp,Feed,Profile,Editing,Shops,Advice
+:dependence: '{ :Login => "Launch,Login,SignUp", :Feed => "Feed", :Profile => "Profile",
+  :Shops => "Shops", :Advice => "Advice" }'
+:router_relashion: '{:Login => "Auth", :Profile => "Login"}'
+:view_controller_relashion: '{:Launch => "Login", :Launch => "SignUp", :Profile =>
+  "Editing", :Launch => "SignUp" }'
+:view_controller_to_router_relashion: '{ :Editing => "Login", :Login => "Auth", :SignUp
+  => "Auth" }'

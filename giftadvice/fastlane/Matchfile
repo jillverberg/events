@@ -1,0 +1,7 @@
+git_url "https://s2.git.fora-soft.com/George.e/ProfileStore.git"
+
+type "development" # The default type, can be: appstore, adhoc or development
+
+username "vladimir@fora-soft.com"
+
+app_identifier ["com.fora-soft.giftadvice.dev"]

@@ -1,0 +1,6 @@
+	produce(
+   	 username: 'vladimir@fora-soft.com',
+	 app_name: 'giftadvice dev',
+	 app_identifier: 'com.fora-soft.giftadvice.dev',
+	 skip_itc: true
+	)

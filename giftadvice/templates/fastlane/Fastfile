@@ -1,0 +1,28 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+ENV["FASTLANE_PASSWORD"] = "4320ERT2q"
+
+default_platform(:ios)
+
+
+platform :ios do
+  lane :initialise do
+  	cocoapods(
+  		clean: true,
+  		podfile: "./Podfile"
+	)
+<%= @produce %>
+	match	
+  end
+end
+
+

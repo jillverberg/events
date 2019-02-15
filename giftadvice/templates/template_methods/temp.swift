@@ -1,0 +1,5 @@
+protocol AdviceRouterInput {
+    func showAdviceViewController()
+
+}
+

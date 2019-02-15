@@ -1,0 +1,6 @@
+	produce(
+   	 username: '<%= @apple_id %>',
+	 app_name: '<%= @app_name %>',
+	 app_identifier: '<%= @app_identifier %>',
+	 skip_itc: true
+	)

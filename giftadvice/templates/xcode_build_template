@@ -1,0 +1,6 @@
+<%= @app_prefix %>_bundle_display_name = "<%= @app_name %>";
+<%= @app_prefix %>_hockeyapp_app_identifier = "";
+<%= @app_prefix %>_security_token = 123;
+<%= @app_prefix %>_server_port = 13013;
+<%= @app_prefix %>_server_url = "https://dev.workerclicks.fora-soft.com/";
+<%= @app_prefix %>_socket_token = asd;
