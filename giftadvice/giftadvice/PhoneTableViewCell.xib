@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhoneTableViewCell" rowHeight="69" id="rqD-f0-YhN" customClass="PhoneTableViewCell" customModule="giftadvice" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rqD-f0-YhN" id="xXe-SH-2Po">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dz0-em-28b">
+                        <rect key="frame" x="16" y="22.5" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="eFR-qB-5cs"/>
+                            <constraint firstAttribute="width" constant="24" id="wmG-Wl-Spk"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;name&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0n-Jd-7si">
+                        <rect key="frame" x="58" y="24" width="64" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="&lt;prefix&gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2N-HP-uai">
+                        <rect key="frame" x="130" y="24" width="229" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="o2N-HP-uai" secondAttribute="trailing" constant="16" id="Qj6-Dv-n7Z"/>
+                    <constraint firstItem="j0n-Jd-7si" firstAttribute="leading" secondItem="dz0-em-28b" secondAttribute="trailing" constant="18" id="Sd7-el-SGR"/>
+                    <constraint firstItem="dz0-em-28b" firstAttribute="centerY" secondItem="xXe-SH-2Po" secondAttribute="centerY" id="bIs-25-yxc"/>
+                    <constraint firstItem="j0n-Jd-7si" firstAttribute="centerY" secondItem="xXe-SH-2Po" secondAttribute="centerY" id="cwS-xx-iq8"/>
+                    <constraint firstItem="o2N-HP-uai" firstAttribute="centerY" secondItem="xXe-SH-2Po" secondAttribute="centerY" id="nYZ-eH-A2e"/>
+                    <constraint firstItem="o2N-HP-uai" firstAttribute="leading" secondItem="j0n-Jd-7si" secondAttribute="trailing" constant="8" id="tsq-9n-M6F"/>
+                    <constraint firstItem="dz0-em-28b" firstAttribute="leading" secondItem="xXe-SH-2Po" secondAttribute="leading" constant="16" id="wDN-d4-goW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="1000" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="countryImage" destination="dz0-em-28b" id="c0T-Y2-RTV"/>
+                <outlet property="nameLabel" destination="j0n-Jd-7si" id="XAR-Hr-vLH"/>
+                <outlet property="prefixLabel" destination="o2N-HP-uai" id="e98-ZP-mrw"/>
+            </connections>
+            <point key="canvasLocation" x="28" y="134.48275862068968"/>
+        </tableViewCell>
+    </objects>
+</document>

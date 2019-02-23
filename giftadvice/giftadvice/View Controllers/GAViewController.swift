@@ -78,7 +78,7 @@ class GAViewController: UIViewController {
         // Should be overridden.
     }
     
-    func showPopupView(adapters: [AbstractAdapterProtocol], models: [ModelProtocol]) {
+    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: Command? = nil) {
         var containerView: UIView!
         
         if let navigation = navigationController {
@@ -89,8 +89,8 @@ class GAViewController: UIViewController {
             containerView = view
         }
 
-        let popupView = PopupView(frame: .zero, adapters: adapters)
-        popupView.reloadData(models: models)
+        let popupView = PopupView(frame: .zero, adapters: adapters, title: title)
+        popupView.reloadData(sections: sections)
         
         popupView.alpha = 0.0
         containerView.addSubview(popupView)
@@ -100,6 +100,19 @@ class GAViewController: UIViewController {
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .beginFromCurrentState, animations: {
             popupView.alpha = 1.0
         }, completion: nil)
+    }
+    
+    func hidePopupView() {
+        guard let popupView = popupView else {
+            return
+        }
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            popupView.alpha = 0.0
+        }) { (succesed) in
+            popupView.removeFromSuperview()
+            self.popupView = nil
+        }
     }
     
     // TODO: Make show/hide some alert or views

@@ -10,69 +10,18 @@ import UIKit
 import RxSwift
 
 class SignUpViewController: GAViewController {
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-    
-    // MARK: Interface Builder Properties
-    
-    // MARK: Private Properties
-    
 
-    private let disposeBag = DisposeBag()
-    
-//    private var loginService: LoginService!
-    
+    // MARK: Interface Builder Properties
+
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        subscribeForUpdates()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-                
-        configureNavigationBar()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
-//        loginService = assembly.loginService
-    }
-    
-    // MARK: Reactive Properties
-    
-    private func subscribeForUpdates() {
-//        _ = someService.someEvent.asObservable().subscribe(onNext: { [weak self] _ in
-        
-//        }).disposed(by: disposeBag)
-    }
-    
-    // MARK: Configure Views
-    
-    private func configureNavigationBar() {
-//        navigationItem.title = AppTexts.TitleTexts.locationsTitle()
     }
     
     // MARK: Show view controller
+    
     private func showAuth() {
         guard let router = router as? LoginRouterInput else {
             fatalError("\(self) router isn't LoginRouter")
@@ -81,8 +30,22 @@ class SignUpViewController: GAViewController {
         router.showAuthRouter()
     }
 
-
-    // MARK: Other Methods
+    // MARK: Action Methods
     
+    @IBAction func didShopChoosen(_ sender: Any) {
+        guard let router = router as? LoginRouterInput else {
+            fatalError("\(self) router isn't LoginRouter")
+        }
+        
+        router.showSignUpStepsViewControllerWith(type: .shop)
+    }
+    
+    @IBAction func didBuyerChoosen(_ sender: Any) {
+        guard let router = router as? LoginRouterInput else {
+            fatalError("\(self) router isn't LoginRouter")
+        }
+        
+        router.showSignUpStepsViewControllerWith(type: .buyer)
+    }
 }
 

@@ -1,0 +1,24 @@
+
+/* Class = "UIButton"; normalTitle = "Восстановить пароль"; ObjectID = "DwJ-UU-MC2"; */
+"DwJ-UU-MC2.normalTitle" = "Restore password";
+
+/* Class = "UIButton"; normalTitle = "+7"; ObjectID = "Fre-2f-bhQ"; */
+"Fre-2f-bhQ.normalTitle" = "+7";
+
+/* Class = "UITextField"; placeholder = "Пароль"; ObjectID = "Gu9-va-kVY"; */
+"Gu9-va-kVY.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Войти"; ObjectID = "LqA-eK-m1C"; */
+"LqA-eK-m1C.normalTitle" = "Enter";
+
+/* Class = "UITextField"; placeholder = "Номер телефона"; ObjectID = "ZRf-e0-d05"; */
+"ZRf-e0-d05.placeholder" = "Phone number";
+
+/* Class = "UILabel"; text = "Россия"; ObjectID = "nbQ-Bs-npr"; */
+"nbQ-Bs-npr.text" = "Russia";
+
+/* Class = "UILabel"; text = "Вход"; ObjectID = "pGF-u1-tdo"; */
+"pGF-u1-tdo.text" = "Login";
+
+/* Class = "UIButton"; normalTitle = "Регистрация"; ObjectID = "rpG-zX-P5S"; */
+"rpG-zX-P5S.normalTitle" = "Registration";

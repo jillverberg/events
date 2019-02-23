@@ -6,7 +6,7 @@ use_frameworks!
 target 'giftadvice' do
     pod 'FlowKitManager'
     pod 'PureLayout'
-
+    pod 'PhoneNumberKit', '~> 2.6'
 	# public repository
     # pod 'HockeySDK-Source'
 

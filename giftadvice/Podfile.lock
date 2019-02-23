@@ -4,14 +4,20 @@ PODS:
   - IQKeyboardManagerSwift (6.2.0)
   - Kingfisher (4.10.1)
   - ObjectMapper (3.4.2)
+  - PhoneNumberKit (2.6.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
+    - PhoneNumberKit/UIKit (= 2.6.0)
+  - PhoneNumberKit/PhoneNumberKitCore (2.6.0)
+  - PhoneNumberKit/UIKit (2.6.0):
+    - PhoneNumberKit/PhoneNumberKitCore
   - PureLayout (3.1.4)
-  - RxAppState (1.4.0):
+  - RxAppState (1.4.1):
     - RxCocoa (~> 4.3)
     - RxSwift (~> 4.3)
-  - RxAtomic (4.4.0)
-  - RxCocoa (4.4.0):
+  - RxAtomic (4.4.1)
+  - RxCocoa (4.4.1):
     - RxSwift (~> 4.0)
-  - RxSwift (4.4.0):
+  - RxSwift (4.4.1):
     - RxAtomic (~> 4.4)
   - SwiftyJSON (4.2.0)
 
@@ -21,6 +27,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Kingfisher
   - ObjectMapper
+  - PhoneNumberKit (~> 2.6)
   - PureLayout
   - RxAppState
   - RxSwift
@@ -33,6 +40,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - Kingfisher
     - ObjectMapper
+    - PhoneNumberKit
     - PureLayout
     - RxAppState
     - RxAtomic
@@ -46,13 +54,14 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
+  PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
-  RxAppState: aba38f71a5a102cc5d189976889c4179432ce727
-  RxAtomic: eacf60db868c96bfd63320e28619fe29c179656f
-  RxCocoa: df63ebf7b9a70d6b4eeea407ed5dd4efc8979749
-  RxSwift: 5976ecd04fc2fefd648827c23de5e11157faa973
+  RxAppState: 5f4aea9eb375e597ab394d60c5a41fe0e6fd0f2a
+  RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
+  RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
+  RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: ef650fd922054b102f7cb886c88d007611c11f74
+PODFILE CHECKSUM: 774f792fd759d4b1538d4d7a81a70410a5d78bbe
 
 COCOAPODS: 1.5.3

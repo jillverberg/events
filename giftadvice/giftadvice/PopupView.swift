@@ -21,7 +21,8 @@ class PopupView: UIView {
     @IBOutlet weak var tableViewHeighConstraint: NSLayoutConstraint!
     
     lazy var tableDirector: TableDirector = TableDirector(self.tableView)
-
+    var command: Command?
+    
     // MARK: Public Methods
 
     func setupTableView(adapters: [AbstractAdapterProtocol]) {
@@ -29,21 +30,27 @@ class PopupView: UIView {
         tableDirector.register(adapters: adapters)
     }
     
-    func reloadData(models: [ModelProtocol]) {
+    func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
-        tableDirector.add(models: models)
+        tableDirector.add(sections: sections)
         tableDirector.reloadData()
         
         tableViewHeighConstraint.constant = tableView.contentSize.height
+        
+        if command == nil {
+            actionButton.removeFromSuperview()
+        }
     }
     
     // MARK: Init Methods & Superclass Overriders
 
-    init(frame: CGRect, adapters: [AbstractAdapterProtocol]) {
+    init(frame: CGRect, adapters: [AbstractAdapterProtocol], title: String) {
         super.init(frame: frame)
         
         setupView()
         setupTableView(adapters: adapters)
+        
+        titleLabel.text = title
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,5 +65,15 @@ class PopupView: UIView {
         addSubview(contentView)
         shadowView.sendSubviewToBack(shadowView.subviews.last!)
         contentView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    // MARK: Action Methods
+
+    @IBAction func didTapOnBackground(_ sender: Any) {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alpha = 0.0
+        }) { (succesed) in
+            self.removeFromSuperview()
+        }
     }
 }

@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  giftadvice
+
+  Created by George Efimenko on 20.02.2019.
+  Copyright © 2019 George Efimenko. All rights reserved.
+*/
+
+"Phone.CountryCode.Title"               = "Choose country";
+
+"Alert.Understand"                      = "Understand";
+"Alert.Cancel"                          = "Cancel";
+"Alert.Photo"                           = "Choose from library";
+"Alert.Camera"                          = "Take a photo";
+
+"Error"                                 = "Error";
+
+"Permission.Error.Photo"                = "Error accessing the library. Allow the application to use the library in the settings";
+
+"Registration.Error"                    = "Error in form";
+"Registration.Error.Phone"              = "Wrong phone format";
+"Registration.Error.Name"               = "Username must be more than 3 letters";
+"Registration.Error.Password"           = "Passwords must match";
+"Registration.Error.PasswordCount"      = "Password must be more than 5 letters";
+"Registration.Error.Email"              = "Wrong format of email";
+"Registration.Error.Site"               = "Incorrect site address";
+"Registration.Error.Company"            = "Address must be more than 3 characters";
+

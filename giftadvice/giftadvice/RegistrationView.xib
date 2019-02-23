@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistrationView" customModule="giftadvice" customModuleProvider="target">
+            <connections>
+                <outlet property="companyAddressLabel" destination="KDB-q7-w9Q" id="zve-qs-1kI"/>
+                <outlet property="companyEmailLabel" destination="XOA-Rb-36O" id="HVe-Fj-wdO"/>
+                <outlet property="companyNameLabel" destination="8OD-4k-dlb" id="OVR-Sm-6Ed"/>
+                <outlet property="companyPasswordLabel" destination="2zI-Yt-Upt" id="GbE-wA-qOs"/>
+                <outlet property="companyRepeatPasswortLabel" destination="Odz-eX-dmt" id="P9N-Hk-n2F"/>
+                <outlet property="companySiteLabel" destination="OeT-EN-xp4" id="Tqf-4G-egI"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="Qui-Mn-ikM"/>
+                <outlet property="contentViewCorp" destination="lns-Jr-TqO" id="wbM-Gd-DAb"/>
+                <outlet property="nameLabel" destination="uui-us-jP4" id="Bcw-a6-CuO"/>
+                <outlet property="passwordLabel" destination="xpu-bp-Uh8" id="B2c-wD-3TN"/>
+                <outlet property="repeatPasswordLabel" destination="vjP-XE-cLw" id="Zvz-we-6qh"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbr-Zy-SmT" customClass="ContentShadowView" customModule="giftadvice" customModuleProvider="target">
+                    <rect key="frame" x="16" y="96" width="288" height="376"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вход" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxu-9f-Uyn">
+                            <rect key="frame" x="119.5" y="16" width="49.5" height="29"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                            <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Заполните поля" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCR-UL-rO5">
+                            <rect key="frame" x="75.5" y="77" width="137.5" height="25"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Имя пользователя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uui-us-jP4" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="118" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="a0R-Bl-VGN"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xpu-bp-Uh8" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="178" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="tYD-Hz-h77"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password">
+                                <passwordRules key="passwordRules" passwordRulesDescriptor="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;"/>
+                            </textInputTraits>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TdQ-XG-DUa" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="72" y="314" width="144" height="44"/>
+                            <color key="backgroundColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="9Qx-XS-FQk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <state key="normal" title="Далее">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowYOffset">
+                                    <real key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowXOffset">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didSelectNext:" destination="-1" eventType="touchUpInside" id="9MD-Tp-1Sq"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Повторите пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vjP-XE-cLw" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="238" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="lZz-wb-Rt7"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password">
+                                <passwordRules key="passwordRules" passwordRulesDescriptor="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;"/>
+                            </textInputTraits>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="XCR-UL-rO5" firstAttribute="top" secondItem="Wxu-9f-Uyn" secondAttribute="bottom" constant="32" id="1CG-eG-ajw"/>
+                        <constraint firstAttribute="trailing" secondItem="vjP-XE-cLw" secondAttribute="trailing" constant="16" id="5us-FY-Abh"/>
+                        <constraint firstItem="xpu-bp-Uh8" firstAttribute="leading" secondItem="pbr-Zy-SmT" secondAttribute="leading" constant="16" id="8Aw-sI-Djc"/>
+                        <constraint firstItem="TdQ-XG-DUa" firstAttribute="centerX" secondItem="pbr-Zy-SmT" secondAttribute="centerX" id="8Ib-ja-FQ9"/>
+                        <constraint firstItem="XCR-UL-rO5" firstAttribute="centerX" secondItem="pbr-Zy-SmT" secondAttribute="centerX" id="Amc-2v-JLF"/>
+                        <constraint firstAttribute="trailing" secondItem="xpu-bp-Uh8" secondAttribute="trailing" constant="16" id="L8u-jr-pwe"/>
+                        <constraint firstItem="vjP-XE-cLw" firstAttribute="top" secondItem="xpu-bp-Uh8" secondAttribute="bottom" constant="16" id="RnG-Hq-KVf"/>
+                        <constraint firstItem="uui-us-jP4" firstAttribute="leading" secondItem="pbr-Zy-SmT" secondAttribute="leading" constant="16" id="aaT-Y9-q7U"/>
+                        <constraint firstItem="TdQ-XG-DUa" firstAttribute="width" secondItem="pbr-Zy-SmT" secondAttribute="width" multiplier="1:2" id="ajE-E1-Zoj"/>
+                        <constraint firstItem="Wxu-9f-Uyn" firstAttribute="centerX" secondItem="pbr-Zy-SmT" secondAttribute="centerX" id="cM8-Cj-gfh"/>
+                        <constraint firstAttribute="bottom" secondItem="TdQ-XG-DUa" secondAttribute="bottom" constant="18" id="dh3-bb-qPf"/>
+                        <constraint firstItem="Wxu-9f-Uyn" firstAttribute="top" secondItem="pbr-Zy-SmT" secondAttribute="top" constant="16" id="qBN-W1-EhD"/>
+                        <constraint firstAttribute="trailing" secondItem="uui-us-jP4" secondAttribute="trailing" constant="16" id="tZu-MX-1r2"/>
+                        <constraint firstItem="TdQ-XG-DUa" firstAttribute="top" secondItem="vjP-XE-cLw" secondAttribute="bottom" constant="32" id="v3a-wC-vLd"/>
+                        <constraint firstItem="uui-us-jP4" firstAttribute="top" secondItem="XCR-UL-rO5" secondAttribute="bottom" constant="16" id="vk0-CA-C7m"/>
+                        <constraint firstItem="vjP-XE-cLw" firstAttribute="leading" secondItem="pbr-Zy-SmT" secondAttribute="leading" constant="16" id="xaV-Up-Mm7"/>
+                        <constraint firstItem="xpu-bp-Uh8" firstAttribute="top" secondItem="uui-us-jP4" secondAttribute="bottom" constant="16" id="zcy-F6-nec"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="18"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="0.0" height="7"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="pbr-Zy-SmT" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="7s5-EP-EUn"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="pbr-Zy-SmT" secondAttribute="trailing" constant="16" id="CXf-zj-37y"/>
+                <constraint firstItem="pbr-Zy-SmT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Dk5-FA-T9Y"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-122" y="17"/>
+        </view>
+        <view contentMode="scaleToFill" id="lns-Jr-TqO">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1o-mh-Jch" customClass="ContentShadowView" customModule="giftadvice" customModuleProvider="target">
+                    <rect key="frame" x="16" y="6" width="288" height="556"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вход" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvI-wm-KPF">
+                            <rect key="frame" x="119.5" y="16" width="49.5" height="29"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                            <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Заполните поля" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FAx-gb-WFg">
+                            <rect key="frame" x="75.5" y="77" width="137.5" height="25"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Имя компании" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8OD-4k-dlb" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="118" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="GiT-cj-QaZ"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Адрес" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KDB-q7-w9Q" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="178" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="ajT-cD-JCX"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" textContentType="street-address"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ftp-78-Mxn" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="72" y="494" width="144" height="44"/>
+                            <color key="backgroundColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="TRs-Da-BSy"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <state key="normal" title="Далее">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowYOffset">
+                                    <real key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowXOffset">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didSelectNext:" destination="-1" eventType="touchUpInside" id="Spd-9s-7p1"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Корпоративный e-mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XOA-Rb-36O" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="238" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="GT6-Tx-elD"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Веб-сайт компании" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OeT-EN-xp4" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="298" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="M5H-Xa-9aK"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" keyboardType="URL" textContentType="url"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2zI-Yt-Upt" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="358" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="GR4-yg-bBV"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password">
+                                <passwordRules key="passwordRules" passwordRulesDescriptor="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;"/>
+                            </textInputTraits>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Повторите пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Odz-eX-dmt" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="418" width="256" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="VT5-5u-6Cl"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password">
+                                <passwordRules key="passwordRules" passwordRulesDescriptor="required: upper; required: lower; required: digit; max-consecutive: 2; minlength: 8;"/>
+                            </textInputTraits>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="KDB-q7-w9Q" firstAttribute="top" secondItem="8OD-4k-dlb" secondAttribute="bottom" constant="16" id="1Sb-Bz-1TV"/>
+                        <constraint firstItem="ftp-78-Mxn" firstAttribute="centerX" secondItem="d1o-mh-Jch" secondAttribute="centerX" id="1bR-RE-fb3"/>
+                        <constraint firstItem="XOA-Rb-36O" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="5Nn-av-0Kw"/>
+                        <constraint firstItem="KDB-q7-w9Q" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="BeH-dE-RJm"/>
+                        <constraint firstItem="ftp-78-Mxn" firstAttribute="width" secondItem="d1o-mh-Jch" secondAttribute="width" multiplier="1:2" id="CJj-fX-PHt"/>
+                        <constraint firstItem="2zI-Yt-Upt" firstAttribute="top" secondItem="OeT-EN-xp4" secondAttribute="bottom" constant="16" id="G6X-Yx-2fY"/>
+                        <constraint firstItem="ftp-78-Mxn" firstAttribute="top" secondItem="Odz-eX-dmt" secondAttribute="bottom" constant="32" id="MPX-hn-Onh"/>
+                        <constraint firstItem="OeT-EN-xp4" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="MlJ-Lz-ggx"/>
+                        <constraint firstAttribute="trailing" secondItem="XOA-Rb-36O" secondAttribute="trailing" constant="16" id="SAO-ff-SuL"/>
+                        <constraint firstItem="OeT-EN-xp4" firstAttribute="top" secondItem="XOA-Rb-36O" secondAttribute="bottom" constant="16" id="W0f-rd-PLi"/>
+                        <constraint firstItem="8OD-4k-dlb" firstAttribute="top" secondItem="FAx-gb-WFg" secondAttribute="bottom" constant="16" id="WyP-h8-yA9"/>
+                        <constraint firstAttribute="trailing" secondItem="KDB-q7-w9Q" secondAttribute="trailing" constant="16" id="X0V-3H-8Jd"/>
+                        <constraint firstItem="FAx-gb-WFg" firstAttribute="centerX" secondItem="d1o-mh-Jch" secondAttribute="centerX" id="ZhQ-zd-Uwi"/>
+                        <constraint firstItem="xvI-wm-KPF" firstAttribute="centerX" secondItem="d1o-mh-Jch" secondAttribute="centerX" id="fuP-f4-Jgq"/>
+                        <constraint firstItem="XOA-Rb-36O" firstAttribute="top" secondItem="KDB-q7-w9Q" secondAttribute="bottom" constant="16" id="gQs-g7-rpY"/>
+                        <constraint firstAttribute="trailing" secondItem="8OD-4k-dlb" secondAttribute="trailing" constant="16" id="htu-gN-TeN"/>
+                        <constraint firstItem="FAx-gb-WFg" firstAttribute="top" secondItem="xvI-wm-KPF" secondAttribute="bottom" constant="32" id="iEE-ze-AiD"/>
+                        <constraint firstAttribute="trailing" secondItem="2zI-Yt-Upt" secondAttribute="trailing" constant="16" id="jCI-0B-XTl"/>
+                        <constraint firstItem="Odz-eX-dmt" firstAttribute="top" secondItem="2zI-Yt-Upt" secondAttribute="bottom" constant="16" id="kO9-K3-YjA"/>
+                        <constraint firstAttribute="trailing" secondItem="Odz-eX-dmt" secondAttribute="trailing" constant="16" id="lTE-Ik-pmR"/>
+                        <constraint firstItem="Odz-eX-dmt" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="mQn-f5-Ja1"/>
+                        <constraint firstAttribute="trailing" secondItem="OeT-EN-xp4" secondAttribute="trailing" constant="16" id="oUS-Ay-PSh"/>
+                        <constraint firstItem="xvI-wm-KPF" firstAttribute="top" secondItem="d1o-mh-Jch" secondAttribute="top" constant="16" id="rMq-C6-pm4"/>
+                        <constraint firstItem="8OD-4k-dlb" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="ubT-NH-9cb"/>
+                        <constraint firstItem="2zI-Yt-Upt" firstAttribute="leading" secondItem="d1o-mh-Jch" secondAttribute="leading" constant="16" id="wYL-ux-1Im"/>
+                        <constraint firstAttribute="bottom" secondItem="ftp-78-Mxn" secondAttribute="bottom" constant="18" id="yIz-QO-gde"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="18"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="0.0" height="7"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="d1o-mh-Jch" firstAttribute="centerY" secondItem="lns-Jr-TqO" secondAttribute="centerY" id="L3W-mb-uok"/>
+                <constraint firstItem="d1o-mh-Jch" firstAttribute="leading" secondItem="lns-Jr-TqO" secondAttribute="leading" constant="16" id="aPl-qm-7HJ"/>
+                <constraint firstItem="RQA-z7-deS" firstAttribute="trailing" secondItem="d1o-mh-Jch" secondAttribute="trailing" constant="16" id="uyu-gO-kJY"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="RQA-z7-deS"/>
+            <point key="canvasLocation" x="641" y="17"/>
+        </view>
+    </objects>
+</document>

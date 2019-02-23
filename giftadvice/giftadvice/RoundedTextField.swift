@@ -30,6 +30,11 @@ class RoundedTextField: UITextField {
         }
     }
     
+    @IBInspectable var leftPaddingPoints: CGFloat = 0.0
+    @IBInspectable var rightPaddingPoints: CGFloat = 0.0
+    
+    private var padingSetted = false
+    
     // MARK: Init Methods & Superclass Overriders
     
     override init(frame: CGRect) {
@@ -43,8 +48,8 @@ class RoundedTextField: UITextField {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setLeftPaddingPoints(57)
-        setRightPaddingPoints(16)
+        setLeftPaddingPoints(leftPaddingPoints)
+        setRightPaddingPoints(rightPaddingPoints)
     }
     
     override func layoutSubviews() {
@@ -84,6 +89,7 @@ extension UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+    
     func setRightPaddingPoints(_ amount:CGFloat) {
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
         self.rightView = paddingView

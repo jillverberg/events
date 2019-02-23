@@ -10,6 +10,11 @@ import UIKit
 
 class LoginRouter: GARouter, LoginRouterInput {
     
+    enum SignUpType {
+        case shop
+        case buyer
+    }
+    
     // MARK: LoginRouterInput
     
     func showInitialViewController(navigationController: UINavigationController) {
@@ -28,6 +33,17 @@ class LoginRouter: GARouter, LoginRouterInput {
         self.rootNavigationController?.pushViewController(viewController, animated: true)
     }
 
+    func showSignUpStepsViewControllerWith(type: SignUpType) {
+        let viewController = setupSignUpStepsViewController() as! SignUpStepsViewController
+        viewController.type = type
+        
+        self.rootNavigationController?.pushViewController(viewController: viewController, animated: true, completion: {
+            if let nc = self.rootNavigationController {
+                nc.viewControllers.remove(at: nc.viewControllers.count - 2)
+            }
+        })
+    }
+    
     func showLaunchViewController() {
         
     }
@@ -48,15 +64,22 @@ class LoginRouter: GARouter, LoginRouterInput {
     }
 
    private func setupLoginViewController() -> UIViewController {
-        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .login)
+        let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .login)
         let viewController = self.createViewController(from: storyboardViewController) as! LoginViewController
         
         return viewController
     }
 
    private func setupSignUpViewController() -> UIViewController {
-        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .signup)
+        let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .signup)
         let viewController = self.createViewController(from: storyboardViewController) as! SignUpViewController
+        
+        return viewController
+    }
+    
+    private func setupSignUpStepsViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .signupsteps)
+        let viewController = self.createViewController(from: storyboardViewController) as! SignUpStepsViewController
         
         return viewController
     }

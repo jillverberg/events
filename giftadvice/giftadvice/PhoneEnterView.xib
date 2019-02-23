@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PhoneEnterView" customModule="giftadvice" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="xbj-5n-LId"/>
+                <outlet property="nameCountryLabel" destination="hdA-ro-mNN" id="RXk-BA-dxJ"/>
+                <outlet property="phoneTextField" destination="Eje-CJ-KXH" id="cPi-od-OI2"/>
+                <outlet property="prefixButton" destination="ddk-ua-ORh" id="mSL-l4-vC9"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EoR-1V-Jnp" customClass="ContentShadowView" customModule="giftadvice" customModuleProvider="target">
+                    <rect key="frame" x="16" y="197.5" width="343" height="272"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вход" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWB-sK-5Wp">
+                            <rect key="frame" x="147" y="16" width="49.5" height="29"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="21"/>
+                            <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Введите ваш номер телефона:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sU-bk-thd">
+                            <rect key="frame" x="39.5" y="77" width="264" height="25"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер телефона" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Eje-CJ-KXH" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="16" y="134" width="311" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="SK7-oC-gnt"/>
+                            </constraints>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                    <real key="value" value="56"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="phoneNumberChanged:" destination="-1" eventType="editingChanged" id="9oV-Pb-1lt"/>
+                            </connections>
+                        </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVM-yb-9f0">
+                            <rect key="frame" x="16" y="134" width="64" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddk-ua-ORh" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="2" width="64" height="40"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="Y3m-6A-Wfx"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                    <state key="normal" title="+7">
+                                        <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="22"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="needsChangeCountry:" destination="-1" eventType="touchUpInside" id="kxL-bj-pUU"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="64" id="C1U-hl-com"/>
+                                <constraint firstItem="ddk-ua-ORh" firstAttribute="centerX" secondItem="pVM-yb-9f0" secondAttribute="centerX" id="GAr-na-zeg"/>
+                                <constraint firstItem="ddk-ua-ORh" firstAttribute="centerY" secondItem="pVM-yb-9f0" secondAttribute="centerY" id="GaH-xs-h43"/>
+                                <constraint firstItem="ddk-ua-ORh" firstAttribute="leading" secondItem="pVM-yb-9f0" secondAttribute="leading" id="bog-ee-CiV"/>
+                                <constraint firstAttribute="trailing" secondItem="ddk-ua-ORh" secondAttribute="trailing" id="dmp-bQ-oeG"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Россия" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hdA-ro-mNN">
+                            <rect key="frame" x="8" y="117.5" width="80" height="16.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="L3N-vM-DJ6"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                            <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6Z-AS-u7o" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                            <rect key="frame" x="86" y="210" width="171.5" height="44"/>
+                            <color key="backgroundColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="hIe-kL-Ga1"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                            <state key="normal" title="Далее">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="22"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                    <color key="value" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowYOffset">
+                                    <real key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="shadowXOffset">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="didSelectNext:" destination="-1" eventType="touchUpInside" id="6hi-vZ-GRs"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="hdA-ro-mNN" firstAttribute="leading" secondItem="EoR-1V-Jnp" secondAttribute="leading" constant="8" id="7Pf-yx-cLm"/>
+                        <constraint firstItem="y6Z-AS-u7o" firstAttribute="width" secondItem="EoR-1V-Jnp" secondAttribute="width" multiplier="1:2" id="Ic6-94-P96"/>
+                        <constraint firstItem="y6Z-AS-u7o" firstAttribute="top" secondItem="Eje-CJ-KXH" secondAttribute="bottom" constant="32" id="JKC-Ry-4BJ"/>
+                        <constraint firstItem="y6Z-AS-u7o" firstAttribute="centerX" secondItem="EoR-1V-Jnp" secondAttribute="centerX" id="P4y-c1-HNc"/>
+                        <constraint firstItem="Eje-CJ-KXH" firstAttribute="top" secondItem="hdA-ro-mNN" secondAttribute="bottom" id="ST5-g0-mLA"/>
+                        <constraint firstItem="0sU-bk-thd" firstAttribute="top" secondItem="lWB-sK-5Wp" secondAttribute="bottom" constant="32" id="UOf-D9-GzJ"/>
+                        <constraint firstItem="hdA-ro-mNN" firstAttribute="centerX" secondItem="ddk-ua-ORh" secondAttribute="centerX" id="XiT-rD-gqk"/>
+                        <constraint firstAttribute="trailing" secondItem="Eje-CJ-KXH" secondAttribute="trailing" constant="16" id="ZEf-S9-7d7"/>
+                        <constraint firstItem="pVM-yb-9f0" firstAttribute="centerY" secondItem="Eje-CJ-KXH" secondAttribute="centerY" id="enj-fW-wIe"/>
+                        <constraint firstItem="lWB-sK-5Wp" firstAttribute="top" secondItem="EoR-1V-Jnp" secondAttribute="top" constant="16" id="feg-iu-bOu"/>
+                        <constraint firstAttribute="bottom" secondItem="y6Z-AS-u7o" secondAttribute="bottom" constant="18" id="g8r-Pa-t1n"/>
+                        <constraint firstItem="pVM-yb-9f0" firstAttribute="leading" secondItem="Eje-CJ-KXH" secondAttribute="leading" id="gxj-EA-4GQ"/>
+                        <constraint firstItem="lWB-sK-5Wp" firstAttribute="centerX" secondItem="EoR-1V-Jnp" secondAttribute="centerX" id="jot-Jq-Qjd"/>
+                        <constraint firstItem="Eje-CJ-KXH" firstAttribute="leading" secondItem="EoR-1V-Jnp" secondAttribute="leading" constant="16" id="nCQ-0U-zGy"/>
+                        <constraint firstItem="Eje-CJ-KXH" firstAttribute="top" secondItem="0sU-bk-thd" secondAttribute="bottom" constant="32" id="uTu-W7-38s"/>
+                        <constraint firstItem="pVM-yb-9f0" firstAttribute="height" secondItem="Eje-CJ-KXH" secondAttribute="height" id="wsl-6U-GYv"/>
+                        <constraint firstItem="0sU-bk-thd" firstAttribute="centerX" secondItem="EoR-1V-Jnp" secondAttribute="centerX" id="yq6-GQ-bUW"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="18"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                            <size key="value" width="0.0" height="7"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="EoR-1V-Jnp" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Aop-Db-gAx"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="EoR-1V-Jnp" secondAttribute="trailing" constant="16" id="UX5-IT-rnF"/>
+                <constraint firstItem="EoR-1V-Jnp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="wn4-CY-khU"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="39.200000000000003" y="46.326836581709152"/>
+        </view>
+    </objects>
+</document>

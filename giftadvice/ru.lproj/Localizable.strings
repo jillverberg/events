@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  giftadvice
+
+  Created by George Efimenko on 20.02.2019.
+  Copyright © 2019 George Efimenko. All rights reserved.
+*/
+
+"Phone.CountryCode.Title"               = "Выберите страну";
+
+
+"Alert.Understand"                      = "Понятно";
+"Alert.Cancel"                          = "Отменить";
+
+"Alert.Photo"                           = "Выбрать из библиотеки";
+"Alert.Camera"                          = "Сделать снимок";
+
+"Error"                                 = "Ошибка";
+
+"Permission.Error.Photo"                = "Ошибка доступа к медиатеки. Разрешите приложению использовать медиатеку в настройках";
+
+"Registration.Error"                    = "Ошибка в форме";
+"Registration.Error.Phone"              = "Неправильный формат телефона";
+"Registration.Error.Name"               = "Имя пользователя должно состоять, как миннимум из 3-х символов";
+"Registration.Error.Password"           = "Пароли должны совпадать";
+"Registration.Error.PasswordCount"      = "Пароль должен быть больше, чем 4 символа";
+"Registration.Error.Email"              = "Адрес почты имеет неправильный формат";
+"Registration.Error.Site"               = "Неправильно указан адрес сайта";
+"Registration.Error.Company"            = "Адрес должен быть больше, чем 3 символа";

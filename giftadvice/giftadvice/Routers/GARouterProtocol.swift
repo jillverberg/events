@@ -20,7 +20,7 @@ protocol LoginRouterInput: InitiallyPresentationRouter {
     func showLoginViewController()
     func showSignUpViewController()
     func showAuthRouter()
-
+    func showSignUpStepsViewControllerWith(type: LoginRouter.SignUpType)
 }
 
 protocol AuthRouterInput: InitiallyPresentationRouter {
