@@ -12,7 +12,7 @@ public typealias Command = CommandWith<Void>
 
 public struct CommandWith<T> {
     private var action: (T) -> Void
-    
+
     public static var nop: CommandWith { return CommandWith { _ in } }
     
     public init(action: @escaping (T) -> Void) {

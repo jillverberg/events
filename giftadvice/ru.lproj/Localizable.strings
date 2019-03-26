@@ -8,16 +8,22 @@
 
 "Phone.CountryCode.Title"               = "Выберите страну";
 
-
 "Alert.Understand"                      = "Понятно";
+
 "Alert.Cancel"                          = "Отменить";
+"Alert.Remove"                          = "Удалить";
+"Alert.Remove.Accept"                   = "Вы уверены?";
 
 "Alert.Photo"                           = "Выбрать из библиотеки";
 "Alert.Camera"                          = "Сделать снимок";
 
 "Error"                                 = "Ошибка";
+"Network.Error"                         = "Ошибка сети";
+"Email.Error"                           = "Добавьте почтовый аккаунт в стандартное приложение Почта";
 
 "Permission.Error.Photo"                = "Ошибка доступа к медиатеки. Разрешите приложению использовать медиатеку в настройках";
+
+"Title.Main"                            = "Подарки";
 
 "Registration.Error"                    = "Ошибка в форме";
 "Registration.Error.Phone"              = "Неправильный формат телефона";
@@ -27,3 +33,28 @@
 "Registration.Error.Email"              = "Адрес почты имеет неправильный формат";
 "Registration.Error.Site"               = "Неправильно указан адрес сайта";
 "Registration.Error.Company"            = "Адрес должен быть больше, чем 3 символа";
+
+"Collection.Title.Editing"              = "Изменить";
+"Collection.Title.Done"                 = "Готово";
+
+"Settings.Title.Edit.Information"       = "Изменение информации";
+"Settings.Title.Report"                 = "Обращение";
+"Settings.Title.Report.Message"         = "Расскажите о проблеме";
+"Settings.Title.Name"                   = "Имя";
+"Settings.Title.Phone"                  = "Номер телефона";
+"Settings.Title.CompanyName"            = "Название компании";
+"Settings.Title.Address"                = "Адрес";
+"Settings.Title.WebSite"                = "Веб сайт";
+
+"Profile.Title.Buyer"                   = "Понравившиеся";
+"Profile.Title.Shop"                    = "Каталог товаров";
+
+"Product.Editing.Photo"                 = "Фотографии";
+"Product.Editing.Name"                  = "Название";
+"Product.Editing.Category"              = "Категория";
+"Product.Editing.Description"           = "Описание";
+"Product.Editing.Web"                   = "Веб-сайт";
+"Product.Editing.Price"                 = "Цена";
+
+"Product.Action.Buyer"                  = "Перейти в магазин";
+"Product.Action.Shop"                   = "Редактировать";

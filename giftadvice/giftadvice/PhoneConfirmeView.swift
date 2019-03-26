@@ -13,7 +13,7 @@ class PhoneConfirmeView: SignUpView {
             
     @IBOutlet weak var inputTextField: RoundedTextField!
     
-    @IBOutlet weak var digitContainerVIew: UIView!
+    @IBOutlet weak var digitContainerView: UIView!
     @IBOutlet weak var firstDigitLabel: UILabel!
     @IBOutlet weak var secondDigitLabel: UILabel!
     @IBOutlet weak var thirdDigitLabel: UILabel!
@@ -23,12 +23,15 @@ class PhoneConfirmeView: SignUpView {
     @IBOutlet weak var errorLabel: UILabel!
 
     var digitLabels = [UILabel]()
+    var loginService: LoginService!
+    var type: LoginRouter.SignUpType!
     
     // MARK: Init Methods & Superclass Overriders
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, type: LoginRouter.SignUpType) {
         super.init(frame: frame)
         
+        self.type = type
         setup()
     }
     
@@ -59,10 +62,18 @@ class PhoneConfirmeView: SignUpView {
             setState(loading: true)
             inputTextField.resignFirstResponder()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                //self.animateError()
-               self.delegate?.didSelectNextWith(object: nil, type: .confirme)
+            loginService.verify(withCode: text, type: type) { [weak self] (error, user) in
+                if error != nil {
+                    self?.errorLabel.text = error
+                    self?.animateError()
+                } else {
+                    self?.delegate?.didSelectNextWith(object: user?.toJSON(), type: .confirme)
+                }
             }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+//                //self.animateError()
+//               self.delegate?.didSelectNextWith(object: nil, type: .confirme)
+//            }
         }
     }
 }
@@ -114,7 +125,7 @@ private extension PhoneConfirmeView {
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.digitContainerVIew.alpha = loading ? 0.0 : 1.0
+            self.digitContainerView.alpha = loading ? 0.0 : 1.0
         }
     }
     

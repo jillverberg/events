@@ -14,7 +14,9 @@ class AssemblyManager {
     
     // TODO: Set your service
     
-//    lazy private(set) var <#serviceName#>Service = <#serviceName#>Service()
+    lazy private(set) var loginService = LoginService()
+    lazy private(set) var profileService = ProfileService()
+
 //    // With some settings:
 //    
 //    var <#serviceName#>Service: <#serviceName#>Service {

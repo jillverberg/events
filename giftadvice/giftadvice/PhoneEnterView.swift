@@ -24,16 +24,23 @@ class PhoneEnterView: SignUpView {
     @IBOutlet weak var nameCountryLabel: UILabel!
     @IBOutlet weak var prefixButton: BorderedButton!
     
+    // MARK: - Public Properties
+
+    var loginService: LoginService!
+    
     // MARK: Private Methods
     
     private let phoneNumberKit = PhoneNumberKit()
     private var region = "RU"
 
+    var type: LoginRouter.SignUpType!
+    
     // MARK: Init Methods & Superclass Overriders
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, type: LoginRouter.SignUpType) {
         super.init(frame: frame)
         
+        self.type = type
         setup()
     }
     
@@ -46,13 +53,18 @@ class PhoneEnterView: SignUpView {
     // MARK: Action Methods
     
     @IBAction func didSelectNext(_ sender: Any) {
-//        delegate?.didSelectNextWith(object: nil, type: .phone)
         if let phone = phoneTextField.text {
             do {
                 let phoneNumber = try phoneNumberKit.parse(phone, withRegion: region, ignoreType: false)
-                phoneTextField.text = phoneNumber.adjustedNationalNumber()
-
-                delegate?.didSelectNextWith(object: nil, type: .phone)
+                //phoneTextField.text = phoneNumber.adjustedNationalNumber()
+                
+                var user = User(JSON: [User.Keys.phoneNumber: prefixButton.title(for: .normal)! + phoneNumber.adjustedNationalNumber()])!
+                user.type = type
+                
+                loginService.signUp(withUser: user) { [weak self] (error, user) in
+                    //TODO: Error handle
+                    self?.delegate?.didSelectNextWith(object: user?.toJSON(), type: .phone)
+                }
             } catch {
                 if let parent = delegate as? UIViewController {
                     let alert = UIAlertController(title: "Registration.Error".localized, message: "Registration.Error.Phone".localized, preferredStyle: .alert)

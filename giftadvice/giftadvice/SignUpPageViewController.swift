@@ -8,9 +8,10 @@
 
 import UIKit
 import PureLayout
+import ObjectMapper
 
 protocol SignUpPageViewControllerDelegate {
-    func didSelectNextWith(object: Any?, type: SignUpPageViewController.ViewType)
+    func didSelectNextWith(object: [String: Any?]?, type: SignUpPageViewController.ViewType)
 }
 
 class SignUpPageViewController: UIPageViewController {
@@ -36,18 +37,27 @@ class SignUpPageViewController: UIPageViewController {
         }
     }
 
+    var user = User(JSON: [:])!
+    
     // MARK: Private Properties
     
     private var pages = [UIViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         setupViewControllers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        guard let parent = parent as? SignUpStepsViewController else { return }
+        user.type = parent.type
     }
 }
 
@@ -55,33 +65,36 @@ private extension SignUpPageViewController {
     func setupViewControllers() {
         
         let firstViewController = initViewControllerWith(type: .phone)
-        //let secondViewController = initViewControllerWith(type: .confirme)
-        //let thirdViewController = initViewControllerWith(type: .photo)
 
-        //dataSource = self
-       
         pages.append(firstViewController)
-        //pages.append(secondViewController)
-        //pages.append(thirdViewController)
-  
+
         setViewControllers([pages[0]], direction: .forward, animated: true, completion: nil)
     }
     
     func initViewControllerWith(type: SignUpPageViewController.ViewType) -> UIViewController {
+        guard let parent = parent as? SignUpStepsViewController else { return UIViewController() }
+
         let viewController = UIViewController()
         var contentView: UIView!
         
         switch type {
         case .phone:
-            contentView = PhoneEnterView(frame: .zero)
+            let phoneView = PhoneEnterView(frame: .zero, type: parent.type)
+            phoneView.loginService = parent.loginService
+
+            contentView = phoneView
         case .confirme:
-            contentView = PhoneConfirmeView(frame: .zero)
-        case .info:
-            guard let parent = parent as? SignUpStepsViewController else { return UIViewController() }
+            let confirmeView = PhoneConfirmeView(frame: .zero, type: parent.type)
+            confirmeView.loginService = parent.loginService
             
-            contentView = RegistrationView(frame: .zero, type: parent.type)
+            contentView = confirmeView
+        case .info:
+            let registrationView = RegistrationView(frame: .zero, type: parent.type)
+            registrationView.loginService = parent.loginService
+
+            contentView = registrationView
         case .photo:
-            contentView = RegistrationEndView(frame: .zero)
+            contentView = RegistrationEndView(frame: .zero, type: parent.type)
         }
         
         if let contentView = contentView as? SignUpView {
@@ -96,12 +109,18 @@ private extension SignUpPageViewController {
 }
 
 extension SignUpPageViewController: SignUpPageViewControllerDelegate {
-    func didSelectNextWith(object: Any?, type: SignUpPageViewController.ViewType) {
-        if let next = type.next, let parent = parent as? SignUpStepsViewController {
+    func didSelectNextWith(object: [String: Any?]?, type: SignUpPageViewController.ViewType) {
+        guard let parent = parent as? SignUpStepsViewController else { return }
+        
+        if let next = type.next {
+            if let json = object {
+                user.mapProperties(Map(mappingType: .fromJSON, JSON: json as [String : Any]))
+            }
+
             parent.pageControllers[type.index].setAppearence(active: true)
             setViewControllers([initViewControllerWith(type: next)], direction: .forward, animated: true, completion: nil)
         } else {
-            // Registration
+            parent.loginRouter().showAuthRouter()
         }
     }
 }

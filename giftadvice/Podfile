@@ -7,25 +7,15 @@ target 'giftadvice' do
     pod 'FlowKitManager'
     pod 'PureLayout'
     pod 'PhoneNumberKit', '~> 2.6'
-	# public repository
-    # pod 'HockeySDK-Source'
 
-	pod 'RxSwift'
-	# pod 'RxCocoa'
-	# pod 'RxAlamofire'
-    	pod 'RxAppState'
-    	# pod 'RxKeyboard'
-    
 	pod 'SwiftyJSON' 
 	pod 'Alamofire'
 	pod 'ObjectMapper'
-
-        #pod 'RealmSwift'
-	#pod 'ObjectMapper+Realm'
-    
-#pod 'Socket.IO-Client-Swift'
+    pod 'UITextView+Placeholder'
+    #pod 'RealmSwift'
+    #pod 'ObjectMapper+Realm'
+    pod 'pop'
 	pod 'Kingfisher'
-
 	pod 'IQKeyboardManagerSwift'
 end
 

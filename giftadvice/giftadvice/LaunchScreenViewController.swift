@@ -9,6 +9,7 @@
 import UIKit
 
 class LaunchScreenViewController: GAViewController {
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

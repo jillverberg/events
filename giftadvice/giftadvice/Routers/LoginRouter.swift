@@ -10,7 +10,7 @@ import UIKit
 
 class LoginRouter: GARouter, LoginRouterInput {
     
-    enum SignUpType {
+    enum SignUpType: String {
         case shop
         case buyer
     }

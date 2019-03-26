@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PhoneConfirmeView" customModule="giftadvice" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="qzs-c2-3ua"/>
-                <outlet property="digitContainerVIew" destination="vBt-gT-u1B" id="xSi-x4-c3m"/>
+                <outlet property="digitContainerView" destination="vBt-gT-u1B" id="tn5-ca-1m4"/>
                 <outlet property="errorLabel" destination="94n-7c-P0G" id="w9z-28-Bb9"/>
                 <outlet property="firstDigitLabel" destination="Tqa-ag-8ss" id="ep5-gH-5a4"/>
                 <outlet property="forthDigitLabel" destination="RcR-BG-VvV" id="cZc-d4-3mU"/>

@@ -61,10 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Setup application appearence
     private func setupAppearance() {
         let BarButtonItemAppearance = UIBarButtonItem.appearance()
-        let attributes = [NSAttributedString.Key.font:  UIFont(name: "Helvetica-Bold", size: 0.1)!, NSAttributedString.Key.foregroundColor: UIColor.clear]
-        
-        BarButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
-        BarButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)
+//        let attributes = [NSAttributedString.Key.font:  UIFont(name: "Helvetica-Bold", size: 0.1)!, NSAttributedString.Key.foregroundColor: UIColor.black]
+//        
+//        BarButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
+//        BarButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)
     }
     
     // Setup your frameworks

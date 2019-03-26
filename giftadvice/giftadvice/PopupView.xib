@@ -44,7 +44,7 @@
                         <constraint firstAttribute="height" constant="44" id="tbV-Tp-V3u"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
-                    <state key="normal" title="&lt;Action&gt;">
+                    <state key="normal" title="Готово">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <userDefinedRuntimeAttributes>
@@ -65,6 +65,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTapOnAction:" destination="-1" eventType="touchUpInside" id="wab-Mg-TzW"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymU-vd-C1f" customClass="ShadowView" customModule="giftadvice" customModuleProvider="target">
                     <rect key="frame" x="16" y="233.5" width="343" height="200"/>
@@ -90,6 +93,7 @@
                     <constraints>
                         <constraint firstItem="F3j-VY-781" firstAttribute="leading" secondItem="ymU-vd-C1f" secondAttribute="leading" constant="8" id="1dS-Yu-LRD"/>
                         <constraint firstItem="F3j-VY-781" firstAttribute="top" secondItem="o5v-n6-LNk" secondAttribute="bottom" constant="16" id="9PQ-ap-yEr"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="KcR-aR-Z9v"/>
                         <constraint firstAttribute="bottom" secondItem="F3j-VY-781" secondAttribute="bottom" constant="16" id="a9M-3X-XPb"/>
                         <constraint firstItem="o5v-n6-LNk" firstAttribute="top" secondItem="ymU-vd-C1f" secondAttribute="top" constant="16" id="chN-vC-F4p"/>
                         <constraint firstItem="o5v-n6-LNk" firstAttribute="centerX" secondItem="ymU-vd-C1f" secondAttribute="centerX" id="pSZ-ea-29k"/>

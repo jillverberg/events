@@ -12,21 +12,28 @@ class FeedRouter: GARouter, FeedRouterInput {
 
     // MARK: FeedRouterInput
     
-    func showInitialViewController(navigationController: UINavigationController) {
-        //let viewController = setupFeedViewController()
-        //setViewControllersWithFadeAnimation(viewControllers, navigationController: navigationController)
+    func showLogin() {
+        if let loginRouter = self.parentRouter?.parentRouter as? LoginRouter, let launchRouter = loginRouter.parentRouter as? LaunchRouter {
+            launchRouter.showLoginRouter()
+        } else {
+            let router = LoginRouter(parentRouter: parentRouter)
+            self.showRouter(router)
+        }
     }
+    
+    func showProduct(_ product: Product) {
+        let viewController = setupViewController() as! ProductViewController
+        viewController.product = product
 
+        self.rootNavigationController?.present(viewController, animated: false, completion: nil)
+    }
 
     // MARK: Private Methods
 
-    private func setViewControllersWithFadeAnimation(_ viewControllers: [UIViewController], navigationController: UINavigationController) {
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        transition.type = CATransitionType.fade
+    private func setupViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .product)
+        let viewController = self.createViewController(from: storyboardViewController)
         
-        navigationController.view.layer.add(transition, forKey: "setViewControllersWithFadeAnimation")
-        navigationController.viewControllers = viewControllers
+        return viewController
     }
 }

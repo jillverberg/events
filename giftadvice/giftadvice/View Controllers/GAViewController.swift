@@ -11,24 +11,11 @@ import FlowKitManager
 import PureLayout
 
 class GAViewController: UIViewController {
-    
-    // MARK: Properties Overriders
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle.lightContent
-    }
-    
+
     // MARK: Public Properties
     
     weak var router: GARouter?
-    
-    // MARK: Private Properties
-    
-    private weak var popupView: PopupView?
+    weak var popupView: PopupView?
 
     // MARK: Init Methods & Superclass Overriders
     
@@ -36,10 +23,10 @@ class GAViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        view.endEditing(true)
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,7 +34,7 @@ class GAViewController: UIViewController {
         
         // TODO: Layout subviews
         if let navigation = navigationController {
-//            waitingView?.frame = CGRect(x: 0.0, y: 0.0, width: navigation.view.bounds.width, height: navigation.view.bounds.height)
+            popupView?.frame = CGRect(x: 0.0, y: 0.0, width: navigation.view.bounds.width, height: navigation.view.bounds.height)
         } else {
             
         }
@@ -78,18 +65,26 @@ class GAViewController: UIViewController {
         // Should be overridden.
     }
     
+    func showErrorAlertWith(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: Command? = nil) {
         var containerView: UIView!
-        
-        if let navigation = navigationController {
-            containerView = navigation.view
-        } else if let tabBar = tabBarController {
+                
+        if let tabBar = tabBarController {
             containerView = tabBar.view
+        } else if let navigation = navigationController {
+            containerView = navigation.view
         } else {
             containerView = view
         }
 
         let popupView = PopupView(frame: .zero, adapters: adapters, title: title)
+        popupView.command = action
         popupView.reloadData(sections: sections)
         
         popupView.alpha = 0.0

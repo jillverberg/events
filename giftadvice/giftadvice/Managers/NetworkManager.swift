@@ -16,22 +16,26 @@ class NetworkManager: RequestAdapter {
     let postQueue = DispatchQueue(label: "post-response-queue", qos: .utility, attributes: [.concurrent])
     let getQueue = DispatchQueue(label: "get-response-queue", qos: .utility, attributes: [.concurrent])
     
-    // TODO: Add service keys
     private struct Keys {
-        //static let <#exmpleKey#> = "<#example#>"
-        
+        static let number = "phone_number"
+        static let password = "password"
+
         static let error = "error"
         static let result = "result"
         static let code = "code"
         static let message = "message"
         
-        static let apiSecurityToken = "api-security-token"
+        static let accessToken = "Authorization"
+        static let contentType = "Content-Type"
     }
-    
-    // TODO: Add service paths
+
     private struct Paths {
         struct POST {
-            //static let <#exmpleKey#>  = "api/mobile/v1/example.login"
+            static let login  = "login"
+            static let verify  = "verify"
+
+            static let user  = "user"
+            static let shop  = "shop"
         }
     }
     
@@ -45,6 +49,7 @@ class NetworkManager: RequestAdapter {
     static let shared = NetworkManager()
     
     /// Creates network manager instance with default session setups.
+    
     init() {
         SessionManager.default.session.configuration.requestCachePolicy = .reloadIgnoringCacheData
         SessionManager.default.session.configuration.urlCache = nil
@@ -60,12 +65,38 @@ class NetworkManager: RequestAdapter {
     
     // MARK: Login Service
     
-    // TODO: Add service methods
-    func login(withEmail email: String, password: String, completion: @escaping NetworkCompletion) {
-//        let parameters: [String : Any] = [Keys.login : email,
-//                                          Keys.password : password]
-//
-//        _ = postRequest(withMethod: Paths.POST.<#exmpleKey#>, parameters: parameters, accessToken: nil, completion: completion)
+    func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping NetworkCompletion) {
+        let method = type != .buyer ? Paths.POST.shop : Paths.POST.user
+        let parameters: [String : Any] = [Keys.number : phone,
+                                          Keys.password : password]
+        
+        _ = postRequest(withMethod: method + "/\(Paths.POST.login)", parameters: parameters, accessToken: nil, completion: completion)
+    }
+    
+    func signUp(withUser user: User, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        
+        _ = postRequest(withMethod: method, parameters: user.toJSON(), accessToken: user.accessToken, completion: completion)
+    }
+    
+    func verify(withUser user: User, code: String, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String: Any] = [Keys.code: code]
+        
+        _ = putRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.verify, parameters: parameters, accessToken: user.accessToken, completion: completion)
+    }
+    
+    func update(user: User, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let accessToken = user.accessToken
+        let identifier = user.identifier
+
+        var user = user
+        user.accessToken = nil
+        user.phoneNumber = nil
+        user.identifier = nil
+        
+        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: completion)
     }
     
     // MARK: - Private Methods
@@ -73,7 +104,7 @@ class NetworkManager: RequestAdapter {
     // MARK: Make Request
     
     private func methodPath(withMethod method: String) -> String {
-        let urlString = infoPlistService.serverURL() + method
+        let urlString = infoPlistService.serverURL() + ":" + infoPlistService.serverPort() + "/" + method
         return urlString
     }
     
@@ -81,7 +112,7 @@ class NetworkManager: RequestAdapter {
         #if DEBUG
             print("\(Date()) GET \(method) with \(parameters)")
         #endif
-        
+
         return fireRequest(withMethod: method, type: .get, parameters: parameters, accessToken: accessToken, queue: getQueue, completion: completion)
     }
     
@@ -93,14 +124,22 @@ class NetworkManager: RequestAdapter {
         return fireRequest(withMethod: method, type: .post, parameters: parameters, accessToken: accessToken, queue: postQueue, completion: completion)
     }
     
+    private func putRequest(withMethod method: String, parameters: [String : Any], accessToken: String?, completion: @escaping NetworkCompletion) -> URLSessionTask? {
+        #if DEBUG
+        print("\(Date()) PUT \(method) with \(parameters)")
+        #endif
+        
+        return fireRequest(withMethod: method, type: .put, parameters: parameters, accessToken: accessToken, queue: postQueue, completion: completion)
+    }
+    
     private func fireRequest(withMethod method: String, type: HTTPMethod, parameters: [String : Any], accessToken: String?, queue: DispatchQueue, completion: @escaping NetworkCompletion) -> URLSessionTask? {
         let urlString = methodPath(withMethod: method)
         let url = URL(string: urlString)
         
         // TODO: Define api headers
-        var headers = [Keys.apiSecurityToken : infoPlistService.securityToken()]
+        var headers = [Keys.contentType: "application/json"]
         if let token = accessToken {
-            //headers[Keys.userAccessToken] = token
+            headers[Keys.accessToken] = "Bearer " + token
         }
         
         let request = Alamofire.request(url!, method: type, parameters: parameters, encoding: JSONEncoding.default, headers: headers).response(queue: queue) { [weak self] (result) in
@@ -147,18 +186,35 @@ class NetworkManager: RequestAdapter {
         return nil
     }
     
-    // TODO: Define errors messages
+    
     private func errorMessage(withSerializedData serializedData: [String:Any]?, response: URLResponse?, error: Error?) -> String? {
+        var error: String? = nil
+        
         if !isReachable() {
-            return AppTexts.Errors.Texts.internetNotReachable()
+            error = AppTexts.Errors.Texts.internetNotReachable()
         }
-        let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
         
-//        if statusCode == <#errorCode#> {
-//            return AppTexts.Errors.Texts.<#exampleErrorText#>
-//        }
+        //let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
         
-        return nil
+        if let message = serializedData?[Keys.message] as? String {
+            error = message
+        }
+        
+        if let error = error {
+            DispatchQueue.main.async {
+                if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                    while let presentedViewController = topController.presentedViewController {
+                        topController = presentedViewController
+                    }
+                    
+                    if let nc = topController as? UINavigationController, let topViewController = nc.viewControllers.first as? GAViewController {
+                        topViewController.showErrorAlertWith(title: "Network.Error".localized, message: error.capitalizingFirstLetter())
+                    }
+                }
+            }
+        }
+        
+        return error
     }
     
     // MARK: Protocols Implementation

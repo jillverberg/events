@@ -8,6 +8,12 @@
 
 extension AppTexts {
     struct TitleTexts {
+        static func done() -> String {
+            return "Готово"
+        }
         
+        static func change() -> String {
+            return "Изменить"
+        }
     }
 }

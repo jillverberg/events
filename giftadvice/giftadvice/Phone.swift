@@ -6,7 +6,6 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import UIKit
 import ObjectMapper
 import FlowKitManager
 

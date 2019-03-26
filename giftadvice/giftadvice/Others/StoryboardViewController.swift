@@ -23,9 +23,15 @@ struct StoryboardViewController {
         case signup = "SignUpViewController"
         case signupsteps = "SignUpStepsViewController"
         
+        case mainTabBar = "TabBarViewController"
+
         case feed = "FeedViewController"
-        case profile = "ProfileViewController"
+        case product = "ProductViewController"
         case editing = "EditingViewController"
+
+        case profile = "ProfileViewController"
+        case settings = "SettingsViewController"
+        
         case shops = "ShopsViewController"
         case advice = "AdviceViewController"
     }

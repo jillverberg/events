@@ -19,11 +19,24 @@ class SignUpStepsViewController: GAViewController {
 
     var type: LoginRouter.SignUpType!
     var pageControllers = [PageIndicatorView]()
+    var loginService: LoginService!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         pageControllers.append(contentsOf: [firstStepView, secondStepView, thirdStepView, forthStepView])
         firstStepView.setAppearence(active: true)
+    }
+    
+    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
+        loginService = assembly.loginService
+    }
+    
+    func loginRouter() -> LoginRouterInput {
+        guard let router = router as? LoginRouterInput else {
+            fatalError("\(self) router isn't LoginRouter")
+        }
+        
+        return router
     }
 }

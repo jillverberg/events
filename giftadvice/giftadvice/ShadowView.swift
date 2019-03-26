@@ -38,10 +38,6 @@ private extension ShadowView {
         Bundle(for: ShadowView.self).loadNibNamed(String(describing: ShadowView.self), owner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
-        //contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Fix offset in .xib
-        //shadowView.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
     }
 }
 
@@ -103,7 +99,6 @@ class ContentShadowView: UIView {
     private func setShadow() {
         shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
         shadowLayer.fillColor = UIColor.white.cgColor
-        
         shadowLayer.shadowColor = AppColors.Common.shadow().cgColor
         shadowLayer.shadowPath = shadowLayer.path
     }

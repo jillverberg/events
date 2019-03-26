@@ -13,11 +13,15 @@ import UIKit
 extension AppColors {
     struct Common {
         static func shadow() -> UIColor {
-            return UIColor(red: 0.0 / 255.0, green: 0.0 / 255.0, blue: 0.0 / 255.0, alpha: 0.12)
+            return UIColor(red: 0.0 / 255.0, green: 0.0 / 255.0, blue: 0.0 / 255.0, alpha: 0.24)
         }
         
         static func active() -> UIColor {
-            return UIColor(red: 0.0 / 255.0, green: 166.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+            if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw), type == .buyer {
+                return UIColor(red: 0.0 / 255.0, green: 166.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
+            }
+            
+            return UIColor(red: 248.0 / 255.0, green: 95.0 / 255.0, blue: 98.0 / 255.0, alpha: 1.0)
         }
     }
 }

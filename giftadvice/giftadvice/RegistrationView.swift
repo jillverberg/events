@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ObjectMapper
 
 class RegistrationView: SignUpView {
     
@@ -24,6 +25,7 @@ class RegistrationView: SignUpView {
     @IBOutlet weak var companyRepeatPasswortLabel: RoundedTextField!
     
     var type: LoginRouter.SignUpType!
+    var loginService: LoginService!
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -52,7 +54,20 @@ class RegistrationView: SignUpView {
             
             parent.present(alert, animated: true, completion: nil)
         } else {
-            delegate?.didSelectNextWith(object: nil, type: .info)
+            if var user = loginService.userModel {
+                let par: [String: Any?] = [User.Keys.name: type == .buyer ? nameLabel.text : nil,
+                                           User.Keys.username: type == .buyer ? nameLabel.text : nil,
+                                           User.Keys.password: type == .buyer ? passwordLabel.text! : companyPasswordLabel.text!,
+                                           User.Keys.companyName: type != .buyer ? companyNameLabel.text : nil,
+                                           User.Keys.address: type != .buyer ? companyAddressLabel.text : nil,
+                                           User.Keys.webSite: type != .buyer ? companySiteLabel.text : nil]
+                user.type = type
+                user.mapProperties(Map(mappingType: .fromJSON, JSON: par as [String : Any]))
+                
+                loginService.update(user: user) { (error, newUser) in
+                    self.delegate?.didSelectNextWith(object: user.toJSON(), type: .info)
+                }
+            }
         }
     }
 }

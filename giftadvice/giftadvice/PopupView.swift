@@ -8,6 +8,7 @@
 
 import UIKit
 import FlowKitManager
+import IQKeyboardManagerSwift
 
 class PopupView: UIView {
     
@@ -21,7 +22,11 @@ class PopupView: UIView {
     @IBOutlet weak var tableViewHeighConstraint: NSLayoutConstraint!
     
     lazy var tableDirector: TableDirector = TableDirector(self.tableView)
-    var command: Command?
+    var command: Command? {
+        didSet {
+            actionButton.isHidden = command == nil
+        }
+    }
     
     // MARK: Public Methods
 
@@ -41,6 +46,9 @@ class PopupView: UIView {
             actionButton.removeFromSuperview()
         }
     }
+    // MARK: - Private Properties
+
+    private var keyHidden = true
     
     // MARK: Init Methods & Superclass Overriders
 
@@ -51,6 +59,11 @@ class PopupView: UIView {
         setupTableView(adapters: adapters)
         
         titleLabel.text = title
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        tableView.tableFooterView = UIView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,11 +82,27 @@ class PopupView: UIView {
     
     // MARK: Action Methods
 
+    @objc func keyboardWillAppear() {
+        keyHidden = false
+    }
+    
+    @objc func keyboardWillDisappear() {
+        keyHidden = true
+    }
+    
     @IBAction func didTapOnBackground(_ sender: Any) {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.alpha = 0.0
-        }) { (succesed) in
-            self.removeFromSuperview()
+        if !keyHidden {
+            IQKeyboardManager.shared.resignFirstResponder()
+        } else {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.alpha = 0.0
+            }) { (succesed) in
+                self.removeFromSuperview()
+            }
         }
+    }
+    
+    @IBAction func didTapOnAction(_ sender: Any) {
+        command?.perform()
     }
 }

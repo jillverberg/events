@@ -7,24 +7,16 @@
 //
 
 import UIKit
-import RxSwift
 
 class LaunchViewController: GAViewController {
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-    
+
+
     // MARK: Interface Builder Properties
     
     // MARK: Private Properties
     
 
-    private let disposeBag = DisposeBag()
+    
     
 //    private var loginService: LoginService!
     

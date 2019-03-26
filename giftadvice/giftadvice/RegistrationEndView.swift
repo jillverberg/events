@@ -13,10 +13,14 @@ class RegistrationEndView: SignUpView {
     
     @IBOutlet weak var profilePhotoImageView: UIImageView!
     
+    var type: LoginRouter.SignUpType!
+    
     // MARK: Init Methods & Superclass Overriders
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, type: LoginRouter.SignUpType) {
         super.init(frame: frame)
+        
+        self.type = type
         
         setup()
     }

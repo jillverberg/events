@@ -28,13 +28,18 @@ class LaunchRouter: GARouter, LaunchRouterInput {
         self.showRouter(router)
     }
     
+    func showLoginRouter() {
+        let router = LoginRouter(parentRouter: self)
+        self.showRouter(router)
+    }
+    
     func showInitialRouter() {
-//        if let loginService = self.assemblyManager?.loginService, loginService.isUserAuthorised() {
-//            showAuthRouter()
-//
-//            return
-//        }
-//
+        if let loginService = self.assemblyManager?.loginService, loginService.isUserAuthorised() {
+            showAuthRouter()
+
+            return
+        }
+
         let loginRouter = LoginRouter(parentRouter: self)
         self.showRouter(loginRouter)
     }
@@ -42,11 +47,13 @@ class LaunchRouter: GARouter, LaunchRouterInput {
     // MARK: - Private Methods
     
     private func setupLaunchNavigationController(withWindow window: UIWindow) -> UINavigationController {
+        //let storyboardViewController = StoryboardViewController(storyboardName: .launch, identifier: .launchScreen)
         let storyboardViewController = StoryboardViewController(storyboardName: .launch, identifier: .launchScreen)
         let viewController = self.createViewController(from: storyboardViewController)
 
         let navigationController = self.navigationController(withRoot: viewController)
         window.rootViewController = navigationController
+        window.makeKeyAndVisible()
         
         return navigationController
     }

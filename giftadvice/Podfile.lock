@@ -10,16 +10,10 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (2.6.0)
   - PhoneNumberKit/UIKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore
+  - pop (1.0.12)
   - PureLayout (3.1.4)
-  - RxAppState (1.4.1):
-    - RxCocoa (~> 4.3)
-    - RxSwift (~> 4.3)
-  - RxAtomic (4.4.1)
-  - RxCocoa (4.4.1):
-    - RxSwift (~> 4.0)
-  - RxSwift (4.4.1):
-    - RxAtomic (~> 4.4)
   - SwiftyJSON (4.2.0)
+  - "UITextView+Placeholder (1.2.1)"
 
 DEPENDENCIES:
   - Alamofire
@@ -28,10 +22,10 @@ DEPENDENCIES:
   - Kingfisher
   - ObjectMapper
   - PhoneNumberKit (~> 2.6)
+  - pop
   - PureLayout
-  - RxAppState
-  - RxSwift
   - SwiftyJSON
+  - "UITextView+Placeholder"
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -41,12 +35,10 @@ SPEC REPOS:
     - Kingfisher
     - ObjectMapper
     - PhoneNumberKit
+    - pop
     - PureLayout
-    - RxAppState
-    - RxAtomic
-    - RxCocoa
-    - RxSwift
     - SwiftyJSON
+    - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -55,13 +47,11 @@ SPEC CHECKSUMS:
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
-  RxAppState: 5f4aea9eb375e597ab394d60c5a41fe0e6fd0f2a
-  RxAtomic: f8d6adc1ccb87a767811269e4875887bc74dbf19
-  RxCocoa: 2f35a76bf8887872e28a1914112395b11b8e0e64
-  RxSwift: 92fcf68dfef21f3e2ab1965363d9e7b3d787597e
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
 
-PODFILE CHECKSUM: 774f792fd759d4b1538d4d7a81a70410a5d78bbe
+PODFILE CHECKSUM: 428c3ac512094b8b934eb0b6deaf0b3298a6e76b
 
 COCOAPODS: 1.5.3

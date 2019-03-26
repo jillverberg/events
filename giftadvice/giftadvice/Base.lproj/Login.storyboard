@@ -195,8 +195,58 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DwJ-UU-MC2" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                <rect key="frame" x="32" y="650.66666666666663" width="350" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="mPB-X8-h82"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
+                                <state key="normal" title="Восстановить пароль">
+                                    <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpG-zX-P5S" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                <rect key="frame" x="32" y="690.66666666666663" width="350" height="40"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JbT-C1-X63"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
+                                <state key="normal" title="Регистрация">
+                                    <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="registrationTaped:" destination="VPx-rM-sa2" eventType="touchUpInside" id="qYs-8y-xiK"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BR1-KC-mgj">
+                                <rect key="frame" x="32" y="544.66666666666663" width="350" height="29"/>
+                                <segments>
+                                    <segment title="Продавец"/>
+                                    <segment title="Покупатель"/>
+                                </segments>
+                                <color key="tintColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LqA-eK-m1C" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
-                                <rect key="frame" x="32" y="544.66666666666663" width="350" height="44"/>
+                                <rect key="frame" x="32" y="588.66666666666663" width="350" height="44"/>
                                 <color key="backgroundColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="J0b-Yl-bYZ"/>
@@ -223,42 +273,8 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DwJ-UU-MC2" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
-                                <rect key="frame" x="32" y="606.66666666666663" width="350" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="mPB-X8-h82"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
-                                <state key="normal" title="Восстановить пароль">
-                                    <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="22"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpG-zX-P5S" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
-                                <rect key="frame" x="32" y="646.66666666666663" width="350" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="JbT-C1-X63"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
-                                <state key="normal" title="Регистрация">
-                                    <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="22"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="registrationTaped:" destination="VPx-rM-sa2" eventType="touchUpInside" id="qYs-8y-xiK"/>
+                                    <action selector="login:" destination="VPx-rM-sa2" eventType="touchUpInside" id="uZX-RT-uyV"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -267,13 +283,16 @@
                             <constraint firstItem="DwJ-UU-MC2" firstAttribute="centerX" secondItem="bgq-sQ-imv" secondAttribute="centerX" id="1ig-nh-0X1"/>
                             <constraint firstItem="PLu-Q1-vbO" firstAttribute="centerY" secondItem="bgq-sQ-imv" secondAttribute="centerY" constant="-32" id="1vu-0A-kOh"/>
                             <constraint firstItem="LqA-eK-m1C" firstAttribute="width" secondItem="PLu-Q1-vbO" secondAttribute="width" id="4CH-4Z-Lhp"/>
+                            <constraint firstItem="BR1-KC-mgj" firstAttribute="trailing" secondItem="LqA-eK-m1C" secondAttribute="trailing" id="ANl-q8-Btq"/>
                             <constraint firstItem="DwJ-UU-MC2" firstAttribute="top" secondItem="LqA-eK-m1C" secondAttribute="bottom" constant="18" id="FMx-kH-LPj"/>
                             <constraint firstItem="DwJ-UU-MC2" firstAttribute="width" secondItem="LqA-eK-m1C" secondAttribute="width" id="Jkt-hc-Xav"/>
                             <constraint firstItem="rpG-zX-P5S" firstAttribute="width" secondItem="LqA-eK-m1C" secondAttribute="width" id="MDf-BN-39z"/>
-                            <constraint firstItem="LqA-eK-m1C" firstAttribute="top" secondItem="PLu-Q1-vbO" secondAttribute="bottom" constant="32" id="YaG-Ud-4di"/>
+                            <constraint firstItem="LqA-eK-m1C" firstAttribute="top" secondItem="BR1-KC-mgj" secondAttribute="bottom" constant="16" id="R8y-EL-h0o"/>
                             <constraint firstItem="rpG-zX-P5S" firstAttribute="centerX" secondItem="bgq-sQ-imv" secondAttribute="centerX" id="dwV-42-hGX"/>
                             <constraint firstItem="LqA-eK-m1C" firstAttribute="centerX" secondItem="bgq-sQ-imv" secondAttribute="centerX" id="egq-mr-x8s"/>
                             <constraint firstItem="PLu-Q1-vbO" firstAttribute="leading" secondItem="qJO-aB-bG0" secondAttribute="leading" constant="32" id="fWk-2q-MtF"/>
+                            <constraint firstItem="BR1-KC-mgj" firstAttribute="top" secondItem="PLu-Q1-vbO" secondAttribute="bottom" constant="32" id="fu0-gU-5u1"/>
+                            <constraint firstItem="BR1-KC-mgj" firstAttribute="leading" secondItem="LqA-eK-m1C" secondAttribute="leading" id="kR2-eQ-FHj"/>
                             <constraint firstItem="qJO-aB-bG0" firstAttribute="trailing" secondItem="PLu-Q1-vbO" secondAttribute="trailing" constant="32" id="s27-ho-rwB"/>
                             <constraint firstItem="rpG-zX-P5S" firstAttribute="top" secondItem="DwJ-UU-MC2" secondAttribute="bottom" id="yR5-Wd-M4o"/>
                         </constraints>
@@ -282,6 +301,7 @@
                     <connections>
                         <outlet property="countryNameLabel" destination="nbQ-Bs-npr" id="ZUx-Iw-cZa"/>
                         <outlet property="countryPrefixButton" destination="Fre-2f-bhQ" id="YCm-Qs-ar5"/>
+                        <outlet property="loginType" destination="BR1-KC-mgj" id="WLw-tc-WS8"/>
                         <outlet property="passwordTextField" destination="Gu9-va-kVY" id="uPM-da-qcd"/>
                         <outlet property="phoneTextField" destination="ZRf-e0-d05" id="nNS-Pc-K9p"/>
                     </connections>

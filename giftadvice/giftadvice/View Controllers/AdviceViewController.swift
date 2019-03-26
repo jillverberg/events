@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RxSwift
+
 
 class AdviceViewController: GAViewController {
     
@@ -24,7 +24,7 @@ class AdviceViewController: GAViewController {
     // MARK: Private Properties
     
 
-    private let disposeBag = DisposeBag()
+    
     
 //    private var loginService: LoginService!
     

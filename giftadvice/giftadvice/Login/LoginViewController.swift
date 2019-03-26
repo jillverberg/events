@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import RxSwift
+
 import FlowKitManager
 import ObjectMapper
 import PhoneNumberKit
@@ -22,13 +22,13 @@ class LoginViewController: GAViewController {
 
     @IBOutlet weak var countryNameLabel: UILabel!
     @IBOutlet weak var countryPrefixButton: BorderedButton!
-    
+    @IBOutlet weak var loginType: UISegmentedControl!
+
     // MARK: Private Properties
 
+    private var loginService: LoginService!
     private let phoneNumberKit = PhoneNumberKit()
     private var region = "RU"
-    
-//    private var loginService: LoginService!
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -36,8 +36,6 @@ class LoginViewController: GAViewController {
         super.viewDidLoad()
         
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-        
-        subscribeForUpdates()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,19 +44,20 @@ class LoginViewController: GAViewController {
         configureNavigationBar()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        #if DEBUG
+            phoneTextField.text = "9992018587"
+            passwordTextField.text = "Qwerty"
+        #endif
+    }
+    
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
-//        loginService = assembly.loginService
+        loginService = assembly.loginService
     }
     
     // MARK: - Private Methods
-    
-    // MARK: Reactive Properties
-    
-    private func subscribeForUpdates() {
-//        _ = someService.someEvent.asObservable().subscribe(onNext: { [weak self] _ in
-        
-//        }).disposed(by: disposeBag)
-    }
     
     // MARK: Configure Views
     
@@ -101,6 +100,35 @@ class LoginViewController: GAViewController {
     }
     
     // MARK: Action Methods
+    
+    @IBAction func login(_ sender: Any) {
+        var errorMessage: String? = nil
+        
+        if let phone = phoneTextField.text {
+            do {
+                let phoneNumber = try phoneNumberKit.parse(phone, withRegion: region, ignoreType: false)
+                phoneTextField.text = phoneNumber.adjustedNationalNumber()
+            } catch {
+                errorMessage = "Registration.Error.Phone".localized
+            }
+        }
+        
+        if let password = passwordTextField.text, password.count < 5 {
+             errorMessage = "Registration.Error.PasswordCount".localized
+        }
+        
+        if let error = errorMessage {
+            showErrorAlertWith(title: "Registration.Error".localized, message: error)
+        } else if let phone = phoneTextField.text, let password = passwordTextField.text {
+            loginService.login(withPhone: countryPrefixButton.title(for: .normal)! + phone, password: password, type: loginType.selectedSegmentIndex == 0 ? .shop : .buyer) { (error, user) in
+                if error == nil {
+                    UserDefaults.standard.set(self.loginType.selectedSegmentIndex == 0 ? LoginRouter.SignUpType.shop.rawValue : LoginRouter.SignUpType.buyer.rawValue, forKey: "type")
+                    UserDefaults.standard.synchronize()
+                    self.showAuth()
+                }
+            }
+        }
+    }
     
     @IBAction func needsChangeCountry(_ sender: Any) {
         phoneTextField.resignFirstResponder()
