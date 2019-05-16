@@ -23,5 +23,13 @@ extension AppColors {
             
             return UIColor(red: 248.0 / 255.0, green: 95.0 / 255.0, blue: 98.0 / 255.0, alpha: 1.0)
         }
+        
+        static func red() -> UIColor {
+            return UIColor(red: 248.0 / 255.0, green: 95.0 / 255.0, blue: 98.0 / 255.0, alpha: 1.0)
+        }
+        
+        static func green() -> UIColor {
+            return UIColor(red: 59.0 / 255.0, green: 204.0 / 255.0, blue: 33.0 / 255.0, alpha: 1.0)
+        }
     }
 }

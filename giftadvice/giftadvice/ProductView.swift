@@ -29,6 +29,10 @@ class ProductView: UIView {
     // MARK: - Public Properties
 
     var delegate: ProductViewDelegate?
+    
+    var service: ProductService?
+    var loginService: LoginService?
+    
     var viewController: GAViewController?
     var product: Product?
     
@@ -88,6 +92,21 @@ class ProductView: UIView {
         reloadData(sections: [section])
     }
     
+    func loadProduct() {
+        if let user = loginService?.userModel, let identifier = product?.identifier {
+            service?.getProduct(user: user, identifier: identifier, completion: { [unowned self] (error, product) in
+                if let product = product {
+                    DispatchQueue.main.async {
+                        self.setupWith(product)
+                    }
+                }
+                
+                self.product = product
+                
+            })
+        }
+    }
+    
     @IBAction func performAction(_ sender: Any) {
         if let viewController = delegate as? ProductViewController, type == .shop {
             viewController.needToHide()
@@ -115,12 +134,6 @@ private extension ProductView {
             if self.initFrame == nil {
                 self.initFrame = self.backgroundView.frame
             }
-            
-//            if self.tableView.contentOffset.y <= 0 {
-//                self.backgroundView.frame = CGRect(x: self.backgroundView.frame.origin.x, y: self.initFrame!.origin.y - self.tableView.contentOffset.y, width: self.backgroundView.frame.size.width, height: self.backgroundView.frame.size.height)
-//            } else {
-//                self.backgroundView.frame = self.initFrame!
-//            }
 
             if self.tableView.contentOffset.y <= 0 {
                 self.backgroundTopConstraint.constant = -self.tableView.contentOffset.y
@@ -173,7 +186,7 @@ private extension ProductView {
         let adapter = TableAdapter<ProductTitle, ProductTitleTableViewCell>()
         
         adapter.on.dequeue = { ctx in
-            //ctx.cell?.render(props: ctx.model)
+            ctx.cell?.setup(props: ctx.model)
         }
         
         return adapter
@@ -183,7 +196,7 @@ private extension ProductView {
         let adapter = TableAdapter<ProductRate, RateTableViewCell>()
         
         adapter.on.dequeue = { ctx in
-            //ctx.cell?.render(props: ctx.model)
+            ctx.cell?.setup(props: ctx.model)
         }
         
         return adapter
@@ -193,7 +206,7 @@ private extension ProductView {
         let adapter = TableAdapter<ProductDescription, InfoTableViewCell>()
         
         adapter.on.dequeue = { ctx in
-            //ctx.cell?.render(props: ctx.model)
+            ctx.cell?.setup(props: ctx.model)
         }
         
         return adapter

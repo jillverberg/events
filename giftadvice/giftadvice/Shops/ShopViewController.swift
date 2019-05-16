@@ -47,8 +47,16 @@ class ShopViewController: GAViewController {
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
         
         shop.accessToken = loginService.getAccessToken()
+        shopService.getShopProducts(user: shop) { (error, response) in
+            DispatchQueue.main.async {
+                self.viewModel.reloadCollectionData(sections: [CollectionSection(response)])
+            }
+        }
+        
         shopService.getShopInfo(user: shop) { (error, response) in
-            
+            if let response = response {
+                self.shop = response
+            }
         }
     }
     
@@ -75,6 +83,10 @@ class ShopViewController: GAViewController {
         
         placeholderView.layer.mask = maskLayer
     }
+    
+    @IBAction func showInfo(_ sender: Any) {
+        shopRouter().showInfo(shop: shop)
+    }
 }
 
 private extension ShopViewController {
@@ -87,7 +99,7 @@ private extension ShopViewController {
         titleLabel.textColor = AppColors.Common.active()
         subscribeButton.setTitleColor(AppColors.Common.active(), for: .normal)
 
-        nameLabel.text = shop.username
+        nameLabel.text = shop.companyName
         titleLabel.text = "Profile.Title.Shop".localized
         subscribeButton.setTitle("Shop.Subscribe".localized, for: .normal)
         
@@ -128,9 +140,17 @@ private extension ShopViewController {
         }
         
         adapter.on.didSelect = { [unowned self] ctx in
-            
+            self.shopRouter().showProduct(ctx.model)
         }
         
         return adapter
+    }
+    
+    private func shopRouter() -> ShopsRouterInput {
+        guard let router = router as? ShopsRouterInput else {
+            fatalError("\(self) router isn't ShopsRouterInput")
+        }
+        
+        return router
     }
 }

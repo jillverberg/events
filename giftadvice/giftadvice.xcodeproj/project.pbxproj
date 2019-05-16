@@ -52,6 +52,8 @@
 		D40C1205224E970500665DB7 /* CameraPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40C11FE224E970500665DB7 /* CameraPickerViewModel.swift */; };
 		D42B01A8221DD71A00EA5868 /* SignUpStepsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01A7221DD71A00EA5868 /* SignUpStepsViewController.swift */; };
 		D42B01AA221DE98A00EA5868 /* PhoneEnterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01A9221DE98A00EA5868 /* PhoneEnterView.swift */; };
+		D42B344D228E034000354413 /* ShopInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B344C228E034000354413 /* ShopInfoViewController.swift */; };
+		D42B344F228E065500354413 /* ShopInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B344E228E065500354413 /* ShopInfoViewModel.swift */; };
 		D444410D22070DE300EB40F0 /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D444410C22070DE300EB40F0 /* PopupView.xib */; };
 		D444410F22070ED400EB40F0 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D444410E22070ED400EB40F0 /* PopupView.swift */; };
 		D444411122070EF000EB40F0 /* Props.swift in Sources */ = {isa = PBXBuildFile; fileRef = D444411022070EF000EB40F0 /* Props.swift */; };
@@ -195,6 +197,8 @@
 		D40C11FE224E970500665DB7 /* CameraPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPickerViewModel.swift; sourceTree = "<group>"; };
 		D42B01A7221DD71A00EA5868 /* SignUpStepsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStepsViewController.swift; sourceTree = "<group>"; };
 		D42B01A9221DE98A00EA5868 /* PhoneEnterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneEnterView.swift; sourceTree = "<group>"; };
+		D42B344C228E034000354413 /* ShopInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoViewController.swift; sourceTree = "<group>"; };
+		D42B344E228E065500354413 /* ShopInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoViewModel.swift; sourceTree = "<group>"; };
 		D444410C22070DE300EB40F0 /* PopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
 		D444410E22070ED400EB40F0 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		D444411022070EF000EB40F0 /* Props.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Props.swift; sourceTree = "<group>"; };
@@ -461,6 +465,7 @@
 				D4F6032A223C00EE00277F54 /* SettingsViewModel.swift */,
 				D40C11F5224E8B9000665DB7 /* ShopViewModel.swift */,
 				D462DB362250CF9F0096E077 /* CameraViewModel.swift */,
+				D42B344E228E065500354413 /* ShopInfoViewModel.swift */,
 			);
 			name = "Table View";
 			sourceTree = "<group>";
@@ -520,6 +525,7 @@
 			children = (
 				EA93F7FD39E08CEB8936C997 /* ShopsViewController.swift */,
 				D4B81EE7226CC95F00627483 /* ShopViewController.swift */,
+				D42B344C228E034000354413 /* ShopInfoViewController.swift */,
 			);
 			path = Shops;
 			sourceTree = "<group>";
@@ -897,6 +903,7 @@
 				D42B01A8221DD71A00EA5868 /* SignUpStepsViewController.swift in Sources */,
 				D40BA2142225D1E100A9A0DE /* FeedViewModel.swift in Sources */,
 				BAFEAA06DDD1161722B77236 /* Reachability.swift in Sources */,
+				D42B344F228E065500354413 /* ShopInfoViewModel.swift in Sources */,
 				D45D923C222AE02D0022AC94 /* ProductViewController.swift in Sources */,
 				2648C8F73FC9AF3FBCE418E2 /* ThreadSafely.swift in Sources */,
 				D444410F22070ED400EB40F0 /* PopupView.swift in Sources */,
@@ -946,6 +953,7 @@
 				31BC4F47F14E68B4EE92D753 /* (null) in Sources */,
 				332389A7FA4E7CB49CA629F5 /* ShopsViewController.swift in Sources */,
 				8514312AA088CA63B2FF5228 /* AdviceRouter.swift in Sources */,
+				D42B344D228E034000354413 /* ShopInfoViewController.swift in Sources */,
 				D40C1204224E970500665DB7 /* CameraPickerMaxPriceFilterManager.swift in Sources */,
 				D4B81EEA226CD62800627483 /* OnboardRouter.swift in Sources */,
 				D4B99B102206E7E000DBF0BB /* BorderedButton.swift in Sources */,

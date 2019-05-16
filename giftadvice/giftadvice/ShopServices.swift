@@ -10,7 +10,8 @@ import ObjectMapper
 
 private protocol PublicMethods {
     func getShops(user: User, completion: @escaping (_ error: String?, _ users: [User]?) -> ())
-    func getShopInfo(user: User, completion: @escaping (_ error: String?, _ users: [User]?) -> ())
+    func getShopProducts(user: User, completion: @escaping (String?, [Product]?) -> ())
+    func getShopInfo(user: User, completion: @escaping (_ error: String?, _ users: User?) -> ())
 }
 
 class ShopService {
@@ -22,9 +23,27 @@ class ShopService {
 }
 
 extension ShopService: PublicMethods {
-    func getShopInfo(user: User, completion: @escaping (String?, [User]?) -> ()) {
+    func getShopInfo(user: User, completion: @escaping (String?, User?) -> ()) {
         networkManager.getShopInfo(user: user) { (canceled, error, response) in
-            
+            if let data = response {
+                let models = Mapper<User>().map(JSON: data)
+                
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
+    }
+    
+    func getShopProducts(user: User, completion: @escaping (String?, [Product]?) -> ()) {
+        networkManager.getShopProducts(user: user) { (canceled, error, response) in
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<Product>().mapArray(JSONArray: data)
+                
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
         }
     }
     

@@ -25,7 +25,7 @@ class FeedRouter: GARouter, FeedRouterInput {
         let viewController = setupViewController() as! ProductViewController
         viewController.product = product
 
-        self.rootNavigationController?.present(viewController, animated: false, completion: nil)
+        self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
 
     // MARK: Private Methods

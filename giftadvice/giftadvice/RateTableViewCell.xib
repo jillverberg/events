@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="564" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jU-yU-KML">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jU-yU-KML">
                         <rect key="frame" x="464" y="-0.5" width="44" height="44.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="AIX-Xe-wgK"/>
@@ -27,7 +27,7 @@
                         </constraints>
                         <state key="normal" image="like"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuu-gm-IvX">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuu-gm-IvX">
                         <rect key="frame" x="508" y="-0.5" width="44" height="44.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="o1N-V3-0AG"/>
@@ -35,25 +35,50 @@
                         </constraints>
                         <state key="normal" image="dislike"/>
                     </button>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" verticalHuggingPriority="251" image="Group 4" translatesAutoresizingMaskIntoConstraints="NO" id="a0V-na-2G4">
-                        <rect key="frame" x="12" y="14.5" width="139" height="15"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6m-yT-bU0">
+                        <rect key="frame" x="26" y="18" width="110" height="8"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="kdY-fB-LYn"/>
+                            <constraint firstAttribute="width" constant="110" id="uCK-KQ-zeV"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="2Mr-zF-Ws2">
+                        <rect key="frame" x="12" y="17" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="KQw-rn-b6c"/>
+                            <constraint firstAttribute="width" constant="10" id="Rp2-dz-NBm"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="FEB-vc-8Fu">
+                        <rect key="frame" x="140" y="17" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="nmE-2a-XEO"/>
+                            <constraint firstAttribute="height" constant="10" id="zfp-4h-yuJ"/>
+                        </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="a0V-na-2G4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="3pf-IH-H1k"/>
-                    <constraint firstItem="a0V-na-2G4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="BDY-G8-9Ev"/>
+                    <constraint firstItem="L6m-yT-bU0" firstAttribute="leading" secondItem="2Mr-zF-Ws2" secondAttribute="trailing" constant="4" id="0We-3b-36Y"/>
                     <constraint firstItem="vuu-gm-IvX" firstAttribute="leading" secondItem="3jU-yU-KML" secondAttribute="trailing" id="JKn-Sh-KzQ"/>
+                    <constraint firstItem="2Mr-zF-Ws2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="V8S-ao-dYJ"/>
+                    <constraint firstItem="FEB-vc-8Fu" firstAttribute="leading" secondItem="L6m-yT-bU0" secondAttribute="trailing" constant="4" id="VNz-j9-Ljq"/>
+                    <constraint firstItem="L6m-yT-bU0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gZv-eB-63i"/>
                     <constraint firstItem="vuu-gm-IvX" firstAttribute="centerY" secondItem="3jU-yU-KML" secondAttribute="centerY" id="htO-v5-Adu"/>
-                    <constraint firstItem="3jU-yU-KML" firstAttribute="centerY" secondItem="a0V-na-2G4" secondAttribute="centerY" id="kWn-4x-6yZ"/>
+                    <constraint firstItem="2Mr-zF-Ws2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hxK-OW-vid"/>
                     <constraint firstAttribute="trailing" secondItem="vuu-gm-IvX" secondAttribute="trailing" constant="12" id="sN5-ll-CaC"/>
+                    <constraint firstItem="FEB-vc-8Fu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zv1-g0-KZx"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="disLikeImageView" destination="FEB-vc-8Fu" id="e9Q-BC-BXM"/>
+                <outlet property="rateView" destination="L6m-yT-bU0" id="U5P-AH-grk"/>
+            </connections>
             <point key="canvasLocation" x="236.80000000000001" y="46.776611694152926"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Group 4" width="139" height="15"/>
         <image name="dislike" width="25" height="24"/>
         <image name="like" width="27" height="25"/>
     </resources>

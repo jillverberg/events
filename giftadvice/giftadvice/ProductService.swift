@@ -34,6 +34,18 @@ extension ProductService: PublicMethods {
         }
     }
     
+    func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ()) {
+        networkManager.getProduct(user: user, identifier: identifier, completion: { (ended, error, response) in
+            if let data = response {
+                let model = Mapper<Product>().map(JSON: data)
+                
+                completion(error, model)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        })
+    }
+    
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
         networkManager.getLatest(user: user) { (ended, error, response) in
             if let data = response?["data"] as? [[String: Any]] {

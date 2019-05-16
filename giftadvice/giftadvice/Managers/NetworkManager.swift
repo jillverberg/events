@@ -98,7 +98,7 @@ class NetworkManager: RequestAdapter {
         _ = putRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.PUT.verify, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
     
-    func update(user: User, completion: @escaping NetworkCompletion) {
+    func update(user: User, image: Data? = nil, completion: @escaping NetworkCompletion) {
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
         let accessToken = user.accessToken
         let identifier = user.identifier
@@ -108,13 +108,20 @@ class NetworkManager: RequestAdapter {
         user.phoneNumber = nil
         user.identifier = nil
         
-        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: completion)
+        requestWith(endUrl: method + "/\(identifier ?? "")/", imageData: image, parameters: user.toJSON())
+//        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: completion)
     }
     
     func getProducts(user: User, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
 
         _ = getRequest(withMethod: Paths.GET.product, parameters: [Keys.limit: "1"], accessToken: accessToken, completion: completion)
+    }
+    
+    func getProduct(user: User, identifier: String, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+        
+        _ = getRequest(withMethod: Paths.GET.product + "/\(identifier)", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
     func getLatest(user: User, completion: @escaping NetworkCompletion) {
@@ -142,9 +149,52 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
+    func getShopProducts(user: User, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+        let identifier = user.identifier
+        
+        _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/product", parameters: [:], accessToken: accessToken, completion: completion)
+    }
+    
     // MARK: - Private Methods
     
     // MARK: Make Request
+    
+    private func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], onCompletion: ((JSON?) -> Void)? = nil, onError: ((Error?) -> Void)? = nil){
+        
+        let url = methodPath(withMethod: endUrl) /* your API url */
+        
+        let headers: HTTPHeaders = [
+            /* "Authorization": "your_access_token",  in case you need authorization header */
+            "Content-type": "multipart/form-data"
+        ]
+        
+        Alamofire.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in parameters {
+                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
+            }
+            
+            if let data = imageData{
+                multipartFormData.append(data, withName: "photo", fileName: "image.png", mimeType: "image/png")
+            }
+            
+        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { (result) in
+            switch result{
+            case .success(let upload, _, _):
+                upload.responseJSON { response in
+                    print("Succesfully uploaded")
+                    if let err = response.error{
+                        onError?(err)
+                        return
+                    }
+                    onCompletion?(nil)
+                }
+            case .failure(let error):
+                print("Error in upload: \(error.localizedDescription)")
+                onError?(error)
+            }
+        }
+    }
     
     private func methodPath(withMethod method: String) -> String {
         let urlString = infoPlistService.serverURL() + "/" + method // + ":" + infoPlistService.serverPort()

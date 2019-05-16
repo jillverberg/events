@@ -261,7 +261,6 @@ private extension SettingsViewController {
     var reportItemAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<Report, ReportTableViewCell>()
 
-        
         adapter.on.dequeue = { ctx in
             ctx.cell?.render(props: ctx.model)
         }
@@ -300,5 +299,9 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         }
         
         profileImageView.image = image
+        
+        if let user = loginService.userModel {
+            loginService.update(user: user, image: image, completion: nil)
+        }
     }
 }

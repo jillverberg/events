@@ -16,7 +16,7 @@ private protocol PublicMethods {
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func signUp(withUser user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func verify(withCode code: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
-    func update(user: User, completion: ((_ error: String?, _ userModel: User?) -> ())?)
+    func update(user: User, image: UIImage?, completion: ((String?, User?) -> ())?)
     func getAccessToken() -> String?
     func isFirstOpen() -> Bool
 }
@@ -44,8 +44,8 @@ class LoginService {
 // MARK: - Public Methods
 
 extension LoginService: PublicMethods {
-    func update(user: User, completion: ((String?, User?) -> ())? = nil) {
-        networkManager.update(user: user) { (cancelled, error, response) in
+    func update(user: User, image: UIImage? = nil, completion: ((String?, User?) -> ())? = nil) {
+        networkManager.update(user: user, image: image?.jpeg(.medium)) { (cancelled, error, response) in
             var userModel: User?
             if let data = response, let user = User(JSON: data) {
                 userModel = user

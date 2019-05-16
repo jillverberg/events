@@ -283,8 +283,11 @@ class ProfileViewController: GAViewController {
         selectedProducts = [:]
         isListEditing.toggle()
         toolBar.isHidden.toggle()
-        addProductContainer.isHidden.toggle()
-        addProductShadow.isHidden.toggle()
+        
+        if let user = loginService.userModel, user.type! == .shop {
+            addProductContainer.isHidden.toggle()
+            addProductShadow.isHidden.toggle()
+        }
         
         viewModel.collectionView.reloadData()
         changeButton.setTitle(isListEditing ? "Collection.Title.Done".localized : "Collection.Title.Editing".localized, for: .normal)

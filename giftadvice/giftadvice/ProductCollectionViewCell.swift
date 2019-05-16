@@ -73,7 +73,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
     }
     
     func setIndicator(hidden: Bool) {
-        activeIndicatorView.isHidden = !hidden
+        activeIndicatorView.isHidden = hidden
     }
     
     func setIndicator(active: Bool) {

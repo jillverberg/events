@@ -29,7 +29,7 @@ class ProductViewController: GAViewController {
     
     private var bottomConsraint: NSLayoutConstraint?
     private var lastCoordinate: CGFloat = 0
-    private var productView: ProductView!
+    private let productView = ProductView(frame: .zero)
     private var presentViewController: GAViewController?
 
     // MARK: - Override Methods
@@ -42,8 +42,10 @@ class ProductViewController: GAViewController {
         setup()
         productView.isUserInteractionEnabled = false
 
-        if let presenting = presentingViewController as? UINavigationController, let vc = presenting.viewControllers[0] as? GAViewController {
-            self.presentViewController = vc
+        if let presenting = presentingViewController as? UITabBarController,
+            let vc = presenting.viewControllers?[0] as? UINavigationController,
+            let controller = vc.viewControllers[0] as? GAViewController {
+            self.presentViewController = controller
         }
         
         DispatchQueue.main.async {
@@ -62,6 +64,11 @@ class ProductViewController: GAViewController {
         }
     }
     
+    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
+        productView.service = assembly.productService
+        productView.loginService = assembly.loginService
+    }
+    
     // MARK: Show view controller
     
     func profileRouter() -> ProfileRouterInput {
@@ -75,10 +82,9 @@ class ProductViewController: GAViewController {
 
 private extension ProductViewController {
     func setup() {
-        let productView = ProductView(frame: .zero)
-        productView.delegate = self
         productView.product = product
-        self.productView = productView
+        productView.loadProduct()
+        productView.delegate = self
         
         productView.setupWith(product)
         //tableViewModel.tableView = choosingView.tableView

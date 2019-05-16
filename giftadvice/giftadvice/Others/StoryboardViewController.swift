@@ -39,6 +39,7 @@ struct StoryboardViewController {
         
         case shops = "ShopsViewController"
         case shop = "ShopViewController"
+        case shopInfo = "ShopInfoViewController"
         
         case advice = "AdviceViewController"
     }

@@ -45,6 +45,8 @@ protocol ProfileRouterInput {
 
 protocol ShopsRouterInput {
     func showShop(_ shop: User)
+    func showProduct(_ product: Product)
+    func showInfo(shop: User)
 }
 
 protocol AdviceRouterInput: InitiallyPresentationRouter {

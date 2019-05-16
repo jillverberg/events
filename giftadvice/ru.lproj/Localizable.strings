@@ -50,6 +50,7 @@
 
 "Settings.Title.Edit.Information"       = "Изменение информации";
 "Settings.Title.Report"                 = "Обращение";
+"Settings.Title.Problem"                = "Пожаловаться";
 "Settings.Title.Report.Message"         = "Расскажите о проблеме";
 "Settings.Title.Name"                   = "Имя";
 "Settings.Title.Phone"                  = "Номер телефона";
@@ -73,6 +74,7 @@
 "Product.Action.Shop"                   = "Редактировать";
 
 "Shop.Subscribe"                        = "Подписаться";
+"Shop.Information"                      = "Информация";
 
 "Onboarding.1"                          = "1";
 "Onboarding.2"                          = "2";

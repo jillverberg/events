@@ -50,6 +50,7 @@
 
 "Settings.Title.Edit.Information"       = "Edit information";
 "Settings.Title.Report"                 = "Report";
+"Settings.Title.Problem"                = "Complain";
 "Settings.Title.Report.Message"         = "Write about a problem";
 "Settings.Title.Name"                   = "Name";
 "Settings.Title.Phone"                  = "Phone";
@@ -73,6 +74,7 @@
 "Product.Action.Shop"                   = "Edit";
 
 "Shop.Subscribe"                        = "Subscribe";
+"Shop.Information"                      = "Information";
 
 "Onboarding.1"                          = "1 eng";
 "Onboarding.2"                          = "2 eng";
