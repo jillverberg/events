@@ -14,13 +14,7 @@ class SettingsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var valueLabel: UITextField!
-    
-    // MARK: - Override Methods
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     // MARK: Private properties
     
     private var props: Setting!
@@ -37,5 +31,9 @@ class SettingsTableViewCell: UITableViewCell {
     
     func setFirstResponer() {
         valueLabel.becomeFirstResponder()
+    }
+    
+    @IBAction func textChanged(_ sender: Any) {
+        props.value = valueLabel.text
     }
 }

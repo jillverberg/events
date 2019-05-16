@@ -17,6 +17,8 @@
 "Alert.Photo"                           = "Choose from library";
 "Alert.Camera"                          = "Take a photo";
 
+"Popup.Done"                            = "Done";
+
 "Error"                                 = "Error";
 "Network.Error"                         = "Network error";
 "Email.Error"                           = "Add at least one account to Mail";
@@ -24,6 +26,15 @@
 "Permission.Error.Photo"                = "Error accessing the library. Allow the application to use the library in the settings";
 
 "Title.Main"                            = "Gifts";
+"Title.Shops"                           = "Shops";
+"Title.Settings"                        = "Settings";
+"Title.Search"                          = "Search";
+"Title.Camera"                          = "Camera";
+"Title.Search.Placeholder"              = "Start typing words";
+
+"Camera.Action"                         = "Clarify recommendation";
+"Camera.Filter.Price"                   = "Set max price";
+"Camera.Filter.Hobby"                   = "Hobby";
 
 "Registration.Error"                    = "Error in form";
 "Registration.Error.Phone"              = "Wrong phone format";
@@ -56,5 +67,34 @@
 "Product.Editing.Web"                   = "Web site";
 "Product.Editing.Price"                 = "Price";
 
+"Product.Editing.New"                   = "New product";
+
 "Product.Action.Buyer"                  = "To shop";
 "Product.Action.Shop"                   = "Edit";
+
+"Shop.Subscribe"                        = "Subscribe";
+
+"Onboarding.1"                          = "1 eng";
+"Onboarding.2"                          = "2 eng";
+"Onboarding.3"                          = "3 eng";
+"Onboarding.4"                          = "4 eng";
+
+"Onboarding.Close"                      = "Escape";
+
+"BIRTHDAY"                              = "Birthday";
+"NEW_YEAR"                              = "New Year";
+"CHRISTMAS"                             = "Christmas";
+"ST_VALENTINE_DAY"                      = "Valentine's Day";
+"FEBRUARY_23"                           = "February 23";
+"MARCH_8"                               = "March 8";
+"EASTER"                                = "Easter";
+"HALLOWEEN"                             = "Halloween";
+"MOTHER_DAY"                            = "Mother's Day";
+"FATHER_DAY"                            = "Father's Day";
+"ANNIVERSARY"                           = "Anniversary";
+"WEDDING"                               = "Wedding";
+"CHILD_BIRTH"                           = "Birth of a child";
+"GRADUATION"                            = "Graduation";
+"PROFESSIONAL_DAY"                      = "Professional Day";
+
+"Empty.Image"                           = "empty_eng";

@@ -21,6 +21,7 @@
                 <outlet property="loadingIndicatorView" destination="OVK-GX-zeP" id="eNG-kU-5pc"/>
                 <outlet property="secondDigitLabel" destination="zAV-Z1-P3c" id="hp4-gD-HFU"/>
                 <outlet property="thirdDigitLabel" destination="Yzl-5R-9mX" id="3mV-cW-IbI"/>
+                <outlet property="titleLabel" destination="hEF-3A-Heu" id="Zmq-c9-fhL"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

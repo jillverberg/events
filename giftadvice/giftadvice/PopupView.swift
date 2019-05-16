@@ -22,7 +22,7 @@ class PopupView: UIView {
     @IBOutlet weak var tableViewHeighConstraint: NSLayoutConstraint!
     
     lazy var tableDirector: TableDirector = TableDirector(self.tableView)
-    var command: Command? {
+    var command: CommandWith<Any>? {
         didSet {
             actionButton.isHidden = command == nil
         }
@@ -40,12 +40,19 @@ class PopupView: UIView {
         tableDirector.add(sections: sections)
         tableDirector.reloadData()
         
-        tableViewHeighConstraint.constant = tableView.contentSize.height
-        
         if command == nil {
             actionButton.removeFromSuperview()
         }
+        
+        layoutSubviews()
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        tableViewHeighConstraint.constant = tableView.contentSize.height + 77
+    }
+    
     // MARK: - Private Properties
 
     private var keyHidden = true
@@ -64,6 +71,11 @@ class PopupView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         tableView.tableFooterView = UIView()
+        
+        actionButton.setTitle("Popup.Done".localized, for: .normal)
+        
+        titleLabel.textColor = AppColors.Common.active()
+        actionButton.backgroundColor = AppColors.Common.active()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -103,6 +115,6 @@ class PopupView: UIView {
     }
     
     @IBAction func didTapOnAction(_ sender: Any) {
-        command?.perform()
+        command?.perform(with: tableDirector.sections[0].models)
     }
 }

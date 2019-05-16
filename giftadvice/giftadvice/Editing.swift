@@ -6,7 +6,6 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-
 import FlowKitManager
 
 class Editing: ModelProtocol {

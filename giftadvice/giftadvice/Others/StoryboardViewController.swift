@@ -13,11 +13,14 @@ struct StoryboardViewController {
         case launch = "Launch"
         case login = "Login"
         case auth = "Auth"
+        case onboard = "Onboard"
     }
     
     enum Identifier: String {
         case launchScreen = "LauchScreenViewController"
-
+        
+        case onboard = "OnboardPageViewController"
+        
         case launch = "LaunchViewController"
         case login = "LoginViewController"
         case signup = "SignUpViewController"
@@ -29,10 +32,14 @@ struct StoryboardViewController {
         case product = "ProductViewController"
         case editing = "EditingViewController"
 
+        case camera = "CameraPickerViewController"
+        
         case profile = "ProfileViewController"
         case settings = "SettingsViewController"
         
         case shops = "ShopsViewController"
+        case shop = "ShopViewController"
+        
         case advice = "AdviceViewController"
     }
     

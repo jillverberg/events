@@ -17,12 +17,24 @@ class FeedViewModel: NSObject {
     @IBOutlet var collectionView: UICollectionView!
     lazy var collectionDirector = FlowCollectionDirector(self.collectionView)
     
+    private let noOrder = UIImageView(image: UIImage(named: "Empty.Image".localized))
+    
     func setupTableView(adapters: [AbstractAdapterProtocol]) {
         tableDirector.rowHeight = .autoLayout(estimated: 44.0)
         tableDirector.register(adapters: adapters)
     }
     
     func reloadData(sections: [TableSection]) {
+        noOrder.tintColor = AppColors.Common.active()
+        
+        if (sections.count > 0 && sections[0].models.count == 0) || sections.count == 0 {
+            collectionView.addSubview(noOrder)
+            noOrder.autoCenterInSuperview()
+        } else {
+            noOrder.removeFromSuperview()
+        }
+        
+        
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
         tableDirector.reloadData()

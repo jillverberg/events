@@ -13,7 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistrationEndView" customModule="giftadvice" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="U9G-ZK-h0d"/>
+                <outlet property="nextButton" destination="5nS-dO-oXC" id="mDg-fq-9Nq"/>
+                <outlet property="profileImage" destination="fYM-qC-W3J" id="oTF-QR-XnL"/>
                 <outlet property="profilePhotoImageView" destination="fYM-qC-W3J" id="Pv1-kD-x2Y"/>
+                <outlet property="titleLabel" destination="9n3-Mj-aCb" id="kBR-vY-VHY"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -17,6 +17,13 @@ class ShopsRouter: GARouter, ShopsRouterInput {
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
     }
 
+    func showShop(_ shop: User) {
+        let viewController = setupShopViewController() as! ShopViewController
+        viewController.shop = shop
+        
+        self.rootNavigationController?.pushViewController(viewController, animated: true)
+    }
+    
     // MARK: Private Methods
    
     private func setupShopsViewController() -> UIViewController {
@@ -34,5 +41,12 @@ class ShopsRouter: GARouter, ShopsRouterInput {
         
         navigationController.view.layer.add(transition, forKey: "setViewControllersWithFadeAnimation")
         navigationController.viewControllers = viewControllers
+    }
+    
+    private func setupShopViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .shop)
+        let viewController = self.createViewController(from: storyboardViewController)
+        
+        return viewController
     }
 }

@@ -36,6 +36,7 @@ class LoginViewController: GAViewController {
         super.viewDidLoad()
         
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,8 +49,8 @@ class LoginViewController: GAViewController {
         super.viewDidAppear(animated)
         
         #if DEBUG
-            phoneTextField.text = "9992018587"
-            passwordTextField.text = "Qwerty"
+            phoneTextField.text = "9992088587"
+            passwordTextField.text = "101010"
         #endif
     }
     

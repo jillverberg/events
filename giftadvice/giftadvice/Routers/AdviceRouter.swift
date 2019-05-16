@@ -9,19 +9,27 @@
 import UIKit
 
 class AdviceRouter: GARouter, AdviceRouterInput {
-    
+
     // MARK: AdviceRouterInput
     
     func showInitialViewController(navigationController: UINavigationController) {
         let viewController = setupAdviceViewController()
-        setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
+        
+        navigationController.present(viewController, animated: true, completion: nil)
     }
 
+    func showRecomendations() {
+        if let parent = parentRouter as? AuthRouter {
+            rootNavigationController?.dismiss(animated: true, completion: nil)
+            parent.showSearchWith(keyword: [])
+        }
+    }
+    
     // MARK: Private Methods
    
    private func setupAdviceViewController() -> UIViewController {
-        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .advice)
-        let viewController = self.createViewController(from: storyboardViewController) as! AdviceViewController
+        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .camera)
+        let viewController = self.createViewController(from: storyboardViewController) as! CameraPickerViewController
         
         return viewController
     }

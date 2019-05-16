@@ -9,11 +9,13 @@
 import UIKit
 
 class AuthRouter: GARouter, AuthRouterInput {
-    
+
     // MARK: Private Properties
     
     private var feedRouter: FeedRouter?
     private var profileRouter: ProfileRouter?
+    private var shopsRouter: ShopsRouter?
+    private var searchRouter: SearchRouter?
 
     // MARK: AuthRouterInput
     
@@ -26,7 +28,18 @@ class AuthRouter: GARouter, AuthRouterInput {
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
     }
 
+    func presentCamera() {
+        let camera = AdviceRouter(parentRouter: self)
+        
+        showRouter(camera)
+    }
 
+    func showSearchWith(keyword: [String]) {
+        if let tabBar = rootNavigationController?.viewControllers[0] as? TabBarViewController {
+            tabBar.selectedIndex = 3
+        }
+    }
+    
     // MARK: Private Methods
     
     private func setupViewController() -> UIViewController {
@@ -52,6 +65,18 @@ class AuthRouter: GARouter, AuthRouterInput {
         
         viewController.router = feedRouter
         configureViewControllerWithAssembly(viewController)
+
+        navigationController.tabBarItem.title = "Title.Main".localized
+    }
+    
+    func configure(searchRouterWith navigationController: UINavigationController, viewController: GAViewController) {
+        let searchRouter = SearchRouter(parentRouter: self, navigationController: navigationController)
+        self.searchRouter = searchRouter
+                
+        viewController.router = searchRouter
+        configureViewControllerWithAssembly(viewController)
+        
+        navigationController.tabBarItem.title = "Title.Search".localized
     }
     
     func configure(profileRouterWith navigationController: UINavigationController, viewController: GAViewController) {
@@ -60,6 +85,18 @@ class AuthRouter: GARouter, AuthRouterInput {
         
         viewController.router = profileRouter
         configureViewControllerWithAssembly(viewController)
+        
+        navigationController.tabBarItem.title = "Title.Settings".localized
+    }
+    
+    func configure(shopsRouterWith navigationController: UINavigationController, viewController: GAViewController) {
+        let shopsRouter = ShopsRouter(parentRouter: self, navigationController: navigationController)
+        self.shopsRouter = shopsRouter
+        
+        viewController.router = shopsRouter
+        configureViewControllerWithAssembly(viewController)
+        
+        navigationController.tabBarItem.title = "Title.Shops".localized
     }
     
     private func configureViewControllerWithAssembly(_ viewController: UIViewController) {

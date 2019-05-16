@@ -15,6 +15,10 @@ protocol LaunchRouterInput {
     func showInitialRouter()
 }
 
+protocol OnboardRouterInput: InitiallyPresentationRouter {
+    func showAuth()
+}
+
 protocol LoginRouterInput: InitiallyPresentationRouter {
     func showLaunchViewController()
     func showLoginViewController()
@@ -24,7 +28,7 @@ protocol LoginRouterInput: InitiallyPresentationRouter {
 }
 
 protocol AuthRouterInput: InitiallyPresentationRouter {
-
+    func presentCamera()
 }
 
 protocol FeedRouterInput {
@@ -40,13 +44,16 @@ protocol ProfileRouterInput {
 }
 
 protocol ShopsRouterInput {
-
+    func showShop(_ shop: User)
 }
 
-protocol AdviceRouterInput {
+protocol AdviceRouterInput: InitiallyPresentationRouter {
+    func showRecomendations()
 }
 
-
+protocol SearchRouterInput {
+    func showProduct(product: Product)
+}
 
 // MARK: Common Protocols
 

@@ -16,6 +16,8 @@ class AssemblyManager {
     
     lazy private(set) var loginService = LoginService()
     lazy private(set) var profileService = ProfileService()
+    lazy private(set) var productService = ProductService()
+    lazy private(set) var shopService = ShopService()
 
 //    // With some settings:
 //    

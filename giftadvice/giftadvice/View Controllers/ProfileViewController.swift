@@ -49,14 +49,21 @@ class ProfileViewController: GAViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = " "
+        navigationItem.title = " "
         
-        mocks()
+//        mocks()
+        
+
+        if let user = loginService.userModel {
+            profileService.getFavorite(user: user)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel.reloadCollectionData(sections: [])
+
         setupViews()
         configureNavigationBar()
     }
@@ -113,12 +120,13 @@ class ProfileViewController: GAViewController {
     private func setupViews() {
         if let user = loginService.userModel {
             if let url = user.photo  {
-                photoImageView.kf.setImage(with: URL(string: url)!)
+                photoImageView.kf.setImage(with: URL(string: url)!, placeholder: UIImage(named: "placeholder"))
             }
             
             nameLabel.text = user.name == nil ? user.companyName : user.name
             titleLabel.text = user.type! == .buyer ? "Profile.Title.Buyer".localized : "Profile.Title.Shop".localized
             addProductContainer.isHidden = user.type! == .buyer
+            addProductShadow.isHidden = user.type! == .buyer
         }
         
         photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
@@ -145,37 +153,37 @@ class ProfileViewController: GAViewController {
         
         var objects = [ModelProtocol]()
         
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://news.ubc.ca/wp-content/uploads/2013/12/gift-giving-770.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://vakilsearch.com/advice/wp-content/uploads/2017/11/gift-11.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.businessnewsdaily.com/images/i/000/012/426/original/gift.jpg?1474048924",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
+//        do {
+//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
+//                                          Product.Keys.name: "Glass for you",
+//                                          Product.Keys.description: "BestForYou",
+//                                          Product.Keys.photo: "https://news.ubc.ca/wp-content/uploads/2013/12/gift-giving-770.jpg",
+//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
+//        }
+//        
+//        do {
+//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
+//                                          Product.Keys.name: "Glass for you",
+//                                          Product.Keys.description: "BestForYou",
+//                                          Product.Keys.photo: "https://vakilsearch.com/advice/wp-content/uploads/2017/11/gift-11.jpg",
+//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
+//        }
+//        
+//        do {
+//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
+//                                          Product.Keys.name: "Glass for you",
+//                                          Product.Keys.description: "BestForYou",
+//                                          Product.Keys.photo: "https://www.businessnewsdaily.com/images/i/000/012/426/original/gift.jpg?1474048924",
+//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
+//        }
+//        
+//        do {
+//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
+//                                          Product.Keys.name: "Glass for you",
+//                                          Product.Keys.description: "BestForYou",
+//                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
+//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
+//        }
         
         var collectionSection = [CollectionSection]()
         objects.append(contentsOf: objects)
@@ -189,6 +197,7 @@ class ProfileViewController: GAViewController {
         _ = collectionSection.map({$0.minimumLineSpacing = {
             return 18
             }})
+        
         viewModel.reloadCollectionData(sections: collectionSection)
     }
     
@@ -274,6 +283,9 @@ class ProfileViewController: GAViewController {
         selectedProducts = [:]
         isListEditing.toggle()
         toolBar.isHidden.toggle()
+        addProductContainer.isHidden.toggle()
+        addProductShadow.isHidden.toggle()
+        
         viewModel.collectionView.reloadData()
         changeButton.setTitle(isListEditing ? "Collection.Title.Done".localized : "Collection.Title.Editing".localized, for: .normal)
         viewModel.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 18 + (isListEditing ? toolBar.frame.size.height : 0), right: 0)

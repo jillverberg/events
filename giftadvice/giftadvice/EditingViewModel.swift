@@ -44,16 +44,46 @@ class EditingViewModel: NSObject {
         ]
     }
 
+    enum Evenst: String, CaseIterable {
+        case birthday = "BIRTHDAY"
+        case newYear = "NEW_YEAR"
+        case christmas = "CHRISTMAS"
+        case stValentin = "ST_VALENTINE_DAY"
+        case febr = "FEBRUARY_23"
+        case march = "MARCH_8"
+        case east = "EASTER"
+        case halloween = "HALLOWEEN"
+        case mother = "MOTHER_DAY"
+        case father = "FATHER_DAY"
+        case ann = "ANNIVERSARY"
+        case wedding = "WEDDING"
+        case childB = "CHILD_BIRTH"
+        case graduation = "GRADUATION"
+        case prof = "PROFESSIONAL_DAY"
+        
+        static let value: [Evenst: String] = [
+            .birthday:  "BIRTHDAY".localized,
+            .newYear:  "NEW_YEAR".localized,
+            .christmas:  "CHRISTMAS".localized,
+            .stValentin:  "ST_VALENTINE_DAY".localized,
+            .febr:  "FEBRUARY_23".localized,
+            .march:  "MARCH_8".localized,
+            .east:  "EASTER".localized,
+            .halloween:  "HALLOWEEN".localized,
+            .mother:  "MOTHER_DAY".localized,
+            .father:  "FATHER_DAY".localized,
+            .ann:  "ANNIVERSARY".localized,
+            .wedding:  "WEDDING".localized,
+            .childB:  "CHILD_BIRTH".localized,
+            .graduation:  "GRADUATION".localized,
+            .prof:  "PROFESSIONAL_DAY".localized
+        ]
+    }
+    
     // MARK: - IBOutlet Properties
 
     @IBOutlet var tableView: GATableView!
     lazy var tableDirector = TableDirector(self.tableView)
-
-    // MARK: - Private Properties
-
-    static let events = [
-        "Some", "Some1", "Some2", "Some3"
-    ]
     
     // MARK: - Public Methods
 
@@ -79,7 +109,7 @@ private extension EditingViewModel {
                                     .category: "",
                                     .description: product.description ?? "",
                                     .web: product.webSite ?? "",
-                                    .price: product.price ?? ""])
+                                    .price: String(product.price)])
             
         } else {
             createEditings(values: [.name: "",
@@ -113,12 +143,12 @@ extension EditingViewModel: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return EditingViewModel.events.count
+        return Evenst.allCases.count
     }
 }
 
 extension EditingViewModel: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return EditingViewModel.events[row]
+        return Evenst.value[Evenst.allCases[row]]
     }
 }

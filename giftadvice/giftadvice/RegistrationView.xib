@@ -21,8 +21,12 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="Qui-Mn-ikM"/>
                 <outlet property="contentViewCorp" destination="lns-Jr-TqO" id="wbM-Gd-DAb"/>
                 <outlet property="nameLabel" destination="uui-us-jP4" id="Bcw-a6-CuO"/>
+                <outlet property="nextButton" destination="TdQ-XG-DUa" id="zJT-gx-qzr"/>
+                <outlet property="nextButtonCompany" destination="ftp-78-Mxn" id="f8A-nW-Qpk"/>
                 <outlet property="passwordLabel" destination="xpu-bp-Uh8" id="B2c-wD-3TN"/>
                 <outlet property="repeatPasswordLabel" destination="vjP-XE-cLw" id="Zvz-we-6qh"/>
+                <outlet property="titleLabel" destination="Wxu-9f-Uyn" id="zhx-ee-zMm"/>
+                <outlet property="titleLabelCompany" destination="xvI-wm-KPF" id="L1p-KL-nUI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

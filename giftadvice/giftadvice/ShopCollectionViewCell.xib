@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ShopCollectionViewCell" customModule="giftadvice" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTD-Mk-JLu">
+                        <rect key="frame" x="4" y="4" width="42" height="42"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="xKH-q7-uOV">
+                                <rect key="frame" x="0.0" y="0.0" width="42" height="42"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.3411764706" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="xKH-q7-uOV" secondAttribute="bottom" id="aVR-x0-C4p"/>
+                            <constraint firstAttribute="trailing" secondItem="xKH-q7-uOV" secondAttribute="trailing" id="iCC-hb-7jr"/>
+                            <constraint firstItem="xKH-q7-uOV" firstAttribute="top" secondItem="fTD-Mk-JLu" secondAttribute="top" id="nqk-FV-nCP"/>
+                            <constraint firstItem="xKH-q7-uOV" firstAttribute="leading" secondItem="fTD-Mk-JLu" secondAttribute="leading" id="w5n-dO-Z0W"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yN0-3w-Alq"/>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="fTD-Mk-JLu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="DNP-lc-9Uf"/>
+                <constraint firstAttribute="bottom" secondItem="fTD-Mk-JLu" secondAttribute="bottom" constant="4" id="NWX-ii-oAX"/>
+                <constraint firstAttribute="trailing" secondItem="fTD-Mk-JLu" secondAttribute="trailing" constant="4" id="UMf-pE-Trj"/>
+                <constraint firstItem="fTD-Mk-JLu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="lI0-vd-cB8"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="imageContentView" destination="fTD-Mk-JLu" id="yOC-TV-VSr"/>
+                <outlet property="imageView" destination="xKH-q7-uOV" id="CUV-Ec-8W1"/>
+            </connections>
+            <point key="canvasLocation" x="40" y="46.776611694152926"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="placeholder" width="128" height="128"/>
+    </resources>
+</document>

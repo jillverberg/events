@@ -10,6 +10,7 @@ import UIKit
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Public Properties
@@ -27,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupAppearance()
         setupFrameworks()
         setupLaunchScreen()
+
         return true
     }
     

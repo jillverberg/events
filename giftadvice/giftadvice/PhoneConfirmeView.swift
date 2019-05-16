@@ -13,6 +13,7 @@ class PhoneConfirmeView: SignUpView {
             
     @IBOutlet weak var inputTextField: RoundedTextField!
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var digitContainerView: UIView!
     @IBOutlet weak var firstDigitLabel: UILabel!
     @IBOutlet weak var secondDigitLabel: UILabel!
@@ -94,6 +95,10 @@ private extension PhoneConfirmeView {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300), execute: {
             self.inputTextField.becomeFirstResponder()
         })
+        
+        _ = digitLabels.map({$0.textColor = AppColors.Common.active()})
+        titleLabel.textColor = AppColors.Common.active()
+        loadingIndicatorView.color = AppColors.Common.active()
     }
     
     func set(lable: UILabel, digit: String?) {

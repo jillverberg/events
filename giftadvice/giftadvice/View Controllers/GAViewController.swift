@@ -9,6 +9,7 @@
 import UIKit
 import FlowKitManager
 import PureLayout
+import Photos
 
 class GAViewController: UIViewController {
 
@@ -65,6 +66,49 @@ class GAViewController: UIViewController {
         // Should be overridden.
     }
     
+    func showImagePicker(withCamera: Bool = true) {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized:
+            let picker = UIImagePickerController()
+            picker.allowsEditing = false
+            if let strongSelf = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+                picker.delegate = strongSelf
+            }
+            if withCamera {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                alert.addAction(UIAlertAction(title: "Alert.Photo".localized, style: .default, handler: { alert in
+                    picker.sourceType = .photoLibrary
+                    self.present(picker, animated: true)
+                }))
+                
+                
+                alert.addAction(UIAlertAction(title: "Alert.Camera".localized, style: .default, handler: { alert in
+                    picker.sourceType = .camera
+                    self.present(picker, animated: true)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Alert.Cancel" .localized, style: .cancel, handler: nil))
+                
+                present(alert, animated: true, completion: nil)
+            } else {
+                picker.sourceType = .photoLibrary
+                self.present(picker, animated: true)
+            }
+            
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                
+            }
+        case .restricted, .denied:
+            let alert = UIAlertController(title: "Error".localized, message: "Permission.Error.Photo".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     func showErrorAlertWith(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
@@ -72,7 +116,7 @@ class GAViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: Command? = nil) {
+    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: CommandWith<Any>? = nil) {
         var containerView: UIView!
                 
         if let tabBar = tabBarController {

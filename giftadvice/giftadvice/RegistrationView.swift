@@ -13,6 +13,8 @@ class RegistrationView: SignUpView {
     
     @IBOutlet var contentViewCorp: UIView!
 
+    @IBOutlet weak var titleLabelCompany: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nameLabel: RoundedTextField!
     @IBOutlet weak var passwordLabel: RoundedTextField!
     @IBOutlet weak var repeatPasswordLabel: RoundedTextField!
@@ -23,6 +25,8 @@ class RegistrationView: SignUpView {
     @IBOutlet weak var companySiteLabel: RoundedTextField!
     @IBOutlet weak var companyPasswordLabel: RoundedTextField!
     @IBOutlet weak var companyRepeatPasswortLabel: RoundedTextField!
+    @IBOutlet weak var nextButton: BorderedButton!
+    @IBOutlet weak var nextButtonCompany: BorderedButton!
     
     var type: LoginRouter.SignUpType!
     var loginService: LoginService!
@@ -86,6 +90,11 @@ private extension RegistrationView {
             contentViewCorp.frame = bounds
             addSubview(contentViewCorp)
         }
+        
+        titleLabel.textColor = AppColors.Common.active()
+        titleLabelCompany.textColor = AppColors.Common.active()
+        nextButton.backgroundColor = AppColors.Common.active()
+        nextButtonCompany.backgroundColor = AppColors.Common.active()
     }
     
     func validationError() -> String? {

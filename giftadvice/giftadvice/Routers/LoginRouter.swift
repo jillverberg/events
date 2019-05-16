@@ -48,9 +48,18 @@ class LoginRouter: GARouter, LoginRouterInput {
         
     }
 
-    func showAuthRouter() {
-        let router = AuthRouter(parentRouter: self)
+    func showOnboardRouter() {
+        let router = OnboardRouter(parentRouter: self)
         self.showRouter(router)
+    }
+    
+    func showAuthRouter() {
+        if let loginService = self.assemblyManager?.loginService, loginService.isFirstOpen() {
+            showOnboardRouter()
+        } else {
+            let router = AuthRouter(parentRouter: self)
+            self.showRouter(router)
+        }
     }
 
 

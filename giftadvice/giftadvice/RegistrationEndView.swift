@@ -11,7 +11,10 @@ import PhotosUI
 
 class RegistrationEndView: SignUpView {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var profilePhotoImageView: UIImageView!
+    @IBOutlet weak var nextButton: BorderedButton!
+    @IBOutlet weak var profileImage: UIImageView!
     
     var type: LoginRouter.SignUpType!
     
@@ -82,6 +85,9 @@ private extension RegistrationEndView {
         addSubview(contentView)
         
         profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.frame.width / 2
+        profileImage.tintColor = AppColors.Common.active()
+        nextButton.backgroundColor = AppColors.Common.active()
+        titleLabel.textColor = AppColors.Common.active()
     }
     
     func checkPermission() -> Bool {

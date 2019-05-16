@@ -16,13 +16,16 @@ private protocol PublicMethods {
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func signUp(withUser user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func verify(withCode code: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
-    func update(user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
+    func update(user: User, completion: ((_ error: String?, _ userModel: User?) -> ())?)
+    func getAccessToken() -> String?
+    func isFirstOpen() -> Bool
 }
 
 class LoginService {
-    private struct UserDefaultsKeys {
+    struct UserDefaultsKeys {
         static let userModel = "userModel"
         static let accessToken = "accessToken"
+        static let firstTime = "firstTime"
     }
     
     var userModel: User?
@@ -41,7 +44,7 @@ class LoginService {
 // MARK: - Public Methods
 
 extension LoginService: PublicMethods {
-    func update(user: User, completion: @escaping (String?, User?) -> ()) {
+    func update(user: User, completion: ((String?, User?) -> ())? = nil) {
         networkManager.update(user: user) { (cancelled, error, response) in
             var userModel: User?
             if let data = response, let user = User(JSON: data) {
@@ -51,7 +54,7 @@ extension LoginService: PublicMethods {
             }
             
             DispatchQueue.main.async {
-                completion(error, userModel)
+                completion?(error, userModel)
             }
         }
     }
@@ -142,12 +145,20 @@ extension LoginService: PublicMethods {
         UserDefaults.standard.synchronize()
     }
     
+    func getAccessToken() -> String? {
+        return UserDefaults.standard.string(forKey: UserDefaultsKeys.accessToken)
+    }
+    
     func saveUserModel(_ model: User) {
         userModel = model
         
         let dictionary = model.toJSON()
         UserDefaults.standard.setValue(dictionary, forKey: UserDefaultsKeys.userModel)
         UserDefaults.standard.synchronize()
+    }
+    
+    func isFirstOpen() -> Bool {
+        return !UserDefaults.standard.bool(forKey: UserDefaultsKeys.firstTime)
     }
 }
 

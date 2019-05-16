@@ -40,12 +40,12 @@ class ProductTableViewCell: UITableViewCell {
     func render(props: Product) {
         self.props = props
         
-        if let photo = props.shopPhoto {
-            photoImageView.kf.setImage(with: URL(string: photo)!)
+        if let photo = props.shop?.photo {
+            photoImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
         }
         
-        if let photo = props.photo {
-            productImageView.kf.setImage(with: URL(string: photo)!)
+        if let photo = props.photo?.first?.photo {
+            productImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
         }
         
         productImageView.mask = maskedView

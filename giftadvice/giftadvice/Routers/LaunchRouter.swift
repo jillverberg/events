@@ -33,9 +33,18 @@ class LaunchRouter: GARouter, LaunchRouterInput {
         self.showRouter(router)
     }
     
+    func showOnboardRouter() {
+        let router = OnboardRouter(parentRouter: self)
+        self.showRouter(router)
+    }
+    
     func showInitialRouter() {
         if let loginService = self.assemblyManager?.loginService, loginService.isUserAuthorised() {
-            showAuthRouter()
+            if loginService.isFirstOpen() {
+                showOnboardRouter()
+            } else {
+                showAuthRouter()
+            }
 
             return
         }

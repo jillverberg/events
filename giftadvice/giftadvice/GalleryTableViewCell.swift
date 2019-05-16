@@ -58,25 +58,7 @@ class GalleryTableViewCell: UITableViewCell {
         var objects = [ModelProtocol]()
         
         if let photo = props.product?.photo {
-            do {
-                objects.append(Photo(JSON: [Photo.Keys.identifier: 1,
-                                            Photo.Keys.url: photo])!)
-            }
-            
-            do {
-                objects.append(Photo(JSON: [Photo.Keys.identifier: 2,
-                                            Photo.Keys.url: photo])!)
-            }
-            
-            do {
-                objects.append(Photo(JSON: [Photo.Keys.identifier: 3,
-                                            Photo.Keys.url: photo])!)
-            }
-            
-            do {
-                objects.append(Photo(JSON: [Photo.Keys.identifier: 4,
-                                            Photo.Keys.url: photo])!)
-            }
+            objects.append(contentsOf: photo)
         }
         
         
@@ -85,7 +67,7 @@ class GalleryTableViewCell: UITableViewCell {
                 let stringPath = Bundle.main.url(forResource: "new_photo", withExtension: "png")
                 
                 objects.append(Photo(JSON: [Photo.Keys.identifier: String(objects.count),
-                                                Photo.Keys.url: stringPath?.absoluteString])!)
+                                                Photo.Keys.photo: stringPath?.absoluteString])!)
             }
         }
         
@@ -125,7 +107,7 @@ extension GalleryTableViewCell {
         for (index, model) in models.enumerated() {
             let index = index + collectionDirector.sections[0].models.count
             let photo = Photo(JSON: [Photo.Keys.identifier: index,
-                                     Photo.Keys.url: model])!
+                                     Photo.Keys.photo: model])!
             objects.append(photo)
         }
         

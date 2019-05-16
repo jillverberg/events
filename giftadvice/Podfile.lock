@@ -1,7 +1,25 @@
 PODS:
-  - Alamofire (4.8.1)
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - Alamofire (4.8.2)
+  - CameraManager (4.4.0)
+  - Clarifai (2.3.2):
+    - AFNetworking (~> 3.1)
   - FlowKitManager (0.6.1)
-  - IQKeyboardManagerSwift (6.2.0)
+  - IQKeyboardManagerSwift (6.2.1)
   - Kingfisher (4.10.1)
   - ObjectMapper (3.4.2)
   - PhoneNumberKit (2.6.0):
@@ -12,11 +30,18 @@ PODS:
     - PhoneNumberKit/PhoneNumberKitCore
   - pop (1.0.12)
   - PureLayout (3.1.4)
+  - RxAtomic (4.4.2)
+  - RxCocoa (4.4.2):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.4.2):
+    - RxAtomic (>= 4.4.2, ~> 4.4)
   - SwiftyJSON (4.2.0)
   - "UITextView+Placeholder (1.2.1)"
 
 DEPENDENCIES:
   - Alamofire
+  - CameraManager
+  - Clarifai
   - FlowKitManager
   - IQKeyboardManagerSwift
   - Kingfisher
@@ -24,12 +49,17 @@ DEPENDENCIES:
   - PhoneNumberKit (~> 2.6)
   - pop
   - PureLayout
+  - RxCocoa
+  - RxSwift
   - SwiftyJSON
   - "UITextView+Placeholder"
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AFNetworking
     - Alamofire
+    - CameraManager
+    - Clarifai
     - FlowKitManager
     - IQKeyboardManagerSwift
     - Kingfisher
@@ -37,21 +67,30 @@ SPEC REPOS:
     - PhoneNumberKit
     - pop
     - PureLayout
+    - RxAtomic
+    - RxCocoa
+    - RxSwift
     - SwiftyJSON
     - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  CameraManager: 583710502c42178d12ef046d9d4f7893feff8354
+  Clarifai: 6d6cce2b31aefcf33893f2c3a18588b266771d11
   FlowKitManager: fd5ac628b3ed7047228eae653f5f2cde89a862f7
-  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  IQKeyboardManagerSwift: 0f0ae8935360b4003e6ea1ac7c19898f01e2f7c7
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
+  RxAtomic: d00e97c10db88c6f08540e0bf2752fc5a2404167
+  RxCocoa: 477990dc3b4c3ff55fb0ac77e1cc06244e0aaec8
+  RxSwift: 74c29b693c8e42b0f64400e8b06564575742d649
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   "UITextView+Placeholder": 0c3efd97f37ea64bde7f34cc6e90fe02e87b3909
 
-PODFILE CHECKSUM: 428c3ac512094b8b934eb0b6deaf0b3298a6e76b
+PODFILE CHECKSUM: 8c465ef00f08fd8ebfa85ee1b6c91cb70f4e71b5
 
 COCOAPODS: 1.5.3

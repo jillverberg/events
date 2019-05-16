@@ -29,7 +29,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="563" height="252.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h9f-Gq-9YG">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="h9f-Gq-9YG">
                                 <rect key="frame" x="0.0" y="76.5" width="563" height="176"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="176" id="g4d-rN-GC9"/>
@@ -47,7 +47,7 @@
                                 <color key="textColor" red="0.5607843137254902" green="0.5607843137254902" blue="0.5607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zg0-5z-0UP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Zg0-5z-0UP">
                                 <rect key="frame" x="12" y="8.5" width="56" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="56" id="aLD-nb-TMs"/>
@@ -99,4 +99,7 @@
             <point key="canvasLocation" x="53.600000000000001" y="-370.16491754122939"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="placeholder" width="128" height="128"/>
+    </resources>
 </document>

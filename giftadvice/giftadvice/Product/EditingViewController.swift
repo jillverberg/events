@@ -67,6 +67,7 @@ private extension EditingViewController {
     func setupView() {
         view.backgroundColor = AppColors.Common.active()
         saveButton.backgroundColor = AppColors.Common.active()
+        title = "Product.Editing.New".localized
     }
     
     var galleryAdapter: AbstractAdapterProtocol {
@@ -104,27 +105,7 @@ private extension EditingViewController {
         
         return adapter
     }
-    
-    func checkPermission() -> Bool {
-        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-        switch photoAuthorizationStatus {
-        case .authorized:
-            return true
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-            }
-            return false
-        case .restricted:
-            // same same
-            print("User do not have access to photo album.")
-            return false
-        case .denied:
-            // same same
-            print("User has denied the permission.")
-            return false
-        }
-    }
+
 }
 
 extension EditingViewController: EditingTableViewCellDelegate {
@@ -142,38 +123,7 @@ extension EditingViewController: EditingTableViewCellDelegate {
 
 extension EditingViewController: GalleryTableViewCellDelegate {
     func didSelectLastCell() {
-        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-        switch photoAuthorizationStatus {
-        case .authorized:
-            let picker = UIImagePickerController()
-            picker.allowsEditing = false
-            picker.delegate = self
-            
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Alert.Photo".localized, style: .default, handler: { alert in
-                picker.sourceType = .photoLibrary
-                self.present(picker, animated: true)
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Alert.Camera".localized, style: .default, handler: { alert in
-                picker.sourceType = .camera
-                self.present(picker, animated: true)
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Alert.Cancel" .localized, style: .cancel, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-            }
-        case .restricted, .denied:
-            let alert = UIAlertController(title: "Error".localized, message: "Permission.Error.Photo".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
-            
-            present(alert, animated: true, completion: nil)
-        }
+        showImagePicker()
     }
 }
 

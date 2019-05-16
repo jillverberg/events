@@ -20,9 +20,11 @@ class SignUpView: UIView {
 
 class PhoneEnterView: SignUpView {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var phoneTextField: RoundedTextField!
     @IBOutlet weak var nameCountryLabel: UILabel!
     @IBOutlet weak var prefixButton: BorderedButton!
+    @IBOutlet weak var nextButton: BorderedButton!
     
     // MARK: - Public Properties
 
@@ -165,5 +167,11 @@ private extension PhoneEnterView {
         Bundle(for: PhoneEnterView.self).loadNibNamed(String(describing: PhoneEnterView.self), owner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
+        
+        titleLabel.textColor = AppColors.Common.active()
+        phoneTextField.textColor = AppColors.Common.active()
+        prefixButton.setTitleColor(AppColors.Common.active(), for: .normal)
+        nextButton.backgroundColor = AppColors.Common.active()
+        nameCountryLabel.textColor = AppColors.Common.active()
     }
 }

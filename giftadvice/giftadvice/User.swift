@@ -7,8 +7,14 @@
 //
 
 import ObjectMapper
+import FlowKitManager
 
-struct User: Mappable {
+struct User: Mappable, ModelProtocol {
+    
+    var modelID: Int {
+        return identifier.hashValue
+    }
+    
     struct Keys {
         static let identifier = "id"
         static let accessToken = "token"
@@ -63,14 +69,12 @@ struct User: Mappable {
         self.accessToken <- map[Keys.accessToken]
         self.name <- map[Keys.name]
         self.username <- map[Keys.username]
-        //self.photo <- map[Keys.photo]
+        self.photo <- map[Keys.photo]
         self.password <- map[Keys.password]
         self.companyName <- map[Keys.companyName]
         self.address <- map[Keys.address]
         self.webSite <- map[Keys.webSite]
         self.phoneNumber <- map[Keys.phoneNumber]
-        
-        photo = "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"
         
         if let raw = UserDefaults.standard.string(forKey: "type") {
             self.type = LoginRouter.SignUpType(rawValue: raw)

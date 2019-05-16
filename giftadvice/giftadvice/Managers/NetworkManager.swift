@@ -25,6 +25,8 @@ class NetworkManager: RequestAdapter {
         static let code = "code"
         static let message = "message"
         
+        static let limit = "limit"
+
         static let accessToken = "Authorization"
         static let contentType = "Content-Type"
     }
@@ -32,10 +34,20 @@ class NetworkManager: RequestAdapter {
     private struct Paths {
         struct POST {
             static let login  = "login"
-            static let verify  = "verify"
 
             static let user  = "user"
             static let shop  = "shop"
+        }
+        
+        struct PUT {
+            static let verify  = "verify"
+        }
+        
+        struct GET {
+            static let product  = "product"
+            static let latest = "product/latest"
+            static let shop  = "shop"
+            static let favorite  = "favorite"
         }
     }
     
@@ -83,7 +95,7 @@ class NetworkManager: RequestAdapter {
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
         let parameters: [String: Any] = [Keys.code: code]
         
-        _ = putRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.verify, parameters: parameters, accessToken: user.accessToken, completion: completion)
+        _ = putRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.PUT.verify, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
     
     func update(user: User, completion: @escaping NetworkCompletion) {
@@ -99,12 +111,43 @@ class NetworkManager: RequestAdapter {
         _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: completion)
     }
     
+    func getProducts(user: User, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+
+        _ = getRequest(withMethod: Paths.GET.product, parameters: [Keys.limit: "1"], accessToken: accessToken, completion: completion)
+    }
+    
+    func getLatest(user: User, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+        
+        _ = getRequest(withMethod: Paths.GET.latest, parameters: [Keys.limit: "1"], accessToken: accessToken, completion: completion)
+    }
+    
+    func getFavorite(user: User, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        
+        _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite, parameters: [:], accessToken: user.accessToken, completion: completion)
+    }
+    
+    func getShops(user: User, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+        
+        _ = getRequest(withMethod: Paths.GET.shop, parameters: [:], accessToken: accessToken, completion: completion)
+    }
+    
+    func getShopInfo(user: User, completion: @escaping NetworkCompletion) {
+        let accessToken = user.accessToken
+        let identifier = user.identifier
+
+        _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/", parameters: [:], accessToken: accessToken, completion: completion)
+    }
+    
     // MARK: - Private Methods
     
     // MARK: Make Request
     
     private func methodPath(withMethod method: String) -> String {
-        let urlString = infoPlistService.serverURL() + ":" + infoPlistService.serverPort() + "/" + method
+        let urlString = infoPlistService.serverURL() + "/" + method // + ":" + infoPlistService.serverPort()
         return urlString
     }
     
@@ -141,10 +184,12 @@ class NetworkManager: RequestAdapter {
         if let token = accessToken {
             headers[Keys.accessToken] = "Bearer " + token
         }
-        
-        let request = Alamofire.request(url!, method: type, parameters: parameters, encoding: JSONEncoding.default, headers: headers).response(queue: queue) { [weak self] (result) in
+        //URLEncoding(destination: .queryString)
+        let request = Alamofire.request(url!, method: type, parameters: parameters, encoding: type == .get ? URLEncoding(destination: .queryString) : JSONEncoding.default, headers: headers).responseJSON(queue: queue) { [weak self] (result) in
             self?.perform(completion: completion, data: result.data, response: result.response, error: result.error, method: method)
         }
+        //request.task?.currentRequest?.
+        
         return request.task
     }
     

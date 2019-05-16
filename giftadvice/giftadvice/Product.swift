@@ -17,8 +17,7 @@ struct Product: Mappable, ModelProtocol {
     
     struct Keys {
         static let identifier = "id"
-        static let shopIdentifier = "shop_id"
-        static let shopPhoto = "shop_photo"
+        static let shop = "shop"
         static let name = "product_name"
         static let photo = "photo"
         static let photos = "product_photos"
@@ -31,15 +30,13 @@ struct Product: Mappable, ModelProtocol {
     }
     
     var identifier: String!
-    var shopIdentifier: String!
-    var shopPhoto: String?
+    var shop: User?
     var name: String?
-    var photo: String?
-    var photos: [String] = []
-    //var event: String!
+    var photo: [Photo]?
+    var event: String?
     var webSite: String?
     var description: String?
-    var price: String?
+    var price: Double = 0.0
     var likes: Int?
     var dislikes: Int?
 
@@ -53,11 +50,10 @@ struct Product: Mappable, ModelProtocol {
     
     mutating func mapProperties(_ map: Map) {
         self.identifier <- map[Keys.identifier]
-        self.shopIdentifier <- map[Keys.shopIdentifier]
-        self.shopPhoto <- map[Keys.shopPhoto]
+        self.shop <- map[Keys.shop]
+        self.event <- map[Keys.event]
         self.name <- map[Keys.name]
         self.photo <- map[Keys.photo]
-        self.photos <- map[Keys.photos]
         self.webSite <- map[Keys.webSite]
         self.description <- map[Keys.description]
         self.likes <- map[Keys.likes]

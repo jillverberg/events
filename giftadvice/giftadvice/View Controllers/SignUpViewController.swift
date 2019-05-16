@@ -18,6 +18,8 @@ class SignUpViewController: GAViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.tintColor = nil
     }
     
     // MARK: Show view controller
@@ -37,6 +39,9 @@ class SignUpViewController: GAViewController {
             fatalError("\(self) router isn't LoginRouter")
         }
         
+        UserDefaults.standard.set(LoginRouter.SignUpType.shop.rawValue, forKey: "type")
+        UserDefaults.standard.synchronize()
+
         router.showSignUpStepsViewControllerWith(type: .shop)
     }
     
@@ -44,6 +49,9 @@ class SignUpViewController: GAViewController {
         guard let router = router as? LoginRouterInput else {
             fatalError("\(self) router isn't LoginRouter")
         }
+        
+        UserDefaults.standard.set(LoginRouter.SignUpType.buyer.rawValue, forKey: "type")
+        UserDefaults.standard.synchronize()
         
         router.showSignUpStepsViewControllerWith(type: .buyer)
     }

@@ -26,6 +26,8 @@ class SignUpStepsViewController: GAViewController {
         
         pageControllers.append(contentsOf: [firstStepView, secondStepView, thirdStepView, forthStepView])
         firstStepView.setAppearence(active: true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.tintColor = AppColors.Common.active()
     }
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {

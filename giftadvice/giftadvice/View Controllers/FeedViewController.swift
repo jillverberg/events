@@ -28,7 +28,9 @@ class FeedViewController: GAViewController {
     
     private var firstCellInitFrame: CGRect!
     private var tabBarHeight: CGFloat!
+    
     private var loginService: LoginService!
+    private var productService: ProductService!
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -66,15 +68,41 @@ class FeedViewController: GAViewController {
             
             self.backgroundView.alpha = cur/hundr
         }
-        
-        mocks()
+
+        viewModel.setupTableView(adapters: [productItemAdapter])
+        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+        if let user = loginService.userModel {
+            productService.getProducts(user: user, completion: { error, models in
+                if let models = models {
+                    let section = TableSection(models)
+                    
+                    DispatchQueue.main.async {
+                        self.viewModel.reloadData(sections: [section])
+                    }
+                }
+            })
+            
+            productService.getLatest(user: user, completion: { [unowned self] error, models in
+                if let models = models {
+                    var collectionSection = [CollectionSection]()
+                    
+                    for model in models {
+                        collectionSection.append(CollectionSection([model]))
+                    }
+                    
+                    _ = collectionSection.map({$0.sectionInsets = {
+                        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+                        }})
+                    
+                    DispatchQueue.main.async {
+                        self.pageControll.numberOfPages = models.count
+                        self.viewModel.reloadCollectionData(sections: collectionSection)
+                    }
+                }
+            })
+        }
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -101,6 +129,7 @@ class FeedViewController: GAViewController {
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
         loginService = assembly.loginService
+        productService = assembly.productService
     }
     
     override func viewDidLayoutSubviews() {
@@ -122,59 +151,6 @@ private extension FeedViewController {
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    }
-    
-    func mocks() {
-        viewModel.setupTableView(adapters: [productItemAdapter])
-        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
-        
-        var objects = [ModelProtocol]()
-
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        do {
-            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-                                          Product.Keys.name: "Glass for you",
-                                          Product.Keys.description: "BestForYou",
-                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-        }
-        
-        let section = TableSection(objects)
-        var collectionSection = [CollectionSection]()
-        
-        for model in objects {
-            collectionSection.append(CollectionSection([model]))
-        }
-
-        _ = collectionSection.map({$0.sectionInsets = {
-            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        }})
- 
-        viewModel.reloadData(sections: [section])
-        viewModel.reloadCollectionData(sections: collectionSection)
     }
     
     var productItemAdapter: AbstractAdapterProtocol {
@@ -212,6 +188,12 @@ private extension FeedViewController {
         
         adapter.on.willDisplay = { (cell, indexPath) in
             self.pageControll.currentPage = indexPath.section
+        }
+        
+        adapter.on.didSelect = { ctx in
+            let model = ctx.model
+            
+            self.feedRouter().showProduct(model)
         }
         
         return adapter

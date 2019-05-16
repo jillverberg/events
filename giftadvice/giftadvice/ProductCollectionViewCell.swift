@@ -53,20 +53,20 @@ class ProductCollectionViewCell: UICollectionViewCell {
     func render(props: Product) {
         self.props = props
         
-        if let photo = props.photo {
-            photoImageView.kf.setImage(with: URL(string: photo)!)
+        if let photo = props.photo?.first?.photo {
+            photoImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
         }
         
-        priceShadowView.isHidden = props.price == nil
-        priceContainerView.isHidden = props.price == nil
-        
-        if let price = props.price {
-            priceLabel.text = price + "Р"
-        }
+        priceShadowView.isHidden = props.price == 0
+        priceContainerView.isHidden = props.price == 0
+ 
+        priceLabel.text = String(props.price) + "Р"
     }
     
     func render(props: Photo) {
-        photoImageView.kf.setImage(with: URL(string: props.url)!)
+        if let photo = props.photo {
+            photoImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
+        }
         
         priceShadowView.isHidden = true
         priceContainerView.isHidden = true

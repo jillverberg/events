@@ -17,6 +17,8 @@
 "Alert.Photo"                           = "Выбрать из библиотеки";
 "Alert.Camera"                          = "Сделать снимок";
 
+"Popup.Done"                            = "Готово";
+
 "Error"                                 = "Ошибка";
 "Network.Error"                         = "Ошибка сети";
 "Email.Error"                           = "Добавьте почтовый аккаунт в стандартное приложение Почта";
@@ -24,6 +26,15 @@
 "Permission.Error.Photo"                = "Ошибка доступа к медиатеки. Разрешите приложению использовать медиатеку в настройках";
 
 "Title.Main"                            = "Подарки";
+"Title.Shops"                           = "Магазины";
+"Title.Settings"                        = "Настройки";
+"Title.Search"                          = "Поиск";
+"Title.Camera"                          = "Камера";
+"Title.Search.Placeholder"              = "Начните вводить ключевые слова";
+
+"Camera.Action"                         = "Уточнить рекомендацию";
+"Camera.Filter.Price"                   = "Установите макс. цену";
+"Camera.Filter.Hobby"                   = "Хобби";
 
 "Registration.Error"                    = "Ошибка в форме";
 "Registration.Error.Phone"              = "Неправильный формат телефона";
@@ -56,5 +67,34 @@
 "Product.Editing.Web"                   = "Веб-сайт";
 "Product.Editing.Price"                 = "Цена";
 
+"Product.Editing.New"                   = "Новый товар";
+
 "Product.Action.Buyer"                  = "Перейти в магазин";
 "Product.Action.Shop"                   = "Редактировать";
+
+"Shop.Subscribe"                        = "Подписаться";
+
+"Onboarding.1"                          = "1";
+"Onboarding.2"                          = "2";
+"Onboarding.3"                          = "3";
+"Onboarding.4"                          = "4";
+
+"Onboarding.Close"                      = "Пропустить";
+
+"BIRTHDAY"                              = "День рождения";
+"NEW_YEAR"                              = "Новый год";
+"CHRISTMAS"                             = "Рождество";
+"ST_VALENTINE_DAY"                      = "День святого валентина";
+"FEBRUARY_23"                           = "23 февраля";
+"MARCH_8"                               = "8 марта";
+"EASTER"                                = "Пасха";
+"HALLOWEEN"                             = "Хэллоуин";
+"MOTHER_DAY"                            = "День матери";
+"FATHER_DAY"                            = "День отца";
+"ANNIVERSARY"                           = "Годовщина";
+"WEDDING"                               = "Свадьба";
+"CHILD_BIRTH"                           = "Рождение ребёнка";
+"GRADUATION"                            = "Выпускной";
+"PROFESSIONAL_DAY"                      = "Профессиональный день";
+
+"Empty.Image"                           = "empty";

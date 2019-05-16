@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="331" height="197"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8mk-ok-GhY">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="8mk-ok-GhY">
                         <rect key="frame" x="0.0" y="0.0" width="331" height="197"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFt-Jd-ieE">
@@ -101,5 +101,6 @@
     </objects>
     <resources>
         <image name="delete" width="20" height="20"/>
+        <image name="placeholder" width="128" height="128"/>
     </resources>
 </document>

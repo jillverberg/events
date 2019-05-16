@@ -14,8 +14,10 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="xbj-5n-LId"/>
                 <outlet property="nameCountryLabel" destination="hdA-ro-mNN" id="RXk-BA-dxJ"/>
+                <outlet property="nextButton" destination="y6Z-AS-u7o" id="cvM-Oc-3vm"/>
                 <outlet property="phoneTextField" destination="Eje-CJ-KXH" id="cPi-od-OI2"/>
                 <outlet property="prefixButton" destination="ddk-ua-ORh" id="mSL-l4-vC9"/>
+                <outlet property="titleLabel" destination="lWB-sK-5Wp" id="HuH-8Q-gnn"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
