@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -155,7 +155,7 @@
 
 /* Begin PBXFileReference section */
 		03E309D86A2C178C56C75926 /* Pods-giftadvice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-giftadvice.release.xcconfig"; path = "Pods/Target Support Files/Pods-giftadvice/Pods-giftadvice.release.xcconfig"; sourceTree = "<group>"; };
-		1115F00CFED99BEF5F42856F /* LaunchViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LaunchViewController.swift; path = "View Controllers/LaunchViewController.swift"; sourceTree = "<group>"; };
+		1115F00CFED99BEF5F42856F /* LaunchViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		1236039D921FD0022EF51D68 /* Pods_giftadvice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_giftadvice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18CC2AC895DAB50821A00B72 /* StoryboardViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoryboardViewController.swift; path = Others/StoryboardViewController.swift; sourceTree = "<group>"; };
 		1EDC748731BEFEBB820EB885 /* Pods-giftadvice.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-giftadvice.dev.xcconfig"; path = "Pods/Target Support Files/Pods-giftadvice/Pods-giftadvice.dev.xcconfig"; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 		4D4FCB76E95FC47D34944508 /* LoginViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4F05680DF02DC1F03D622C18 /* Pods-giftadvice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-giftadvice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-giftadvice/Pods-giftadvice.debug.xcconfig"; sourceTree = "<group>"; };
 		5A4CF9A3428B6B47D13A9D45 /* ErrorsTexts.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ErrorsTexts.swift; path = Others/ErrorsTexts.swift; sourceTree = "<group>"; };
-		606CDD1E54F246DD6E819AED /* ProfileViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = "View Controllers/ProfileViewController.swift"; sourceTree = "<group>"; };
+		606CDD1E54F246DD6E819AED /* ProfileViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		631926C63CB4CF7BB4101D7B /* AdviceViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AdviceViewController.swift; sourceTree = "<group>"; };
 		6A4024D1C55D844D75FD3010 /* ThreadSafely.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThreadSafely.swift; path = Others/ThreadSafely.swift; sourceTree = "<group>"; };
 		7A91413CCCB9FB195FFA246D /* AssemblyManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AssemblyManager.swift; path = Managers/AssemblyManager.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		AF7893AC6702127B2BBCB9F4 /* LoginRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginRouter.swift; path = Routers/LoginRouter.swift; sourceTree = "<group>"; };
 		B3901E20D15181DDE55F43BC /* SignUpViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = "View Controllers/SignUpViewController.swift"; sourceTree = "<group>"; };
 		C83A5B4C8847D16FD92AD20D /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEEFA25CFA9CAB4FE144FFDA /* FeedViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = "View Controllers/FeedViewController.swift"; sourceTree = "<group>"; };
+		CEEFA25CFA9CAB4FE144FFDA /* FeedViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D40BA2092225B42200A9A0DE /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		D40BA20B2225BD9800A9A0DE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D40BA20D2225C6CF00A9A0DE /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
@@ -335,19 +335,17 @@
 			isa = PBXGroup;
 			children = (
 				230CF63634C511EE4B40AED4 /* GAViewController.swift */,
-				D4B99AFB2206246100DBF0BB /* LaunchScreenViewController.swift */,
-				1115F00CFED99BEF5F42856F /* LaunchViewController.swift */,
+				D4CAE01C22B127CA00F01BE5 /* Launch */,
 				D4B81EED226CD6E400627483 /* OnboardPageViewController.swift */,
 				D40BA20B2225BD9800A9A0DE /* TabBarViewController.swift */,
 				D4E8E1342243CEB1005E1A0B /* Login */,
 				D459D51C221E02ED00468A2F /* SignUp */,
-				CEEFA25CFA9CAB4FE144FFDA /* FeedViewController.swift */,
+				D4CAE01D22B127FD00F01BE5 /* Feed */,
 				D4E8E1352243CEC0005E1A0B /* Product */,
-				606CDD1E54F246DD6E819AED /* ProfileViewController.swift */,
-				D4F60328223BFFCA00277F54 /* SettingsViewController.swift */,
+				D4CAE01E22B1280600F01BE5 /* Profile */,
 				D4B81EE6226CC91F00627483 /* Shops */,
 				D40C11F7224E90DA00665DB7 /* Camera */,
-				D462DB382250DAC40096E077 /* SearchingViewController.swift */,
+				D4CAE01F22B1280D00F01BE5 /* Searching */,
 			);
 			name = "View controllers";
 			sourceTree = "<group>";
@@ -640,6 +638,40 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		D4CAE01C22B127CA00F01BE5 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				D4B99AFB2206246100DBF0BB /* LaunchScreenViewController.swift */,
+				1115F00CFED99BEF5F42856F /* LaunchViewController.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		D4CAE01D22B127FD00F01BE5 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				CEEFA25CFA9CAB4FE144FFDA /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		D4CAE01E22B1280600F01BE5 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				606CDD1E54F246DD6E819AED /* ProfileViewController.swift */,
+				D4F60328223BFFCA00277F54 /* SettingsViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		D4CAE01F22B1280D00F01BE5 /* Searching */ = {
+			isa = PBXGroup;
+			children = (
+				D462DB382250DAC40096E077 /* SearchingViewController.swift */,
+			);
+			path = Searching;
+			sourceTree = "<group>";
+		};
 		D4E8E1342243CEB1005E1A0B /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,50 +854,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-giftadvice/Pods-giftadvice-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
-				"${BUILT_PRODUCTS_DIR}/Clarifai/Clarifai.framework",
-				"${BUILT_PRODUCTS_DIR}/FlowKitManager/FlowKitManager.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/UITextView+Placeholder/UITextView_Placeholder.framework",
-				"${BUILT_PRODUCTS_DIR}/pop/pop.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-giftadvice/Pods-giftadvice-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Clarifai.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlowKitManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextView_Placeholder.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/pop.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-giftadvice/Pods-giftadvice-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-giftadvice/Pods-giftadvice-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-giftadvice/Pods-giftadvice-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
