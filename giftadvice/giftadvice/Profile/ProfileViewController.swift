@@ -50,12 +50,16 @@ class ProfileViewController: GAViewController {
         super.viewDidLoad()
         
         navigationItem.title = " "
-        
-//        mocks()
-        
 
+        
         if let user = loginService.userModel {
-            profileService.getFavorite(user: user)
+            profileService.getFavorite(user: user, completion: { [unowned self] error, response in
+                if let response = response {
+                    DispatchQueue.main.async {
+                        self.reloadWith(product: response)
+                    }
+                }
+            })
         }
     }
     
@@ -110,6 +114,24 @@ class ProfileViewController: GAViewController {
     
     // MARK: Configure Views
     
+    private func reloadWith(product: [Product]) {
+        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+        
+        var collectionSection = [CollectionSection]()
+
+        collectionSection.append(CollectionSection(product))
+        
+        _ = collectionSection.map({$0.sectionInsets = {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            }})
+        
+        _ = collectionSection.map({$0.minimumLineSpacing = {
+            return 18
+            }})
+        
+        viewModel.reloadCollectionData(sections: collectionSection)
+    }
+    
     private func configureNavigationBar() {
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -148,59 +170,6 @@ class ProfileViewController: GAViewController {
         toolBar.barTintColor = AppColors.Common.active()
     }
     
-    func mocks() {
-        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
-        
-        var objects = [ModelProtocol]()
-        
-//        do {
-//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-//                                          Product.Keys.name: "Glass for you",
-//                                          Product.Keys.description: "BestForYou",
-//                                          Product.Keys.photo: "https://news.ubc.ca/wp-content/uploads/2013/12/gift-giving-770.jpg",
-//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-//        }
-//        
-//        do {
-//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-//                                          Product.Keys.name: "Glass for you",
-//                                          Product.Keys.description: "BestForYou",
-//                                          Product.Keys.photo: "https://vakilsearch.com/advice/wp-content/uploads/2017/11/gift-11.jpg",
-//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-//        }
-//        
-//        do {
-//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-//                                          Product.Keys.name: "Glass for you",
-//                                          Product.Keys.description: "BestForYou",
-//                                          Product.Keys.photo: "https://www.businessnewsdaily.com/images/i/000/012/426/original/gift.jpg?1474048924",
-//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-//        }
-//        
-//        do {
-//            objects.append(Product(JSON: [Product.Keys.identifier: "1",
-//                                          Product.Keys.name: "Glass for you",
-//                                          Product.Keys.description: "BestForYou",
-//                                          Product.Keys.photo: "https://www.incimages.com/uploaded_files/image/970x450/getty_152889714_970647970450077_44957.jpg",
-//                                          Product.Keys.shopPhoto: "https://thechive.files.wordpress.com/2018/03/girls-whose-hotness-just-trumped-cute-89-photos-257.jpg"])!)
-//        }
-        
-        var collectionSection = [CollectionSection]()
-        objects.append(contentsOf: objects)
-
-        collectionSection.append(CollectionSection(objects))
-
-        _ = collectionSection.map({$0.sectionInsets = {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            }})
-
-        _ = collectionSection.map({$0.minimumLineSpacing = {
-            return 18
-            }})
-        
-        viewModel.reloadCollectionData(sections: collectionSection)
-    }
-    
     var productCollectionAdapter: AbstractAdapterProtocol {
         let adapter = CollectionAdapter<Product, ProductCollectionViewCell>()
         
@@ -211,7 +180,7 @@ class ProfileViewController: GAViewController {
         
         adapter.on.dequeue = { [unowned self] ctx in
             ctx.cell?.render(props: ctx.model)
-            ctx.cell?.setIndicator(hidden: self.isListEditing)
+            ctx.cell?.setIndicator(hidden: !self.isListEditing)
         }
         
         adapter.on.didSelect = { [unowned self] ctx in
@@ -234,7 +203,7 @@ class ProfileViewController: GAViewController {
     }
     
     private func didSelect(at ctx: (CollectionAdapter<Product, ProductCollectionViewCell>.Context<Product, ProductCollectionViewCell>)) {
-        if self.isListEditing {
+        if isListEditing {
             if self.selectedProducts[ctx.indexPath.row] != nil {
                 ctx.cell?.setIndicator(active: false)
                 self.selectedProducts[ctx.indexPath.row] = nil
@@ -289,7 +258,7 @@ class ProfileViewController: GAViewController {
             addProductShadow.isHidden.toggle()
         }
         
-        viewModel.collectionView.reloadData()
+        viewModel.reloadCollectionData(sections: viewModel.collectionDirector.sections)
         changeButton.setTitle(isListEditing ? "Collection.Title.Done".localized : "Collection.Title.Editing".localized, for: .normal)
         viewModel.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 18 + (isListEditing ? toolBar.frame.size.height : 0), right: 0)
     }
@@ -300,9 +269,7 @@ class ProfileViewController: GAViewController {
         alert.addAction(UIAlertAction(title: "Alert.Remove".localized, style: .destructive, handler: { [unowned self] (alert) in
 
             self.viewModel.collectionDirector.reloadData(after: { () -> (Void) in
-                for key in self.selectedProducts.keys {
-                    self.viewModel.collectionDirector.firstSection()?.remove(at: key)
-                }
+                self.viewModel.collectionDirector.firstSection()?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
             }, onEnd: {
                 self.startEditing(self)
             })

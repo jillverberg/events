@@ -45,16 +45,17 @@ class LoginService {
 
 extension LoginService: PublicMethods {
     func update(user: User, image: UIImage? = nil, completion: ((String?, User?) -> ())? = nil) {
-        networkManager.update(user: user, image: image?.jpeg(.medium)) { (cancelled, error, response) in
+        networkManager.update(user: user, image: image?.jpeg(.medium)) { (response) in
             var userModel: User?
             if let data = response, let user = User(JSON: data) {
                 userModel = user
                 
-                self.saveUserModel(user)
+                self.userModel?.photo = user.photo
+                self.saveUserModel(self.userModel!)
             }
             
             DispatchQueue.main.async {
-                completion?(error, userModel)
+                completion?(nil, userModel)
             }
         }
     }

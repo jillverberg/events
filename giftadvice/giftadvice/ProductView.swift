@@ -8,6 +8,7 @@
 
 import UIKit
 import FlowKitManager
+import Kingfisher
 
 protocol ProductViewDelegate {
     func needToHide()
@@ -48,21 +49,21 @@ class ProductView: UIView {
     
     struct ProductTitle: StaticCellModel {
         let title: String
-        let subTitle: String
+        var isFavorite: Bool
         let shareCommand: Command?
         let favoriteCommand: Command?
     }
     
     struct ProductRate: StaticCellModel {
-        let like: Int
-        let dislike: Int
+        let like: Int?
+        let dislike: Int?
         let likeCommand: Command?
         let dislikeCommand: Command?
     }
     
     struct ProductDescription: StaticCellModel {
         let title: String
-        let description: String
+        let description: String?
     }
     
     // MARK: Init Methods & Superclass Overriders
@@ -80,16 +81,34 @@ class ProductView: UIView {
     }
  
     func setupWith(_ product: Product) {
+        let dispatch = DispatchGroup()
+        
         setupTableView(adapters: [galleryAdapter, titleAdapter, rateAdapter, descriptionAdapter])
         
-        let gallery = ProductGallery(product: product)
-        let title = ProductTitle(title: product.name ?? "", subTitle: "sub", shareCommand: nil, favoriteCommand: nil)
-        let rate = ProductRate(like: 0, dislike: 0, likeCommand: nil, dislikeCommand: nil)
-        let descriptiopn = ProductDescription(title: "Описание", description: "ffffff")
-        
-        let section = TableSection([gallery, title, rate, descriptiopn])
-        
-        reloadData(sections: [section])
+        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+            let gallery = ProductGallery(product: product)
+            
+            var title: ProductTitle?
+            if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
+                dispatch.enter()
+                self.service?.isProductFavorite(user: user, product: identifier, completion: { (error, favorite) in
+                    title = ProductTitle(title: product.name ?? "", isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
+                    dispatch.leave()
+                })
+            }
+            
+            let rate = ProductRate(like: product.likes, dislike: product.dislikes, likeCommand: nil, dislikeCommand: nil)
+            let descriptiopn = ProductDescription(title: "Описание", description: product.description)
+            
+            dispatch.notify(queue: .global()) { [unowned self] in
+                let models: [ModelProtocol?] = [gallery, title, rate, descriptiopn]
+                let section = TableSection(models.compactMap({ $0 }))
+                
+                DispatchQueue.main.async {
+                    self.reloadData(sections: [section])
+                }
+            }
+        }
     }
     
     func loadProduct() {
@@ -102,7 +121,6 @@ class ProductView: UIView {
                 }
                 
                 self.product = product
-                
             })
         }
     }
@@ -170,6 +188,19 @@ private extension ProductView {
         tableDirector.reloadData()
     }
     
+    func showShare() {
+        let shareText = "Hello, world!"
+        
+        if let photo = product?.photo?.first?.photo, let url = URL(string: photo) {
+            KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil) { [unowned self] (image, error, cache, url) in
+                guard let image = image else { return }
+                let vc = UIActivityViewController(activityItems: [shareText, image, URL(string: "https://www.apple.com")!], applicationActivities: [])
+                
+                self.viewController?.present(vc, animated: true)
+            }
+        }
+    }
+    
     // MARK: Adapters
     
     var galleryAdapter: AbstractAdapterProtocol {
@@ -185,8 +216,17 @@ private extension ProductView {
     var titleAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<ProductTitle, ProductTitleTableViewCell>()
         
-        adapter.on.dequeue = { ctx in
+        adapter.on.dequeue = { [unowned self] ctx in
             ctx.cell?.setup(props: ctx.model)
+            
+            ctx.cell?.favoriteToggleAction = { [unowned self] favorite in
+                if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
+                    self.service?.toggleProductFavorite(user: user, product: identifier, favorite: favorite)
+                }
+            }
+            ctx.cell?.shareAction = { [unowned self] in
+                self.showShare()
+            }
         }
         
         return adapter

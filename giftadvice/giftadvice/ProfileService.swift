@@ -6,10 +6,10 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import UIKit
+import ObjectMapper
 
 private protocol PublicMethods {
-    func getFavorite(user: User) -> [Product]
+    func getFavorite(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
 }
 
 class ProfileService {
@@ -21,11 +21,15 @@ class ProfileService {
 }
 
 extension ProfileService: PublicMethods {
-    func getFavorite(user: User) -> [Product] {
+    func getFavorite(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
         networkManager.getFavorite(user: user) { (ended, error, response) in
-            
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<Product>().mapArray(JSONArray: data.map({ $0["product"] as! [String: Any] }))
+                
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
         }
-        
-        return []
     }
 }

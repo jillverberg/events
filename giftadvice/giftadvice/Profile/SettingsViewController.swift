@@ -15,7 +15,7 @@ import PhotosUI
 class SettingsViewController: GAViewController {
 
     // MARK: - IBOutlet Properties
-
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var viewModel: SettingsViewModel!
     @IBOutlet weak var settingsButton: UIButton!
@@ -35,14 +35,14 @@ class SettingsViewController: GAViewController {
         
         title = "Title.Settings".localized
 
-        viewModel.setupTableView(adapters: [settingsItemAdapter])
+        viewModel.setupTableView(adapters: [infoItemAdapter])
         viewModel.reloadData(sections: poluteInfo())
+        
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-         setupViews()
     }
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
@@ -132,7 +132,9 @@ private extension SettingsViewController {
         
         if let user = loginService.userModel {
             if let url = user.photo  {
-                profileImageView.kf.setImage(with: URL(string: url)!, placeholder: UIImage(named: "placeholder"))
+                DispatchQueue.main.async {
+                    self.profileImageView.kf.setImage(with: URL(string: url)!)
+                }
             }
         }
         
@@ -191,34 +193,37 @@ private extension SettingsViewController {
         guard var user = loginService.userModel else { return }
 
         do {
-            let title = "Settings.Title.Name".localized
+            let title = "Settings.Title.Name".localized + ":"
             if let value = models.filter({$0.title == title}).first {
                 user.name = value.value
+                user.username = value.value
             }
         }
         
         do {
-            let title = "Settings.Title.CompanyName".localized
+            let title = "Settings.Title.CompanyName".localized + ":"
             if let value = models.filter({$0.title == title}).first {
                 user.companyName = value.value
             }
         }
         
         do {
-            let title = "Settings.Title.Address".localized
+            let title = "Settings.Title.Address".localized + ":"
             if let value = models.filter({$0.title == title}).first {
                 user.address = value.value
             }
         }
         
         do {
-            let title = "Settings.Title.WebSite".localized
+            let title = "Settings.Title.WebSite".localized + ":"
             if let value = models.filter({$0.title == title}).first {
                 user.webSite = value.value
             }
         }
         
         loginService.update(user: user)
+        loginService.userModel = user
+        
         viewModel.reloadData(sections: poluteInfo())
     }
     
@@ -235,21 +240,27 @@ private extension SettingsViewController {
         }
     }
     
-    var settingsItemAdapter: AbstractAdapterProtocol {
+    var infoItemAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<Setting, SettingsTableViewCell>()
-        
-        adapter.on.prefetch = { (products, indexPaths) in
-            
-        }
         
         adapter.on.dequeue = { ctx in
             ctx.cell?.render(props: ctx.model)
-            ctx.cell?.valueLabel.isUserInteractionEnabled = true
+            ctx.cell?.valueLabel.isUserInteractionEnabled = false
+        }
+        
+        return adapter
+    }
+    
+    var settingsItemAdapter: AbstractAdapterProtocol {
+        let adapter = TableAdapter<Setting, SettingsTableViewCell>()
+   
+        adapter.on.dequeue = { ctx in
+            ctx.cell?.tableView = ctx.table
+            ctx.cell?.render(props: ctx.model)
+            ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
         adapter.on.tap = { [unowned self] ctx in
-            let model = ctx.model
-            
             ctx.cell?.setFirstResponer()
             
             return .deselectAnimated
@@ -298,10 +309,12 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
             return
         }
         
-        profileImageView.image = image
+        DispatchQueue.main.async {
+            self.profileImageView.image = image
+        }
         
         if let user = loginService.userModel {
-            loginService.update(user: user, image: image, completion: nil)
+            loginService.update(user: user, image: image) { (error, user) in }
         }
     }
 }

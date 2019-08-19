@@ -12,6 +12,8 @@ private protocol PublicMethods {
     func getShops(user: User, completion: @escaping (_ error: String?, _ users: [User]?) -> ())
     func getShopProducts(user: User, completion: @escaping (String?, [Product]?) -> ())
     func getShopInfo(user: User, completion: @escaping (_ error: String?, _ users: User?) -> ())
+    func isSubscribed(user: User, shop: String, completion: @escaping (_ error: String?, _ subscribed: Bool) -> ())
+    func subscribeToggle(user: User, shop: String, subscribed: Bool)
 }
 
 class ShopService {
@@ -57,5 +59,21 @@ extension ShopService: PublicMethods {
                 completion(error, nil)
             }
         }
+    }
+    
+    func isSubscribed(user: User, shop: String, completion: @escaping (_ error: String?, _ subscribed: Bool) -> ()) {
+        networkManager.isSubscribed(user: user, shop: shop) { (canceled, error, response) in
+            if let favorite = response?["isSubscribed"] as? Bool {
+                completion(error, favorite)
+            } else if let error = error {
+                completion(error, false)
+            } else {
+                completion(nil, false)
+            }
+        }
+    }
+    
+    func subscribeToggle(user: User, shop: String, subscribed: Bool) {
+        networkManager.toggleSubscribe(user: user, shop: shop, subscribed: subscribed)
     }
 }

@@ -85,6 +85,7 @@ private extension ProductViewController {
         productView.product = product
         productView.loadProduct()
         productView.delegate = self
+        productView.viewController = self
         
         productView.setupWith(product)
         //tableViewModel.tableView = choosingView.tableView

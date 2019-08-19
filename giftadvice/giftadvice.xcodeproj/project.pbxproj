@@ -94,6 +94,7 @@
 		D48B3CB6224D5AC8000FE39C /* ShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48B3CB4224D5AC8000FE39C /* ShopCollectionViewCell.swift */; };
 		D48B3CB7224D5AC8000FE39C /* ShopCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D48B3CB5224D5AC8000FE39C /* ShopCollectionViewCell.xib */; };
 		D48B3CBC224D5E4A000FE39C /* ShopServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48B3CBB224D5E4A000FE39C /* ShopServices.swift */; };
+		D4B031A5230AF63800EA8C7A /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B031A4230AF63800EA8C7A /* PasswordResetViewController.swift */; };
 		D4B3747B222BE72C00E23D42 /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B3747A222BE72C00E23D42 /* GalleryTableViewCell.swift */; };
 		D4B3747D222BE73D00E23D42 /* GalleryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B3747C222BE73D00E23D42 /* GalleryTableViewCell.xib */; };
 		D4B3747F222BE8C300E23D42 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B3747E222BE8C300E23D42 /* Photo.swift */; };
@@ -242,6 +243,7 @@
 		D48B3CB4224D5AC8000FE39C /* ShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCollectionViewCell.swift; sourceTree = "<group>"; };
 		D48B3CB5224D5AC8000FE39C /* ShopCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopCollectionViewCell.xib; sourceTree = "<group>"; };
 		D48B3CBB224D5E4A000FE39C /* ShopServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopServices.swift; sourceTree = "<group>"; };
+		D4B031A4230AF63800EA8C7A /* PasswordResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
 		D4B3747A222BE72C00E23D42 /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
 		D4B3747C222BE73D00E23D42 /* GalleryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryTableViewCell.xib; sourceTree = "<group>"; };
 		D4B3747E222BE8C300E23D42 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -676,6 +678,7 @@
 			isa = PBXGroup;
 			children = (
 				4D4FCB76E95FC47D34944508 /* LoginViewController.swift */,
+				D4B031A4230AF63800EA8C7A /* PasswordResetViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -900,6 +903,7 @@
 				D42B01A8221DD71A00EA5868 /* SignUpStepsViewController.swift in Sources */,
 				D40BA2142225D1E100A9A0DE /* FeedViewModel.swift in Sources */,
 				BAFEAA06DDD1161722B77236 /* Reachability.swift in Sources */,
+				D4B031A5230AF63800EA8C7A /* PasswordResetViewController.swift in Sources */,
 				D42B344F228E065500354413 /* ShopInfoViewModel.swift in Sources */,
 				D45D923C222AE02D0022AC94 /* ProductViewController.swift in Sources */,
 				2648C8F73FC9AF3FBCE418E2 /* ThreadSafely.swift in Sources */,
@@ -1024,7 +1028,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 538NJNQH6C;
+				DEVELOPMENT_TEAM = VQ2H7N574D;
 				ENABLE_BITCODE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1224,7 +1228,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 538NJNQH6C;
+				DEVELOPMENT_TEAM = VQ2H7N574D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = giftadvice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1247,7 +1251,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 538NJNQH6C;
+				DEVELOPMENT_TEAM = VQ2H7N574D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = giftadvice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

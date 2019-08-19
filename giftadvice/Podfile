@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'giftadvice' do
@@ -18,8 +18,9 @@ target 'giftadvice' do
     pod 'CameraManager'
     #pod 'ObjectMapper+Realm'
     pod 'pop'
-	pod 'Kingfisher'
+    pod 'Kingfisher', '~> 5.0'
 	pod 'IQKeyboardManagerSwift'
+  pod 'RSKGrowingTextView'
 end
 
 post_install do |installer|

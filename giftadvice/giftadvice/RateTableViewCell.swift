@@ -25,11 +25,11 @@ class RateTableViewCell: UITableViewCell {
     }
     
     func setup(props: ProductView.ProductRate) {
-        if props.dislike > 0 {
+        if let dislike = props.dislike, let like = props.like, dislike > 0 {
             let gradient: CAGradientLayer = CAGradientLayer()
 
             gradient.colors = [AppColors.Common.green().cgColor, AppColors.Common.red().cgColor]
-            gradient.locations = [NSNumber(value: 1.0 - Double(props.like)/Double(props.dislike)), NSNumber(value: Double(props.like)/Double(props.dislike)) ]
+            gradient.locations = [NSNumber(value: Double(like)/Double(dislike + like)), NSNumber(value: 1.0 - Double(dislike)/Double(like + dislike))]
             gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
             gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
             gradient.frame = rateView.bounds

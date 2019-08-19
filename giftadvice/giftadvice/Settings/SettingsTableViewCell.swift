@@ -13,11 +13,22 @@ class SettingsTableViewCell: UITableViewCell {
     // MARK: Interface Builder Properties
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var valueLabel: UITextField!
-
+    @IBOutlet weak var valueLabel: UITextView!
+    
+    var tableView: UITableView?
+    
     // MARK: Private properties
     
     private var props: Setting!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        valueLabel.delegate = self
+        valueLabel.isScrollEnabled = false
+        valueLabel.textContainerInset = .zero
+        valueLabel.textContainer.lineFragmentPadding = 0
+    }
     
     // MARK: - Public Methods
 
@@ -27,13 +38,22 @@ class SettingsTableViewCell: UITableViewCell {
         titleLabel.text = props.title
         valueLabel.text = props.value
         valueLabel.keyboardType = props.type
+        
+        layoutSubviews()
     }
     
     func setFirstResponer() {
         valueLabel.becomeFirstResponder()
     }
-    
-    @IBAction func textChanged(_ sender: Any) {
+}
+
+extension SettingsTableViewCell: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
         props.value = valueLabel.text
+        
+        layoutSubviews()
+        
+        tableView?.beginUpdates()
+        tableView?.endUpdates()
     }
 }

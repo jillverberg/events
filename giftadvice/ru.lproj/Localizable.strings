@@ -74,6 +74,8 @@
 "Product.Action.Shop"                   = "Редактировать";
 
 "Shop.Subscribe"                        = "Подписаться";
+"Shop.UnSubscribe"                      = "Отписаться";
+
 "Shop.Information"                      = "Информация";
 
 "Onboarding.1"                          = "1";

@@ -74,6 +74,8 @@
 "Product.Action.Shop"                   = "Edit";
 
 "Shop.Subscribe"                        = "Subscribe";
+"Shop.UnSubscribe"                      = "Unsubscribe";
+
 "Shop.Information"                      = "Information";
 
 "Onboarding.1"                          = "1 eng";

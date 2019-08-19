@@ -10,7 +10,10 @@ import ObjectMapper
 
 private protocol PublicMethods {
     func getProducts(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
+    func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
+    func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ())
+    func toggleProductFavorite(user: User, product: String, favorite: Bool)
 }
 
 class ProductService {
@@ -18,7 +21,6 @@ class ProductService {
     // MARK: - Private Properties
     
     private let networkManager = NetworkManager.shared
-
 }
 
 extension ProductService: PublicMethods {
@@ -56,5 +58,21 @@ extension ProductService: PublicMethods {
                 completion(error, nil)
             }
         }
+    }
+    
+    func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ()) {
+        networkManager.isFavorite(user: user, product: product) { (ended, error, response) in
+            if let favorite = response?["inFavorite"] as? Bool {                
+                completion(error, favorite)
+            } else if let error = error {
+                completion(error, false)
+            } else {
+                completion(nil, false)
+            }
+        }
+    }
+    
+    func toggleProductFavorite(user: User, product: String, favorite: Bool) {
+        networkManager.setFavorite(user: user, product: product, favorite: favorite)
     }
 }

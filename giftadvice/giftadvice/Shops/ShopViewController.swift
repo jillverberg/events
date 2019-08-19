@@ -29,7 +29,8 @@ class ShopViewController: GAViewController {
     @IBOutlet var viewModel: ShopViewModel!
     @IBOutlet weak var subscribeButton: UIButton!
     @IBOutlet weak var photoTopConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var subscribeActivityView: UIActivityIndicatorView!
+    
     // MARK: - Public Properties
 
     var shop: User!
@@ -38,11 +39,16 @@ class ShopViewController: GAViewController {
     
     private var shopService: ShopService!
     private var loginService: LoginService!
+    private var isSubscribed = false
     
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        subscribeButton.layer.cornerRadius = subscribeButton.frame.size.height / 2
+        subscribeButton.setTitleColor(AppColors.Common.active(), for: .normal)
+        subscribeButton.layer.borderColor = UIColor.white.cgColor
         
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
         
@@ -56,6 +62,15 @@ class ShopViewController: GAViewController {
         shopService.getShopInfo(user: shop) { (error, response) in
             if let response = response {
                 self.shop = response
+            }
+        }
+        if let user = loginService?.userModel, let identifier = shop.identifier {
+            shopService.isSubscribed(user: user, shop: identifier) { [unowned self] (error, subscribed) in
+                self.isSubscribed = subscribed
+                
+                DispatchQueue.main.async {
+                    self.setUpSubscribeButton()
+                }
             }
         }
     }
@@ -87,6 +102,15 @@ class ShopViewController: GAViewController {
     @IBAction func showInfo(_ sender: Any) {
         shopRouter().showInfo(shop: shop)
     }
+    
+    @IBAction func subscribeAction(_ sender: Any) {
+        if let user = loginService?.userModel, let identifier = shop.identifier {
+            isSubscribed.toggle()
+            setUpSubscribeButton()
+            
+            shopService.subscribeToggle(user: user, shop: identifier, subscribed: isSubscribed)
+        }
+    }
 }
 
 private extension ShopViewController {
@@ -97,11 +121,9 @@ private extension ShopViewController {
         view.backgroundColor = AppColors.Common.active()
         view.backgroundColor = AppColors.Common.active()
         titleLabel.textColor = AppColors.Common.active()
-        subscribeButton.setTitleColor(AppColors.Common.active(), for: .normal)
-
+ 
         nameLabel.text = shop.companyName
         titleLabel.text = "Profile.Title.Shop".localized
-        subscribeButton.setTitle("Shop.Subscribe".localized, for: .normal)
         
         if let url = shop.photo  {
             photoImageView.kf.setImage(with: URL(string: url)!, placeholder: UIImage(named: "placeholder"))
@@ -110,13 +132,22 @@ private extension ShopViewController {
         viewModel.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 18, right: 0)
         
         photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
-        subscribeButton.layer.cornerRadius = subscribeButton.frame.size.height / 2
         
         if let navBar = navigationController?.navigationBar {
             let center = navBar.center.y
             photoTopConstraint.constant = center - 35/2
             view.layoutSubviews()
         }
+    }
+    
+    func setUpSubscribeButton() {
+        subscribeActivityView.stopAnimating()
+        subscribeButton.isHidden = false
+        
+        subscribeButton.setTitle(isSubscribed ? "Shop.UnSubscribe".localized : "Shop.Subscribe".localized, for: .normal)
+        subscribeButton.setTitleColor(isSubscribed ? .white : AppColors.Common.active(), for: .normal)
+        subscribeButton.backgroundColor = isSubscribed ? AppColors.Common.active() : .white
+        subscribeButton.layer.borderWidth = isSubscribed ? 1.0 : 0.0
     }
     
     func configureNavigationBar() {

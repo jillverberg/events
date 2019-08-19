@@ -49,7 +49,7 @@ class LoginViewController: GAViewController {
         super.viewDidAppear(animated)
         
         #if DEBUG
-            phoneTextField.text = "9992088587"
+            phoneTextField.text = "9992018587"
             passwordTextField.text = "101010"
         #endif
     }

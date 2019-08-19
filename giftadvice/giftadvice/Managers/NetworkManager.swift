@@ -27,6 +27,12 @@ class NetworkManager: RequestAdapter {
         
         static let limit = "limit"
 
+        static let product = "product_id"
+        static let favorite = "is_favorite"
+        
+        static let shop = "shopId"
+        static let subscribe = "isSubscribed"
+        
         static let accessToken = "Authorization"
         static let contentType = "Content-Type"
     }
@@ -37,6 +43,8 @@ class NetworkManager: RequestAdapter {
 
             static let user  = "user"
             static let shop  = "shop"
+            static let rate  = "rate"
+            static let subscribe = "subscribe"
         }
         
         struct PUT {
@@ -98,18 +106,20 @@ class NetworkManager: RequestAdapter {
         _ = putRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.PUT.verify, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
     
-    func update(user: User, image: Data? = nil, completion: @escaping NetworkCompletion) {
+    func update(user: User, image: Data? = nil, completion: (([String : Any]?) -> Void)?) {
+        guard let accessToken = user.accessToken else { return }
+        
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
-        let accessToken = user.accessToken
         let identifier = user.identifier
 
         var user = user
         user.accessToken = nil
         user.phoneNumber = nil
         user.identifier = nil
+        user.photo = nil
         
-        requestWith(endUrl: method + "/\(identifier ?? "")/", imageData: image, parameters: user.toJSON())
-//        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: completion)
+        requestWith(endUrl: method + "/\(identifier ?? "")/", imageData: image, parameters: user.toJSON(), accessToken: accessToken, onCompletion: completion)
+//        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: { _,_,_ in })
     }
     
     func getProducts(user: User, completion: @escaping NetworkCompletion) {
@@ -136,6 +146,20 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite, parameters: [:], accessToken: user.accessToken, completion: completion)
     }
     
+    func isFavorite(user: User, product: String, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        
+        _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite + "/\(product)", parameters: [:], accessToken: user.accessToken, completion: completion)
+    }
+    
+    func setFavorite(user: User, product: String, favorite: Bool) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String : Any] = [Keys.product: product,
+                          Keys.favorite: favorite]
+        
+        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.rate, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
+    }
+    
     func getShops(user: User, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
         
@@ -156,17 +180,33 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/product", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
+    func isSubscribed(user: User, shop: String, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let accessToken = user.accessToken
+        
+        _ = getRequest(withMethod:  method + "/\(user.identifier ?? "")/" + Paths.POST.subscribe + "/\(shop)", parameters: [:], accessToken: accessToken, completion: completion)
+    }
+    
+    func toggleSubscribe(user: User, shop: String, subscribed: Bool) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String : Any] = [Keys.shop: shop,
+                                          Keys.subscribe: subscribed]
+        
+        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.subscribe, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
+    }
+    
     // MARK: - Private Methods
     
     // MARK: Make Request
     
-    private func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], onCompletion: ((JSON?) -> Void)? = nil, onError: ((Error?) -> Void)? = nil){
+    private func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], accessToken: String, onCompletion: (([String : Any]?) -> Void)? = nil, onError: ((Error?) -> Void)? = nil){
         
         let url = methodPath(withMethod: endUrl) /* your API url */
         
         let headers: HTTPHeaders = [
             /* "Authorization": "your_access_token",  in case you need authorization header */
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
+            Keys.accessToken: "Bearer " + accessToken
         ]
         
         Alamofire.upload(multipartFormData: { (multipartFormData) in
@@ -174,11 +214,11 @@ class NetworkManager: RequestAdapter {
                 multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
             }
             
-            if let data = imageData{
-                multipartFormData.append(data, withName: "photo", fileName: "image.png", mimeType: "image/png")
+            if let data = imageData {
+                multipartFormData.append(data, withName: "photo", fileName: "", mimeType: "")
             }
             
-        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers) { (result) in
+        }, usingThreshold: UInt64.init(), to: url, method: .put, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -187,7 +227,10 @@ class NetworkManager: RequestAdapter {
                         onError?(err)
                         return
                     }
-                    onCompletion?(nil)
+                    
+                    if let data = response.result.value as? [String: Any] {
+                        onCompletion?(data)
+                    }
                 }
             case .failure(let error):
                 print("Error in upload: \(error.localizedDescription)")

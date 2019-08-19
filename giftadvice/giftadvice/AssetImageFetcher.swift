@@ -19,7 +19,7 @@ class AssetImageFetcher {
     }
     
     func loadOriginalImages(fromAssets: [PHAsset]) -> Observable<[UIImage]> {
-        return Observable.concat(fromAssets.map {loadOriginalImage(fromAsset: $0)}).toArray()
+        return Observable.concat(fromAssets.map {loadOriginalImage(fromAsset: $0)}).toArray().asObservable()
     }
     
     func loadOriginalImage(fromAsset asset: PHAsset) -> Observable<UIImage> {

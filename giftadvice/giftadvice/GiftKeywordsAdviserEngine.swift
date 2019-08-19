@@ -40,12 +40,12 @@ class GiftKeywordsAdviserEngine {
             }.toArray()
         
         if !includingPersonInfo {
-            return gifts.map({ (categories) in
+            return gifts.asObservable().map({ (categories) in
                 return Result(giftsByKeyword: categories.compactMap {$0}, imageTags: imageTags!, personInfo: nil)
             })
         } else {
             let demographics = faceDetectionService.loadDemographics(forImages: forImages)
-            return Observable.combineLatest(gifts, demographics, resultSelector: { (categories, demographics) -> Result in
+            return Observable.combineLatest(gifts.asObservable(), demographics, resultSelector: { (categories, demographics) -> Result in
                 return Result(giftsByKeyword: categories.compactMap {$0}, imageTags: imageTags!, personInfo: demographics)
             })
         }

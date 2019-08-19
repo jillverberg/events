@@ -61,7 +61,6 @@ class GalleryTableViewCell: UITableViewCell {
             objects.append(contentsOf: photo)
         }
         
-        
         if isEditing {
             do {
                 let stringPath = Bundle.main.url(forResource: "new_photo", withExtension: "png")
@@ -70,7 +69,6 @@ class GalleryTableViewCell: UITableViewCell {
                                                 Photo.Keys.photo: stringPath?.absoluteString])!)
             }
         }
-        
         
         var collectionSection = [CollectionSection]()
         pageControll.numberOfPages = objects.count
