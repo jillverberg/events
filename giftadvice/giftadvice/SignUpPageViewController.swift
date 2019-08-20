@@ -45,10 +45,6 @@ class SignUpPageViewController: UIPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         setupViewControllers()
     }

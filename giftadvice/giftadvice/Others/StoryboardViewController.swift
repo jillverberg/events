@@ -23,6 +23,7 @@ struct StoryboardViewController {
         
         case launch = "LaunchViewController"
         case login = "LoginViewController"
+        case reset = "PasswordResetViewController"
         case signup = "SignUpViewController"
         case signupsteps = "SignUpStepsViewController"
         

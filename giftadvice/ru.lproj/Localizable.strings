@@ -70,6 +70,13 @@
 
 "Product.Editing.New"                   = "Новый товар";
 
+"Product.Error.Photo"                   = "Необходимо добавить хоят бы одну фотографию товара!";
+"Product.Error.Name"                    = "Необходимо, чтобы имя товара было больше 3-х букв!";
+"Product.Error.Category"                = "Необходимо выбрать категорию товара!";
+"Product.Error.Description"             = "Необходимо заполнить описание. Также, как и имя, длина - больше 3-х букв!";
+"Product.Error.Website"                 = "Необходимо ввести корректный веб-адрес!";
+"Product.Error.Price"                   = "Цена должна быть больше 0 руб.";
+
 "Product.Action.Buyer"                  = "Перейти в магазин";
 "Product.Action.Shop"                   = "Редактировать";
 

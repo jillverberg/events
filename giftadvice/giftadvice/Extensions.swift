@@ -21,6 +21,36 @@ public extension String {
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }
+    
+    mutating func currencyInputFormatting() -> String {
+        
+        var number: NSNumber!
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currencyAccounting
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.maximumFractionDigits = 0
+        formatter.minimumFractionDigits = 0
+
+        // remove from String: "$", ".", ","
+        
+        number = removeSpecialCurrencyChar()
+        
+        // if first number is 0 or all numbers were deleted
+        guard number != 0 as NSNumber else {
+            return ""
+        }
+        
+        return formatter.string(from: number)!
+    }
+    
+    func removeSpecialCurrencyChar() -> NSNumber {
+        var preffix = self
+        
+        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
+        preffix = regex.stringByReplacingMatches(in: preffix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
+        
+        return NSNumber(value: (preffix as NSString).doubleValue)
+    }
 }
 
 extension UINavigationController {
@@ -278,3 +308,4 @@ extension UITextField {
     
     func getClearButton() -> UIButton? { return value(forKey: "clearButton") as? UIButton }
 }
+

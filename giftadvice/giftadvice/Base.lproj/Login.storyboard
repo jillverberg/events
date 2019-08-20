@@ -211,6 +211,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="resetFlowAction:" destination="VPx-rM-sa2" eventType="touchUpInside" id="fJT-qh-MZI"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpG-zX-P5S" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
                                 <rect key="frame" x="32" y="690.66666666666663" width="350" height="40"/>
@@ -540,8 +543,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zSw-x5-TCE" customClass="ContentShadowView" customModule="giftadvice" customModuleProvider="target">
-                                <rect key="frame" x="32" y="320" width="350" height="256"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zSw-x5-TCE" customClass="ContentShadowView" customModule="giftadvice" customModuleProvider="target">
+                                <rect key="frame" x="32" y="229.33333333333334" width="350" height="373.33333333333326"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Восстановление пароля" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2R-2g-mNk">
                                         <rect key="frame" x="16" y="16" width="318" height="24.666666666666671"/>
@@ -549,10 +552,126 @@
                                         <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер телефона" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j9Q-Cw-zoD" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="56.666666666666686" width="318" height="44"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Для сохранения пароля введите кодиз СМС" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-xy-20V">
+                                        <rect key="frame" x="16" y="253.33333333333337" width="318" height="44"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Новый пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j9Q-Cw-zoD" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="133.33333333333334" width="318" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="UEg-0i-azV"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Повторите новый пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NXn-xR-H4N" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="193.33333333333334" width="318" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="8fr-ws-uuh"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Код" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pK4-I0-vT9" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="313.33333333333326" width="151" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="AYw-ss-rs6"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
+                                                <real key="value" value="16"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pXf-mK-7IO" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                        <rect key="frame" x="183" y="313.33333333333326" width="151" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="3HJ-4G-8jl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
+                                        <state key="normal" title="Получить код">
+                                            <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="22"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                                <color key="value" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowYOffset">
+                                                <real key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="shadowXOffset">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="sendCodeAction:" destination="6qm-4b-wHZ" eventType="touchUpInside" id="z0S-nY-eQK"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер телефона" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6jZ-gc-JhP" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="73.333333333333343" width="318" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="VUj-T1-Ff2"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
@@ -568,52 +687,90 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
-                                                <real key="value" value="16"/>
+                                                <real key="value" value="56"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
                                                 <real key="value" value="16"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="phoneNumberChanged:" destination="6qm-4b-wHZ" eventType="editingChanged" id="Zm1-FC-s5o"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NXn-xR-H4N" customClass="RoundedTextField" customModule="giftadvice" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="116.66666666666663" width="318" height="44"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gf-WQ-244">
+                                        <rect key="frame" x="16" y="73.333333333333343" width="64" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uC1-Zz-P5b" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="2" width="64" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Q3d-7Q-L9S"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
+                                                <state key="normal" title="+7">
+                                                    <color key="titleColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="22"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="needsChangeCountry:" destination="6qm-4b-wHZ" eventType="touchUpInside" id="fXY-Vz-jzn"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="8fr-ws-uuh"/>
+                                            <constraint firstItem="uC1-Zz-P5b" firstAttribute="centerX" secondItem="8gf-WQ-244" secondAttribute="centerX" id="EWT-nq-HD0"/>
+                                            <constraint firstItem="uC1-Zz-P5b" firstAttribute="centerY" secondItem="8gf-WQ-244" secondAttribute="centerY" id="L2a-Jz-cUr"/>
+                                            <constraint firstAttribute="width" constant="64" id="Qf2-ym-hST"/>
+                                            <constraint firstAttribute="trailing" secondItem="uC1-Zz-P5b" secondAttribute="trailing" id="hoY-ge-mY8"/>
+                                            <constraint firstItem="uC1-Zz-P5b" firstAttribute="leading" secondItem="8gf-WQ-244" secondAttribute="leading" id="tH2-xd-X3M"/>
                                         </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="22"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.87740179019999998" green="0.87740179019999998" blue="0.87740179019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPaddingPoints">
-                                                <real key="value" value="16"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="rightPaddingPoints">
-                                                <real key="value" value="16"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Россия" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hoh-Am-Aww">
+                                        <rect key="frame" x="8" y="56.66666666666665" width="80" height="16.666666666666664"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="mJU-jy-nXj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                        <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Yuf-xy-20V" secondAttribute="trailing" constant="16" id="0ZJ-3n-ObL"/>
                                     <constraint firstItem="a2R-2g-mNk" firstAttribute="centerX" secondItem="zSw-x5-TCE" secondAttribute="centerX" id="20C-C1-AAF"/>
+                                    <constraint firstItem="Yuf-xy-20V" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="2xh-sD-fuO"/>
                                     <constraint firstAttribute="trailing" secondItem="NXn-xR-H4N" secondAttribute="trailing" constant="16" id="3YM-7s-cWB"/>
+                                    <constraint firstAttribute="trailing" secondItem="6jZ-gc-JhP" secondAttribute="trailing" constant="16" id="AMY-bM-u2D"/>
+                                    <constraint firstAttribute="bottom" secondItem="pK4-I0-vT9" secondAttribute="bottom" constant="16" id="B42-fa-QrN"/>
+                                    <constraint firstItem="j9Q-Cw-zoD" firstAttribute="top" secondItem="6jZ-gc-JhP" secondAttribute="bottom" constant="16" id="CoH-wH-TfH"/>
+                                    <constraint firstItem="8gf-WQ-244" firstAttribute="height" secondItem="6jZ-gc-JhP" secondAttribute="height" id="K0G-XK-5yM"/>
+                                    <constraint firstItem="pXf-mK-7IO" firstAttribute="width" secondItem="pK4-I0-vT9" secondAttribute="width" id="LT6-Sw-8FR"/>
+                                    <constraint firstItem="6jZ-gc-JhP" firstAttribute="top" secondItem="hoh-Am-Aww" secondAttribute="bottom" id="M7h-fI-Woc"/>
                                     <constraint firstItem="a2R-2g-mNk" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="N5z-6v-6pm"/>
+                                    <constraint firstItem="pK4-I0-vT9" firstAttribute="top" secondItem="Yuf-xy-20V" secondAttribute="bottom" constant="16" id="NNd-x4-aLB"/>
+                                    <constraint firstItem="pK4-I0-vT9" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="QPK-mX-ndC"/>
+                                    <constraint firstItem="8gf-WQ-244" firstAttribute="leading" secondItem="6jZ-gc-JhP" secondAttribute="leading" id="Sxg-Tk-r2o"/>
                                     <constraint firstAttribute="trailing" secondItem="j9Q-Cw-zoD" secondAttribute="trailing" constant="16" id="WNy-HD-mLj"/>
+                                    <constraint firstItem="hoh-Am-Aww" firstAttribute="top" secondItem="a2R-2g-mNk" secondAttribute="bottom" constant="16" id="WSb-8R-jVb"/>
                                     <constraint firstItem="a2R-2g-mNk" firstAttribute="top" secondItem="zSw-x5-TCE" secondAttribute="top" constant="16" id="XX7-BG-0CU"/>
                                     <constraint firstItem="j9Q-Cw-zoD" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="ZRt-9s-FV5"/>
                                     <constraint firstAttribute="trailing" secondItem="a2R-2g-mNk" secondAttribute="trailing" constant="16" id="a2l-2L-00s"/>
                                     <constraint firstItem="NXn-xR-H4N" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="a3r-NJ-uBG"/>
+                                    <constraint firstItem="pXf-mK-7IO" firstAttribute="top" secondItem="Yuf-xy-20V" secondAttribute="bottom" constant="16" id="aQf-FL-j1l"/>
+                                    <constraint firstItem="pXf-mK-7IO" firstAttribute="leading" secondItem="pK4-I0-vT9" secondAttribute="trailing" constant="16" id="biJ-cN-WTx"/>
+                                    <constraint firstItem="6jZ-gc-JhP" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="16" id="dxy-H1-gNR"/>
                                     <constraint firstItem="NXn-xR-H4N" firstAttribute="top" secondItem="j9Q-Cw-zoD" secondAttribute="bottom" constant="16" id="ePx-fU-NGw"/>
-                                    <constraint firstItem="j9Q-Cw-zoD" firstAttribute="top" secondItem="a2R-2g-mNk" secondAttribute="bottom" constant="16" id="iZr-Mh-zko"/>
+                                    <constraint firstAttribute="trailing" secondItem="pXf-mK-7IO" secondAttribute="trailing" constant="16" id="fDK-JP-717"/>
+                                    <constraint firstItem="hoh-Am-Aww" firstAttribute="centerX" secondItem="uC1-Zz-P5b" secondAttribute="centerX" id="h4f-Rq-Bzj"/>
+                                    <constraint firstItem="8gf-WQ-244" firstAttribute="centerY" secondItem="6jZ-gc-JhP" secondAttribute="centerY" id="hnT-Ko-Dcu"/>
+                                    <constraint firstItem="Yuf-xy-20V" firstAttribute="top" secondItem="NXn-xR-H4N" secondAttribute="bottom" constant="16" id="lJg-Od-q1J"/>
+                                    <constraint firstItem="hoh-Am-Aww" firstAttribute="leading" secondItem="zSw-x5-TCE" secondAttribute="leading" constant="8" id="ztO-eJ-0YT"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -630,14 +787,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FLa-jb-qzP" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
-                                <rect key="frame" x="32" y="588.66666666666663" width="350" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FLa-jb-qzP" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                <rect key="frame" x="32" y="634.66666666666663" width="350" height="44"/>
                                 <color key="backgroundColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="sRC-LL-yR3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="Войти">
+                                <state key="normal" title="Сохранить">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -664,12 +821,23 @@
                         <constraints>
                             <constraint firstItem="FLa-jb-qzP" firstAttribute="centerX" secondItem="kEn-r5-bDG" secondAttribute="centerX" id="3MP-dV-gCp"/>
                             <constraint firstItem="FLa-jb-qzP" firstAttribute="width" secondItem="zSw-x5-TCE" secondAttribute="width" id="C1H-Tf-Yye"/>
+                            <constraint firstItem="FLa-jb-qzP" firstAttribute="top" secondItem="zSw-x5-TCE" secondAttribute="bottom" constant="32" id="MOd-g2-FSP"/>
                             <constraint firstItem="zSw-x5-TCE" firstAttribute="leading" secondItem="SM8-xQ-GTQ" secondAttribute="leading" constant="32" id="Uil-yS-yVX"/>
                             <constraint firstItem="SM8-xQ-GTQ" firstAttribute="trailing" secondItem="zSw-x5-TCE" secondAttribute="trailing" constant="32" id="deQ-Z4-Xd4"/>
                             <constraint firstItem="zSw-x5-TCE" firstAttribute="centerY" secondItem="kEn-r5-bDG" secondAttribute="centerY" constant="-32" id="vrR-xP-u0J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SM8-xQ-GTQ"/>
                     </view>
+                    <connections>
+                        <outlet property="codeTextField" destination="pK4-I0-vT9" id="lTt-8a-3tm"/>
+                        <outlet property="countryNameLabel" destination="hoh-Am-Aww" id="IQi-yz-7Mj"/>
+                        <outlet property="countryPrefixButton" destination="uC1-Zz-P5b" id="64x-1w-D5L"/>
+                        <outlet property="getButton" destination="pXf-mK-7IO" id="6ez-4c-ocV"/>
+                        <outlet property="passwordTextField" destination="j9Q-Cw-zoD" id="cVA-2o-beG"/>
+                        <outlet property="phoneTextField" destination="6jZ-gc-JhP" id="Pkv-bC-S11"/>
+                        <outlet property="repeatPasswordTextField" destination="NXn-xR-H4N" id="2nq-tn-V6t"/>
+                        <outlet property="saveButton" destination="FLa-jb-qzP" id="0LU-TL-OWA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jjc-tz-6XG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

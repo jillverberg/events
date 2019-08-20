@@ -70,6 +70,13 @@
 
 "Product.Editing.New"                   = "New product";
 
+"Product.Error.Photo"                   = "You must add one photo of the product!";
+"Product.Error.Name"                    = "The product name must be more than 3 letters!";
+"Product.Error.Category"                = "You must select a product category!";
+"Product.Error.Description"             = "You must fill out a description. As well as the name, the length is more than 3 letters!";
+"Product.Error.Website"                 = "You must enter a valid web address!";
+"Product.Error.Price"                   = "The price must be more than 0!";
+
 "Product.Action.Buyer"                  = "To shop";
 "Product.Action.Shop"                   = "Edit";
 

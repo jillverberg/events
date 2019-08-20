@@ -100,7 +100,7 @@ class CameraPickerViewController: GAViewController {
     }
     
     @IBAction func galleryButtonAction(_ sender: Any) {
-        showImagePicker(withCamera: false)
+        showImagePicker(withCamera: false, picker: UIImagePickerController())
     }
     
     @IBAction func flipButtonAction(_ sender: Any) {

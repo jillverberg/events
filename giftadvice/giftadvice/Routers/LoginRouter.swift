@@ -22,17 +22,17 @@ class LoginRouter: GARouter, LoginRouterInput {
         
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
     }
-
+    
     func showLoginViewController() {
         let viewController = setupLoginViewController()
         self.rootNavigationController?.pushViewController(viewController, animated: true)
     }
-
+    
     func showSignUpViewController() {
         let viewController = setupSignUpViewController()
         self.rootNavigationController?.pushViewController(viewController, animated: true)
     }
-
+    
     func showSignUpStepsViewControllerWith(type: SignUpType) {
         let viewController = setupSignUpStepsViewController() as! SignUpStepsViewController
         viewController.type = type
@@ -47,7 +47,7 @@ class LoginRouter: GARouter, LoginRouterInput {
     func showLaunchViewController() {
         
     }
-
+    
     func showOnboardRouter() {
         let router = OnboardRouter(parentRouter: self)
         self.showRouter(router)
@@ -61,25 +61,36 @@ class LoginRouter: GARouter, LoginRouterInput {
             self.showRouter(router)
         }
     }
-
-
+    
+    func showResetViewController() {
+        let viewController = setupResetViewController()
+        self.rootNavigationController?.pushViewController(viewController, animated: true)
+    }
+    
     // MARK: Private Methods
-   
-   private func setupLaunchViewController() -> UIViewController {
+    
+    private func setupLaunchViewController() -> UIViewController {
         let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .login)
         let viewController = self.createViewController(from: storyboardViewController) as! LoginViewController
         
         return viewController
     }
-
-   private func setupLoginViewController() -> UIViewController {
+    
+    private func setupLoginViewController() -> UIViewController {
         let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .login)
         let viewController = self.createViewController(from: storyboardViewController) as! LoginViewController
         
         return viewController
     }
-
-   private func setupSignUpViewController() -> UIViewController {
+    
+    private func setupResetViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .reset)
+        let viewController = self.createViewController(from: storyboardViewController) as! PasswordResetViewController
+        
+        return viewController
+    }
+    
+    private func setupSignUpViewController() -> UIViewController {
         let storyboardViewController = StoryboardViewController(storyboardName: .login, identifier: .signup)
         let viewController = self.createViewController(from: storyboardViewController) as! SignUpViewController
         
@@ -92,7 +103,7 @@ class LoginRouter: GARouter, LoginRouterInput {
         
         return viewController
     }
-
+    
     private func setViewControllersWithFadeAnimation(_ viewControllers: [UIViewController], navigationController: UINavigationController) {
         let transition = CATransition()
         transition.duration = 0.3

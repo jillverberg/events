@@ -337,9 +337,9 @@
 			isa = PBXGroup;
 			children = (
 				230CF63634C511EE4B40AED4 /* GAViewController.swift */,
-				D4CAE01C22B127CA00F01BE5 /* Launch */,
 				D4B81EED226CD6E400627483 /* OnboardPageViewController.swift */,
 				D40BA20B2225BD9800A9A0DE /* TabBarViewController.swift */,
+				D4CAE01C22B127CA00F01BE5 /* Launch */,
 				D4E8E1342243CEB1005E1A0B /* Login */,
 				D459D51C221E02ED00468A2F /* SignUp */,
 				D4CAE01D22B127FD00F01BE5 /* Feed */,

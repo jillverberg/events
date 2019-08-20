@@ -58,5 +58,6 @@ struct Product: Mappable, ModelProtocol {
         self.description <- map[Keys.description]
         self.likes <- map[Keys.likes]
         self.dislikes <- map[Keys.dislikes]
+        self.price <- map[Keys.price]
     }
 }

@@ -27,7 +27,9 @@ class EditingViewController: GAViewController {
 
     private let categoryRowIndex = 2
     private let picker = UIPickerView()
-    
+    private var service: ProductService!
+    private var loginService: LoginService!
+
     // MARK: - Override Methods
 
     override func viewDidLoad() {
@@ -58,12 +60,35 @@ class EditingViewController: GAViewController {
         
         placeholder.layer.mask = maskLayer
     }
+
+    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
+        self.service = assembly.productService
+        self.loginService = assembly.loginService
+    }
+    
+    // MARK: - Actions
+
+    @IBAction func saveProduct(_ sender: Any) {
+        do {
+            let newProduct = try viewModel.getProduct()
+            if let user = loginService.userModel, let newProduct = newProduct {
+                self.navigationController?.popViewController(animated: true)
+                
+                service.add(user: user, product: newProduct) { (error, product) in
+                    
+                }
+            }
+        } catch let error {
+            guard let error = error as? EditingViewModel.ProductError else { return }
+            
+            showErrorAlertWith(title: "Error".localized, message: error.errorMessage)
+        }
+    }
 }
 
 // MARK: - Private Methods
 
 private extension EditingViewController {
-    
     func setupView() {
         view.backgroundColor = AppColors.Common.active()
         saveButton.backgroundColor = AppColors.Common.active()
@@ -73,7 +98,7 @@ private extension EditingViewController {
     var galleryAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<ProductView.ProductGallery, GalleryTableViewCell>()
         
-        adapter.on.dequeue = { ctx in
+        adapter.on.dequeue = { [unowned self] ctx in
             ctx.cell?.render(props: ctx.model, isEditing: true)
             ctx.cell?.delegate = self
         }
@@ -105,7 +130,6 @@ private extension EditingViewController {
         
         return adapter
     }
-
 }
 
 extension EditingViewController: EditingTableViewCellDelegate {
@@ -123,29 +147,10 @@ extension EditingViewController: EditingTableViewCellDelegate {
 
 extension EditingViewController: GalleryTableViewCellDelegate {
     func didSelectLastCell() {
-        showImagePicker()
+        let picker = UIImagePickerController()
+        picker.delegate = viewModel
+        
+        showImagePicker(picker: picker)
     }
 }
 
-extension EditingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        
-        guard let image = info[.originalImage] as? UIImage else {
-            print("No image found")
-            return
-        }
-        
-        if let cell = viewModel.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? GalleryTableViewCell {
-            if #available(iOS 11.0, *) {
-                if let url = info[.imageURL] as? URL {
-                    cell.appendModels(models: [url.absoluteString])
-                }
-            } else {
-                if let url = info[.mediaURL] as? URL {
-                    cell.appendModels(models: [url.absoluteString])
-                }
-            }
-        }
-    }
-}

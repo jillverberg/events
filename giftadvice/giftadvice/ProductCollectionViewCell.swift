@@ -54,7 +54,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
         self.props = props
         
         if let photo = props.photo?.first?.photo {
-            photoImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
+            if photo.contains("file:") {
+                photoImageView.image = UIImage(data: try! Data(contentsOf: URL(string: photo)!))
+            } else {
+                photoImageView.kf.setImage(with:URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
+            }            
         }
         
         priceShadowView.isHidden = props.price == 0
@@ -65,7 +69,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
     
     func render(props: Photo) {
         if let photo = props.photo {
-            photoImageView.kf.setImage(with: URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
+            if photo.contains("file:") {
+                photoImageView.image = UIImage(data: try! Data(contentsOf: URL(string: photo)!))
+            } else {
+                photoImageView.kf.setImage(with:URL(string: photo)!, placeholder: UIImage(named: "placeholder"))
+            }
         }
         
         priceShadowView.isHidden = true

@@ -43,6 +43,7 @@ class NetworkManager: RequestAdapter {
 
             static let user  = "user"
             static let shop  = "shop"
+            static let product  = "product"
             static let rate  = "rate"
             static let subscribe = "subscribe"
         }
@@ -56,6 +57,7 @@ class NetworkManager: RequestAdapter {
             static let latest = "product/latest"
             static let shop  = "shop"
             static let favorite  = "favorite"
+            static let code = "code"
         }
     }
     
@@ -91,6 +93,14 @@ class NetworkManager: RequestAdapter {
                                           Keys.password : password]
         
         _ = postRequest(withMethod: method + "/\(Paths.POST.login)", parameters: parameters, accessToken: nil, completion: completion)
+    }
+    
+    func getUsers(completion: @escaping NetworkCompletion) {
+        _ = getRequest(withMethod: Paths.POST.user, parameters: [:], accessToken: nil, completion: completion)
+    }
+    
+    func getCode(user: String, completion: @escaping NetworkCompletion) {
+        _ = getRequest(withMethod: Paths.POST.user + "/\(user)/" + Paths.GET.code, parameters: [:], accessToken: nil, completion: completion)
     }
     
     func signUp(withUser user: User, completion: @escaping NetworkCompletion) {
@@ -193,6 +203,16 @@ class NetworkManager: RequestAdapter {
                                           Keys.subscribe: subscribed]
         
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.subscribe, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
+    }
+    
+    func addProduct(user: User, product: Product, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        
+        var product = product
+        product.photo = nil
+        product.identifier = nil
+        
+        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.product, parameters: product.toJSON(), accessToken: user.accessToken, completion: completion)
     }
     
     // MARK: - Private Methods

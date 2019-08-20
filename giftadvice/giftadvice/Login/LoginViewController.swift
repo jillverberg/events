@@ -36,13 +36,13 @@ class LoginViewController: GAViewController {
         super.viewDidLoad()
         
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
                 
         configureNavigationBar()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +63,7 @@ class LoginViewController: GAViewController {
     // MARK: Configure Views
     
     private func configureNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)        
     }
@@ -129,6 +130,14 @@ class LoginViewController: GAViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func resetFlowAction(_ sender: Any) {
+        guard let router = router as? LoginRouterInput else {
+            fatalError("\(self) router isn't LoginRouter")
+        }
+        
+        router.showResetViewController()
     }
     
     @IBAction func needsChangeCountry(_ sender: Any) {

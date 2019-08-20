@@ -39,6 +39,7 @@ class ProfileViewController: GAViewController {
     
     // MARK: Private Properties
     
+    private var productService: ProductService!
     private var profileService: ProfileService!
     private var loginService: LoginService!
     private var isListEditing = false
@@ -51,7 +52,8 @@ class ProfileViewController: GAViewController {
         
         navigationItem.title = " "
 
-        
+        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+
         if let user = loginService.userModel {
             profileService.getFavorite(user: user, completion: { [unowned self] error, response in
                 if let response = response {
@@ -60,14 +62,24 @@ class ProfileViewController: GAViewController {
                     }
                 }
             })
+            
+            productService.recieveProduct = { [weak self] product in
+                DispatchQueue.main.async {
+                    if let count = self?.viewModel.collectionDirector.sections.count, count == 0 {
+                        self?.reloadWith(product: [product])
+                    } else {
+                        self?.viewModel.collectionDirector.reloadData(after: { () -> (Void) in
+                            self?.viewModel.collectionDirector.section(at: 0)?.add(model: product, at: 0)
+                        })
+                    }                    
+                }
+            }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.reloadCollectionData(sections: [])
-
         setupViews()
         configureNavigationBar()
     }
@@ -87,6 +99,7 @@ class ProfileViewController: GAViewController {
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
         profileService = assembly.profileService
         loginService = assembly.loginService
+        productService = assembly.productService
     }
     
     override func viewWillLayoutSubviews() {
@@ -115,8 +128,6 @@ class ProfileViewController: GAViewController {
     // MARK: Configure Views
     
     private func reloadWith(product: [Product]) {
-        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
-        
         var collectionSection = [CollectionSection]()
 
         collectionSection.append(CollectionSection(product))
@@ -129,7 +140,8 @@ class ProfileViewController: GAViewController {
             return 18
             }})
         
-        viewModel.reloadCollectionData(sections: collectionSection)
+        viewModel.addCollectionData(sections: collectionSection)
+        viewModel.collectionDirector.reloadData()
     }
     
     private func configureNavigationBar() {
@@ -258,7 +270,8 @@ class ProfileViewController: GAViewController {
             addProductShadow.isHidden.toggle()
         }
         
-        viewModel.reloadCollectionData(sections: viewModel.collectionDirector.sections)
+        viewModel.collectionView.reloadData()
+//        viewModel.reloadCollectionData(sections: viewModel.collectionDirector.sections)
         changeButton.setTitle(isListEditing ? "Collection.Title.Done".localized : "Collection.Title.Editing".localized, for: .normal)
         viewModel.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 18 + (isListEditing ? toolBar.frame.size.height : 0), right: 0)
     }

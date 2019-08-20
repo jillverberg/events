@@ -18,9 +18,11 @@ class ProfileViewModel: NSObject {
 
     func setupCollectionView(adapters: [AbstractAdapterProtocol]) {
         collectionDirector.register(adapters: adapters)
+        collectionDirector.add(CollectionSection(nil))
+        collectionDirector.reloadData()
     }
     
-    func reloadCollectionData(sections: [CollectionSection]) {
+    func addCollectionData(sections: [CollectionSection]) {
         noOrder.tintColor = AppColors.Common.active()
 
         if (sections.count > 0 && sections[0].models.count == 0) || sections.count == 0 {
@@ -30,8 +32,6 @@ class ProfileViewModel: NSObject {
             noOrder.removeFromSuperview()
         }
         
-        collectionDirector.removeAll()
         collectionDirector.add(sections: sections)
-        collectionDirector.reloadData()
     }
 }

@@ -43,8 +43,8 @@ class ProductView: UIView {
     private var hidding = false
     private var type: LoginRouter.SignUpType = .buyer
 
-    struct ProductGallery: StaticCellModel {
-        let product: Product?
+    class ProductGallery: StaticCellModel {
+        var product: Product? = nil
     }
     
     struct ProductTitle: StaticCellModel {
@@ -86,7 +86,8 @@ class ProductView: UIView {
         setupTableView(adapters: [galleryAdapter, titleAdapter, rateAdapter, descriptionAdapter])
         
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
-            let gallery = ProductGallery(product: product)
+            let gallery = ProductGallery()
+            gallery.product = product
             
             var title: ProductTitle?
             if let user = self.loginService?.userModel, let identifier = self.product?.identifier {

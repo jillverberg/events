@@ -14,6 +14,7 @@ private protocol PublicMethods {
     func saveUserModel(_ model: User)
     func removeUserModel()
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
+    func getCode(for phone: String)
     func signUp(withUser user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func verify(withCode code: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func update(user: User, image: UIImage?, completion: ((String?, User?) -> ())?)
@@ -109,6 +110,15 @@ extension LoginService: PublicMethods {
                 completion(error, userModel)
             }
         }
+    }
+    
+    func getCode(for phone: String) {
+        networkManager.getUsers { (canceled, error, response) in
+            print(response)
+        }
+//        if let user = userModel {
+//            networkManager.getCode(user: user, completion: {_, _, _ in })
+//        }
     }
     
     func removeUserModel() {

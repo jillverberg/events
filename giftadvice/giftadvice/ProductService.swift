@@ -9,15 +9,22 @@
 import ObjectMapper
 
 private protocol PublicMethods {
+    var recieveProduct: ((Product) -> ())? { get set }
+
     func getProducts(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
     func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
     func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ())
     func toggleProductFavorite(user: User, product: String, favorite: Bool)
+    func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ())
 }
 
 class ProductService {
     
+    // MARK: - Public Properties
+    
+    var recieveProduct: ((Product) -> ())?
+
     // MARK: - Private Properties
     
     private let networkManager = NetworkManager.shared
@@ -74,5 +81,21 @@ extension ProductService: PublicMethods {
     
     func toggleProductFavorite(user: User, product: String, favorite: Bool) {
         networkManager.setFavorite(user: user, product: product, favorite: favorite)
+    }
+    
+    func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ()) {
+        networkManager.addProduct(user: user, product: product) { [weak self] (ended, error, response) in
+            if let data = response {
+                let model = Mapper<Product>().map(JSON: data)
+                
+                if let model = model {
+                    self?.recieveProduct?(model)
+                }
+
+                completion(error, model)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
     }
 }

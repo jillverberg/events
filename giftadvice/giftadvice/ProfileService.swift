@@ -13,11 +13,10 @@ private protocol PublicMethods {
 }
 
 class ProfileService {
-    
+
     // MARK: - Private Properties
     
     private let networkManager = NetworkManager.shared
-    
 }
 
 extension ProfileService: PublicMethods {

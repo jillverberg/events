@@ -66,11 +66,10 @@ class GAViewController: UIViewController {
         // Should be overridden.
     }
     
-    func showImagePicker(withCamera: Bool = true) {
+    func showImagePicker(withCamera: Bool = true, picker: UIImagePickerController) {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch photoAuthorizationStatus {
-        case .authorized:
-            let picker = UIImagePickerController()
+        case .authorized:            
             picker.allowsEditing = false
             if let strongSelf = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate {
                 picker.delegate = strongSelf
