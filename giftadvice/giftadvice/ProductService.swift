@@ -17,6 +17,7 @@ private protocol PublicMethods {
     func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ())
     func toggleProductFavorite(user: User, product: String, favorite: Bool)
     func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ())
+    func remove(user: User, product: Product)
 }
 
 class ProductService {
@@ -97,5 +98,9 @@ extension ProductService: PublicMethods {
                 completion(error, nil)
             }
         }
+    }
+    
+    func remove(user: User, product: Product) {
+        
     }
 }

@@ -129,13 +129,13 @@ class NetworkManager: RequestAdapter {
         user.photo = nil
         
         requestWith(endUrl: method + "/\(identifier ?? "")/", imageData: image, parameters: user.toJSON(), accessToken: accessToken, onCompletion: completion)
-//        _ = putRequest(withMethod: method + "/\(identifier ?? "")/", parameters: user.toJSON(), accessToken: accessToken, completion: { _,_,_ in })
     }
     
     func getProducts(user: User, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.GET.product : Paths.GET.shop + "/\(user.identifier ?? "")/" + Paths.GET.product
         let accessToken = user.accessToken
 
-        _ = getRequest(withMethod: Paths.GET.product, parameters: [Keys.limit: "1"], accessToken: accessToken, completion: completion)
+        _ = getRequest(withMethod: method , parameters: [Keys.limit: "10"], accessToken: accessToken, completion: completion)
     }
     
     func getProduct(user: User, identifier: String, completion: @escaping NetworkCompletion) {
@@ -213,6 +213,11 @@ class NetworkManager: RequestAdapter {
         product.identifier = nil
         
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.product, parameters: product.toJSON(), accessToken: user.accessToken, completion: completion)
+    }
+    
+    func removeProduct(user: User, product: Product) {
+        
+        
     }
     
     // MARK: - Private Methods

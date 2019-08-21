@@ -79,7 +79,7 @@ private extension SearchingViewController {
     }
 }
 
-extension SearchingViewController: SearchingManagerDelegate{
+extension SearchingViewController: SearchingManagerDelegate {
     func didChangeState(state: SearchingManager.SearchingState) {
         switch state {
         case .initial:

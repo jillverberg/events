@@ -55,13 +55,19 @@ class ProfileViewController: GAViewController {
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
 
         if let user = loginService.userModel {
-            profileService.getFavorite(user: user, completion: { [unowned self] error, response in
+            let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
                 if let response = response {
                     DispatchQueue.main.async {
                         self.reloadWith(product: response)
                     }
                 }
-            })
+            }
+            
+            if user.type! == .buyer {
+                profileService.getFavorite(user: user, completion: completion)
+            } else {
+                productService.getProducts(user: user, completion: completion)
+            }
             
             productService.recieveProduct = { [weak self] product in
                 DispatchQueue.main.async {
@@ -282,7 +288,7 @@ class ProfileViewController: GAViewController {
         alert.addAction(UIAlertAction(title: "Alert.Remove".localized, style: .destructive, handler: { [unowned self] (alert) in
 
             self.viewModel.collectionDirector.reloadData(after: { () -> (Void) in
-                self.viewModel.collectionDirector.firstSection()?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
+                self.viewModel.collectionDirector.section(at: 0)?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
             }, onEnd: {
                 self.startEditing(self)
             })

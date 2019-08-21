@@ -18,7 +18,6 @@ class ProfileViewModel: NSObject {
 
     func setupCollectionView(adapters: [AbstractAdapterProtocol]) {
         collectionDirector.register(adapters: adapters)
-        collectionDirector.add(CollectionSection(nil))
         collectionDirector.reloadData()
     }
     
