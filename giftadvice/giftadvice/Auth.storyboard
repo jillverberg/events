@@ -680,12 +680,17 @@
                                             <action selector="saveProduct:" destination="lJH-Zw-X5I" eventType="touchUpInside" id="Al5-BU-GQH"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1c3-zm-EQQ">
+                                        <rect key="frame" x="119" y="666" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="ler-aC-o2F" secondAttribute="bottom" constant="26" id="7gt-sI-Yds"/>
                                     <constraint firstItem="jbW-NQ-FKn" firstAttribute="top" secondItem="N5Z-42-LWq" secondAttribute="top" constant="8" id="Oxk-2O-Veb"/>
+                                    <constraint firstItem="1c3-zm-EQQ" firstAttribute="centerY" secondItem="ler-aC-o2F" secondAttribute="centerY" id="Q81-MD-gXS"/>
                                     <constraint firstItem="jbW-NQ-FKn" firstAttribute="leading" secondItem="N5Z-42-LWq" secondAttribute="leading" id="SC4-is-p7G"/>
+                                    <constraint firstItem="1c3-zm-EQQ" firstAttribute="centerX" secondItem="ler-aC-o2F" secondAttribute="centerX" id="n0j-xq-WA1"/>
                                     <constraint firstAttribute="bottom" secondItem="jbW-NQ-FKn" secondAttribute="bottom" constant="12" id="uXx-Ts-MU6"/>
                                     <constraint firstItem="ler-aC-o2F" firstAttribute="centerX" secondItem="N5Z-42-LWq" secondAttribute="centerX" id="vd8-Kj-wYO"/>
                                     <constraint firstAttribute="trailing" secondItem="jbW-NQ-FKn" secondAttribute="trailing" id="zfB-w4-wp7"/>
@@ -702,6 +707,7 @@
                         <viewLayoutGuide key="safeArea" id="1Lz-aR-ZWY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="1c3-zm-EQQ" id="eV0-ec-5Il"/>
                         <outlet property="placeholder" destination="N5Z-42-LWq" id="ovM-fn-Q4O"/>
                         <outlet property="saveButton" destination="ler-aC-o2F" id="aH9-kk-mex"/>
                         <outlet property="viewModel" destination="sYy-6p-PHh" id="gNh-gi-uJz"/>

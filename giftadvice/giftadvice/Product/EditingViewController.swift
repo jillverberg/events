@@ -18,6 +18,7 @@ class EditingViewController: GAViewController {
     @IBOutlet var viewModel: EditingViewModel!
     @IBOutlet weak var placeholder: UIView!
     @IBOutlet weak var saveButton: BorderedButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: - Public Properties
 
@@ -69,19 +70,28 @@ class EditingViewController: GAViewController {
     // MARK: - Actions
 
     @IBAction func saveProduct(_ sender: Any) {
+        setLoading(true)
+        
         do {
             let newProduct = try viewModel.getProduct()
             if let user = loginService.userModel, let newProduct = newProduct {
-                self.navigationController?.popViewController(animated: true)
                 
-                service.add(user: user, product: newProduct) { (error, product) in
-                    
+                service.add(user: user, product: newProduct) { [unowned self] (error, product) in
+                    DispatchQueue.main.async {
+                        if product != nil {
+                            self.navigationController?.popViewController(animated: true)
+                        } else if let error = error {
+                            self.setLoading(false)
+                            self.showErrorAlertWith(title: "Error".localized, message: error)
+                        }
+                    }
                 }
             }
         } catch let error {
             guard let error = error as? EditingViewModel.ProductError else { return }
             
             showErrorAlertWith(title: "Error".localized, message: error.errorMessage)
+            setLoading(false)
         }
     }
 }
@@ -92,6 +102,7 @@ private extension EditingViewController {
     func setupView() {
         view.backgroundColor = AppColors.Common.active()
         saveButton.backgroundColor = AppColors.Common.active()
+        activityIndicator.tintColor = AppColors.Common.active()
         title = "Product.Editing.New".localized
     }
     
@@ -129,6 +140,20 @@ private extension EditingViewController {
         }
         
         return adapter
+    }
+    
+    func setLoading(_ loading: Bool) {
+        if loading {
+            activityIndicator.startAnimating()
+            saveButton.isHidden = true
+            view.isUserInteractionEnabled = false
+            navigationController?.navigationBar.isUserInteractionEnabled = false
+        } else {
+            activityIndicator.stopAnimating()
+            saveButton.isHidden = false
+            view.isUserInteractionEnabled = true
+            navigationController?.navigationBar.isUserInteractionEnabled = true
+        }
     }
 }
 

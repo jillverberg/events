@@ -32,7 +32,7 @@ class ShopCollectionViewCell: UICollectionViewCell {
         
         imageContentView.layer.cornerRadius = (frame.size.width - 8) / 2
         imageContentView.layer.borderWidth = 0.5
-        imageContentView.layer.borderColor = UIColor.lightGray.cgColor
+        imageContentView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
     }
     
     // MARK: - Public Methods
