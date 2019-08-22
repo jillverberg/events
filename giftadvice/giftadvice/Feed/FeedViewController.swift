@@ -204,7 +204,7 @@ private extension FeedViewController {
             
             self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
                 self.hidePopupView()
-            }), actionTitle: "Filtering.Next".localized)
+            }), actionTitle: "Filtering.Save".localized)
         }), actionTitle: "Filtering.Next".localized)
     }
 }

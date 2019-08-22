@@ -104,6 +104,7 @@
 "Filtering.Event"                       = "Filter by event";
 "Filtering.Price"                       = "Filter by price";
 "Filtering.Next"                        = "Next (Price)";
+"Filtering.Save"                        = "Apply";
 
 "BIRTHDAY"                              = "Birthday";
 "NEW_YEAR"                              = "New Year";

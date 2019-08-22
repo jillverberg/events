@@ -104,6 +104,7 @@
 "Filtering.Event"                       = "Фильтр по событию";
 "Filtering.Price"                       = "Фильтр по цене";
 "Filtering.Next"                        = "Далее (цена)";
+"Filtering.Save"                        = "Применить";
 
 "BIRTHDAY"                              = "День рождения";
 "NEW_YEAR"                              = "Новый год";
