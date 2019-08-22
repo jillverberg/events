@@ -18,6 +18,7 @@ private protocol PublicMethods {
     func toggleProductFavorite(user: User, product: String, favorite: Bool)
     func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func remove(user: User, product: Product)
+    func searchProduct(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [Product]?) -> ())
 }
 
 class ProductService {
@@ -102,5 +103,17 @@ extension ProductService: PublicMethods {
     
     func remove(user: User, product: Product) {
         
+    }
+    
+    func searchProduct(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [Product]?) -> ()) {
+        networkManager.searchProduct(user: user, value: value) { (cancelled, error, response) in
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<Product>().mapArray(JSONArray: data)
+                
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
     }
 }

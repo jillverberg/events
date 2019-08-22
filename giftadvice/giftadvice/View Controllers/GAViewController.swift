@@ -115,7 +115,7 @@ class GAViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: CommandWith<Any>? = nil) {
+    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: CommandWith<Any>? = nil, actionTitle: String? = nil) {
         var containerView: UIView!
                 
         if let tabBar = tabBarController {
@@ -129,6 +129,10 @@ class GAViewController: UIViewController {
         let popupView = PopupView(frame: .zero, adapters: adapters, title: title)
         popupView.command = action
         popupView.reloadData(sections: sections)
+        
+        if let actionTitle = actionTitle {
+            popupView.actionButton.setTitle(actionTitle, for: .normal)
+        }
         
         popupView.alpha = 0.0
         containerView.addSubview(popupView)

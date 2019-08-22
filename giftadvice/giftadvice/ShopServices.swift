@@ -14,6 +14,7 @@ private protocol PublicMethods {
     func getShopInfo(user: User, completion: @escaping (_ error: String?, _ users: User?) -> ())
     func isSubscribed(user: User, shop: String, completion: @escaping (_ error: String?, _ subscribed: Bool) -> ())
     func subscribeToggle(user: User, shop: String, subscribed: Bool)
+    func searchShop(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [User]?) -> ())
 }
 
 class ShopService {
@@ -75,5 +76,17 @@ extension ShopService: PublicMethods {
     
     func subscribeToggle(user: User, shop: String, subscribed: Bool) {
         networkManager.toggleSubscribe(user: user, shop: shop, subscribed: subscribed)
+    }
+    
+    func searchShop(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [User]?) -> ()) {
+        networkManager.searchShop(user: user, value: value) { (cancelled, error, response) in
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<User>().mapArray(JSONArray: data)
+                
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
     }
 }

@@ -93,7 +93,7 @@ extension EditingTableViewCell: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if let picker = textView.inputView as? UIPickerView {
-            props.value = EditingViewModel.Evenst.value[EditingViewModel.Evenst.allCases[picker.selectedRow(inComponent: 0)]]
+            props.value = EditingViewModel.Events.value[EditingViewModel.Events.allCases[picker.selectedRow(inComponent: 0)]]
             valueTextField.text = props.value
         }
     }

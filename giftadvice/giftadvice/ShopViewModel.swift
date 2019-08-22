@@ -29,7 +29,7 @@ class ShopViewModel: NSObject {
             return 18
             }})
         
-        noOrder.tintColor = AppColors.Common.active()
+        noOrder.tintColor = UIColor.gray.withAlphaComponent(0.5)
         
         if (sections.count > 0 && sections[0].models.count == 0) || sections.count == 0 {
             collectionView.addSubview(noOrder)

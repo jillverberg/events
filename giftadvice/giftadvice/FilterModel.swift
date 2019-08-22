@@ -44,12 +44,28 @@ class HobbyFilterModel: ModelProtocol {
     }
 }
 
-class FilterModel: ModelProtocol {
+struct FilterModel: ModelProtocol {
     var modelID: Int {
-        return 0
+        return value.hashValue
     }
     
     // MARK: - Public Properties
+    var value: String
+    var key: String
+}
+
+enum SortingModel: String, ModelProtocol {
+    var modelID: Int {
+        return rawValue.hashValue
+    }
     
-    var maxPrice: Int?
+    case likes
+    case date
+    case rate
+    
+    static let value: [SortingModel: String] = [
+        .likes: "Sorting.Key.Likes".localized,
+        .date: "Sorting.Key.Date".localized,
+        .rate: "Sorting.Key.Review".localized
+    ]
 }

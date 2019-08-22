@@ -67,7 +67,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
         priceShadowView.isHidden = props.price == 0
         priceContainerView.isHidden = props.price == 0
  
-        priceLabel.text = String(props.price) + "Р"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "ru_RU")
+        
+        priceLabel.text = formatter.string(from: NSNumber(value: props.price))!
     }
     
     func render(props: Photo) {

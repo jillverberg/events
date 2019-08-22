@@ -32,6 +32,10 @@ class FeedViewController: GAViewController {
     private var loginService: LoginService!
     private var productService: ProductService!
     
+    private var sortingValue: SortingModel?
+    private var filterEventValue = [FilterModel]()
+    private var filterPage = 0
+    
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
@@ -137,11 +141,19 @@ class FeedViewController: GAViewController {
         
         
     }
+    
+    // MARK: - Actions
+    @IBAction func sortingAction(_ sender: Any) {
+        poluteSortingData()
+    }
+    
+    @IBAction func filterAction(_ sender: Any) {
+        poluteFilterData()
+    }
 }
 
 private extension FeedViewController {
     // MARK: Configure Views
-    
     func setupView() {
         backgroundView.backgroundColor = AppColors.Common.active()
         view.backgroundColor = AppColors.Common.active()
@@ -152,14 +164,53 @@ private extension FeedViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
+
+    func scale(from transform: CGAffineTransform) -> CGFloat {
+        return CGFloat(sqrt(Double(transform.a * transform.a + transform.c * transform.c)))
+    }
     
+    func feedRouter() -> FeedRouterInput {
+        guard let router = router as? FeedRouterInput else {
+            fatalError("\(self) router isn't LaunchRouter")
+        }
+        
+        return router
+    }
+    
+    func poluteSortingData() {
+        let title = "Sorting".localized
+        
+        showPopupView(title: title, adapters: [sortingItemAdapter], sections: [TableSection([SortingModel.likes, SortingModel.date, SortingModel.rate])], CommandWith<Any>(action: { [unowned self] models in
+            self.hidePopupView()            
+        }))
+    }
+    
+    func poluteFilterData() {
+        let title = "Filtering.Event".localized
+        
+        let models: [FilterModel] = EditingViewModel.Events.value.map({ FilterModel(value: $0.value, key: $0.key.rawValue) })
+        
+        showPopupView(title: title, adapters: [filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+            let title = "Filtering.Price".localized
+            let models: [FilterModel] = EditingViewModel.Prices.value
+                .sorted(by: { $0.key.rawValue < $1.key.rawValue })
+                .map({ FilterModel(value: $0.value, key: String($0.key.rawValue)) })
+            
+            self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+                self.hidePopupView()
+            }), actionTitle: "Filtering.Next".localized)
+        }), actionTitle: "Filtering.Next".localized)
+    }
+}
+
+private extension FeedViewController {
     var productItemAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<Product, ProductTableViewCell>()
         
         adapter.on.prefetch = { (products, indexPaths) in
             
         }
-
+        
         adapter.on.dequeue = { ctx in
             ctx.cell?.render(props: ctx.model)
         }
@@ -174,7 +225,7 @@ private extension FeedViewController {
         
         return adapter
     }
-
+    
     var productCollectionAdapter: AbstractAdapterProtocol {
         let adapter = CollectionAdapter<Product, ProductCollectionViewCell>()
         
@@ -199,15 +250,47 @@ private extension FeedViewController {
         return adapter
     }
     
-    func scale(from transform: CGAffineTransform) -> CGFloat {
-        return CGFloat(sqrt(Double(transform.a * transform.a + transform.c * transform.c)))
-    }
-    
-    private func feedRouter() -> FeedRouterInput {
-        guard let router = router as? FeedRouterInput else {
-            fatalError("\(self) router isn't LaunchRouter")
+    var sortingItemAdapter: AbstractAdapterProtocol {
+        let adapter = TableAdapter<SortingModel, FilterTableViewCell>()
+        
+        adapter.on.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.model, selected: self.sortingValue == ctx.model)
         }
         
-        return router
+        adapter.on.tap = { [unowned self] ctx in
+            if self.sortingValue == ctx.model {
+                self.sortingValue = nil
+            } else {
+                self.sortingValue = ctx.model
+            }
+                        
+            ctx.table?.reloadData()
+            
+            return .none
+        }
+        
+        return adapter
+    }
+    
+    var filterItemAdapter: AbstractAdapterProtocol {
+        let adapter = TableAdapter<FilterModel, FilterTableViewCell>()
+        
+        adapter.on.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.model, selected: self.filterEventValue.contains(where: { ctx.model.key == $0.key }))
+        }
+        
+        adapter.on.tap = { [unowned self] ctx in
+            if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
+                self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
+            } else {
+                self.filterEventValue.append(ctx.model)
+            }
+            
+            ctx.table?.reloadData()
+            
+            return .none
+        }
+        
+        return adapter
     }
 }

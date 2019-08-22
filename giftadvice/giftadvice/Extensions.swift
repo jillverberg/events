@@ -309,3 +309,47 @@ extension UITextField {
     func getClearButton() -> UIButton? { return value(forKey: "clearButton") as? UIButton }
 }
 
+extension UISearchBar {
+    private var textField: UITextField? {
+        let subViews = self.subviews.flatMap { $0.subviews }
+        return (subViews.filter { $0 is UITextField }).first as? UITextField
+    }
+    
+    private var searchIcon: UIImage? {
+        let subViews = subviews.flatMap { $0.subviews }
+        return  ((subViews.filter { $0 is UIImageView }).first as? UIImageView)?.image
+    }
+    
+    private var activityIndicator: UIActivityIndicatorView? {
+        return textField?.leftView?.subviews.compactMap{ $0 as? UIActivityIndicatorView }.first
+    }
+    
+    var isLoading: Bool {
+        get {
+            return activityIndicator != nil
+        } set {
+            let _searchIcon = searchIcon
+            if newValue {
+                if activityIndicator == nil {
+                    let _activityIndicator = UIActivityIndicatorView(style: .white)
+                    _activityIndicator.startAnimating()
+                    _activityIndicator.backgroundColor = UIColor.clear
+                    self.setImage(UIImage(), for: .search, state: .normal)
+                    textField?.leftView?.addSubview(_activityIndicator)
+                    let leftViewSize = textField?.leftView?.frame.size ?? CGSize.zero
+                    _activityIndicator.center = CGPoint(x: leftViewSize.width/2, y: leftViewSize.height/2)
+                    isUserInteractionEnabled = false
+                }
+            } else {
+                isUserInteractionEnabled = true
+                setImage(_searchIcon, for: .search, state: .normal)
+                setPlaceholderText(color: UIColor.white.withAlphaComponent(0.4))
+                setSearchImage(color: .white)
+                setClearButton(color: .white)
+                setTextField(color: .white)
+                setText(color: .white)
+                activityIndicator?.removeFromSuperview()
+            }
+        }
+    }
+}

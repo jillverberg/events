@@ -31,8 +31,16 @@ class GiftShoppingAdviserEngine {
             self.keywords = keywords
             
             return Observable.from(keywords).flatMap({ [weak self] (keyword) -> Observable<[StoreProductInfo]> in
-                let strongSelf = self!
-                return strongSelf.productSearchService.findProducts(byKeyword: keyword, maxPrice: options?.maxPrice)
+//                let strongSelf = self!
+//                return strongSelf.productSearchService.findProducts(byKeyword: keyword, maxPrice: options?.maxPrice)
+                return Observable<[StoreProductInfo]>.create({ [weak self] (observer) -> Disposable in
+                    observer.onNext([])
+                    observer.onCompleted()
+                    
+                    return Disposables.create {
+                        
+                    }
+                })
             }).reduce([StoreProductInfo](), accumulator: {$0 + $1})
         }
     }

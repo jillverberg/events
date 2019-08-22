@@ -160,6 +160,7 @@ extension CameraPickerViewController: UIImagePickerControllerDelegate, UINavigat
             return
         }
         
-        
+        SearchingManager.shared.generateKeywordsFrom(image: image, maxPrice: self.priceFModel.maxPrice, hobby: self.hobbyFModel.hobby)
+        self.adviceRouter().showRecomendations()
     }
 }

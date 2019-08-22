@@ -19,6 +19,13 @@
 
 "Popup.Done"                            = "Done";
 
+"Onboarding.1"                          = "1 eng";
+"Onboarding.2"                          = "2 eng";
+"Onboarding.3"                          = "3 eng";
+"Onboarding.4"                          = "4 eng";
+
+"Onboarding.Close"                      = "Escape";
+
 "Error"                                 = "Error";
 "Network.Error"                         = "Network error";
 "Email.Error"                           = "Add at least one account to Mail";
@@ -85,12 +92,18 @@
 
 "Shop.Information"                      = "Information";
 
-"Onboarding.1"                          = "1 eng";
-"Onboarding.2"                          = "2 eng";
-"Onboarding.3"                          = "3 eng";
-"Onboarding.4"                          = "4 eng";
+"Search.Shop"                           = "Shops";
+"Search.Product"                        = "Products";
+"Search.Section.Inner"                  = "Our products";
+"Search.Section.Outter"                 = "Other site";
 
-"Onboarding.Close"                      = "Escape";
+"Sorting"                               = "Sorting";
+"Sorting.Key.Likes"                     = "By likes";
+"Sorting.Key.Date"                      = "By date";
+"Sorting.Key.Review"                    = "By review";
+"Filtering.Event"                       = "Filter by event";
+"Filtering.Price"                       = "Filter by price";
+"Filtering.Next"                        = "Next (Price)";
 
 "BIRTHDAY"                              = "Birthday";
 "NEW_YEAR"                              = "New Year";
@@ -109,3 +122,4 @@
 "PROFESSIONAL_DAY"                      = "Professional Day";
 
 "Empty.Image"                           = "empty_eng";
+"Search.Image"                          = "search_initial_eng";

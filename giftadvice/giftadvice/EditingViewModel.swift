@@ -48,7 +48,7 @@ class EditingViewModel: NSObject {
         ]
     }
 
-    enum Evenst: String, CaseIterable {
+    enum Events: String, CaseIterable {
         case birthday = "BIRTHDAY"
         case newYear = "NEW_YEAR"
         case christmas = "CHRISTMAS"
@@ -65,7 +65,7 @@ class EditingViewModel: NSObject {
         case graduation = "GRADUATION"
         case prof = "PROFESSIONAL_DAY"
         
-        static let value: [Evenst: String] = [
+        static let value: [Events: String] = [
             .birthday:  "BIRTHDAY".localized,
             .newYear:  "NEW_YEAR".localized,
             .christmas:  "CHRISTMAS".localized,
@@ -82,6 +82,35 @@ class EditingViewModel: NSObject {
             .graduation:  "GRADUATION".localized,
             .prof:  "PROFESSIONAL_DAY".localized
         ]
+    }
+    
+    enum Prices: Int, CaseIterable {
+        case zero = 0
+        case one = 1000
+        case two = 3000
+        case three = 5000
+        case four = 10000
+        case five = 50000
+        case six
+        
+        static let value: [Prices: String] = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.locale = Locale(identifier: "ru_RU")
+            
+            var dictionary = [Prices: String]()
+
+            for (index, price) in Prices.allCases.enumerated() {
+                if index == 0 { continue }
+                let fromPrice = formatter.string(from: NSNumber(value: Prices.allCases[index - 1].rawValue))!
+                let toPrice = formatter.string(from: NSNumber(value: price.rawValue))!
+                dictionary[price] = "\(fromPrice) - \(toPrice)"
+            }
+            
+            dictionary[.six] = "\(formatter.string(from: NSNumber(value: Prices.five.rawValue))!) +"
+            
+            return dictionary
+        }()
     }
     
     enum ProductError: Error {
@@ -147,7 +176,7 @@ class EditingViewModel: NSObject {
                         }
                     case .category:
                         if value.count > 0 {
-                            let event = Evenst.value.filter({ $0.value == value }).first!.key
+                            let event = Events.value.filter({ $0.value == value }).first!.key
                             product?.event = event.rawValue
                         } else {
                             throw ProductError.category
@@ -228,13 +257,13 @@ extension EditingViewModel: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Evenst.allCases.count
+        return Events.allCases.count
     }
 }
 
 extension EditingViewModel: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Evenst.value[Evenst.allCases[row]]
+        return Events.value[Events.allCases[row]]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

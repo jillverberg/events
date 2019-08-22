@@ -165,7 +165,7 @@ private extension ShopViewController {
             return CGSize(width: width, height: 300)
         }
         
-        adapter.on.dequeue = { [unowned self] ctx in
+        adapter.on.dequeue = { ctx in
             ctx.cell?.render(props: ctx.model)
             ctx.cell?.setIndicator(hidden: true)
         }

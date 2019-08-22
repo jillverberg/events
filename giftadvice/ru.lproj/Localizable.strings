@@ -19,6 +19,13 @@
 
 "Popup.Done"                            = "Готово";
 
+"Onboarding.1"                          = "1";
+"Onboarding.2"                          = "2";
+"Onboarding.3"                          = "3";
+"Onboarding.4"                          = "4";
+
+"Onboarding.Close"                      = "Пропустить";
+
 "Error"                                 = "Ошибка";
 "Network.Error"                         = "Ошибка сети";
 "Email.Error"                           = "Добавьте почтовый аккаунт в стандартное приложение Почта";
@@ -85,12 +92,18 @@
 
 "Shop.Information"                      = "Информация";
 
-"Onboarding.1"                          = "1";
-"Onboarding.2"                          = "2";
-"Onboarding.3"                          = "3";
-"Onboarding.4"                          = "4";
+"Search.Shop"                           = "Магазины";
+"Search.Product"                        = "Товары";
+"Search.Section.Inner"                  = "Наши товары";
+"Search.Section.Outter"                 = "Другие сайты";
 
-"Onboarding.Close"                      = "Пропустить";
+"Sorting"                               = "Сортировка";
+"Sorting.Key.Likes"                     = "По лайкам";
+"Sorting.Key.Date"                      = "По дате";
+"Sorting.Key.Review"                    = "По отзывам";
+"Filtering.Event"                       = "Фильтр по событию";
+"Filtering.Price"                       = "Фильтр по цене";
+"Filtering.Next"                        = "Далее (цена)";
 
 "BIRTHDAY"                              = "День рождения";
 "NEW_YEAR"                              = "Новый год";
@@ -109,3 +122,4 @@
 "PROFESSIONAL_DAY"                      = "Профессиональный день";
 
 "Empty.Image"                           = "empty";
+"Search.Image"                          = "search_initial";

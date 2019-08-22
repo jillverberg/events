@@ -94,6 +94,12 @@
 		D48B3CB6224D5AC8000FE39C /* ShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48B3CB4224D5AC8000FE39C /* ShopCollectionViewCell.swift */; };
 		D48B3CB7224D5AC8000FE39C /* ShopCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D48B3CB5224D5AC8000FE39C /* ShopCollectionViewCell.xib */; };
 		D48B3CBC224D5E4A000FE39C /* ShopServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48B3CBB224D5E4A000FE39C /* ShopServices.swift */; };
+		D4A22FA3230D54D4001F23A1 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A22FA2230D54D4001F23A1 /* SearchViewModel.swift */; };
+		D4A22FA6230D7682001F23A1 /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A22FA4230D7682001F23A1 /* CollectionHeaderView.swift */; };
+		D4A22FA7230D7682001F23A1 /* CollectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A22FA5230D7682001F23A1 /* CollectionHeaderView.xib */; };
+		D4A22FAD230DD42A001F23A1 /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A22FAC230DD42A001F23A1 /* FilterViewModel.swift */; };
+		D4A22FB5230E630F001F23A1 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A22FB3230E630F001F23A1 /* FilterTableViewCell.swift */; };
+		D4A22FB6230E630F001F23A1 /* FilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4A22FB4230E630F001F23A1 /* FilterTableViewCell.xib */; };
 		D4B031A5230AF63800EA8C7A /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B031A4230AF63800EA8C7A /* PasswordResetViewController.swift */; };
 		D4B3747B222BE72C00E23D42 /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B3747A222BE72C00E23D42 /* GalleryTableViewCell.swift */; };
 		D4B3747D222BE73D00E23D42 /* GalleryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4B3747C222BE73D00E23D42 /* GalleryTableViewCell.xib */; };
@@ -243,6 +249,12 @@
 		D48B3CB4224D5AC8000FE39C /* ShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCollectionViewCell.swift; sourceTree = "<group>"; };
 		D48B3CB5224D5AC8000FE39C /* ShopCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShopCollectionViewCell.xib; sourceTree = "<group>"; };
 		D48B3CBB224D5E4A000FE39C /* ShopServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopServices.swift; sourceTree = "<group>"; };
+		D4A22FA2230D54D4001F23A1 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		D4A22FA4230D7682001F23A1 /* CollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
+		D4A22FA5230D7682001F23A1 /* CollectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionHeaderView.xib; sourceTree = "<group>"; };
+		D4A22FAC230DD42A001F23A1 /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
+		D4A22FB3230E630F001F23A1 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
+		D4A22FB4230E630F001F23A1 /* FilterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterTableViewCell.xib; sourceTree = "<group>"; };
 		D4B031A4230AF63800EA8C7A /* PasswordResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetViewController.swift; sourceTree = "<group>"; };
 		D4B3747A222BE72C00E23D42 /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
 		D4B3747C222BE73D00E23D42 /* GalleryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryTableViewCell.xib; sourceTree = "<group>"; };
@@ -466,6 +478,8 @@
 				D40C11F5224E8B9000665DB7 /* ShopViewModel.swift */,
 				D462DB362250CF9F0096E077 /* CameraViewModel.swift */,
 				D42B344E228E065500354413 /* ShopInfoViewModel.swift */,
+				D4A22FA2230D54D4001F23A1 /* SearchViewModel.swift */,
+				D4A22FAC230DD42A001F23A1 /* FilterViewModel.swift */,
 			);
 			name = "Table View";
 			sourceTree = "<group>";
@@ -615,6 +629,8 @@
 				D4F6032C223C013F00277F54 /* Settings */,
 				D48B3CB8224D5ACC000FE39C /* Shop */,
 				D462DB312250CC690096E077 /* Camera */,
+				D4A22FB3230E630F001F23A1 /* FilterTableViewCell.swift */,
+				D4A22FB4230E630F001F23A1 /* FilterTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -636,6 +652,8 @@
 				D483D4FD221DB53200B4AC13 /* TableHeaderView.xib */,
 				D4DA86B4221F5CBB006B2489 /* PageIndicatorView.swift */,
 				D4DA86B2221F5CAF006B2489 /* PageIndicatorView.xib */,
+				D4A22FA4230D7682001F23A1 /* CollectionHeaderView.swift */,
+				D4A22FA5230D7682001F23A1 /* CollectionHeaderView.xib */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -793,10 +811,12 @@
 				D4B99B0E2206E6F300DBF0BB /* AvenirNextCyr-Medium.ttf in Resources */,
 				D459D510221DF98100468A2F /* PhoneConfirmeView.xib in Resources */,
 				D4E8E13B22440CCE005E1A0B /* EditingTableViewCell.xib in Resources */,
+				D4A22FA7230D7682001F23A1 /* CollectionHeaderView.xib in Resources */,
 				D483D503221DBE0400B4AC13 /* Localizable.strings in Resources */,
 				D4B99B0522062AEC00DBF0BB /* ShadowView.xib in Resources */,
 				D4B3B0692244E2DB005485D2 /* new_photo.png in Resources */,
 				D40BA2102225C6CF00A9A0DE /* ProductTableViewCell.xib in Resources */,
+				D4A22FB6230E630F001F23A1 /* FilterTableViewCell.xib in Resources */,
 				D4BEDD2F221DAC73001CFB67 /* countryCodes.json in Resources */,
 				D40BA20A2225B42200A9A0DE /* Auth.storyboard in Resources */,
 				D4B99AF32206169F00DBF0BB /* LaunchScreen.storyboard in Resources */,
@@ -925,6 +945,7 @@
 				D48B3CBC224D5E4A000FE39C /* ShopServices.swift in Sources */,
 				D4F6032F223C015A00277F54 /* SettingsTableViewCell.swift in Sources */,
 				D459D51E221E030300468A2F /* SignUpPageViewController.swift in Sources */,
+				D4A22FA3230D54D4001F23A1 /* SearchViewModel.swift in Sources */,
 				D4E96C092250DF1C00F2E4C1 /* TextProductCategories.swift in Sources */,
 				A423CEC6F00931A8566F035C /* LoginViewController.swift in Sources */,
 				D40C1205224E970500665DB7 /* CameraPickerViewModel.swift in Sources */,
@@ -943,10 +964,12 @@
 				D462DB282250B1EE0096E077 /* AssetImageFetcher.swift in Sources */,
 				7138E7FC3277519A7E228413 /* FeedRouter.swift in Sources */,
 				AE039B959602A13A7E4634A8 /* (null) in Sources */,
+				D4A22FB5230E630F001F23A1 /* FilterTableViewCell.swift in Sources */,
 				1A72D39A5C7DC83FB03A15A3 /* FeedViewController.swift in Sources */,
 				06273C42BC6B14FD79AA0E1D /* ProfileRouter.swift in Sources */,
 				D4C902252251302C00CAB2A4 /* SearchRouter.swift in Sources */,
 				EF14EB33F6FE630F9380DF85 /* (null) in Sources */,
+				D4A22FA6230D7682001F23A1 /* CollectionHeaderView.swift in Sources */,
 				DF983B7AFDB4BED0EAE8071F /* ProfileViewController.swift in Sources */,
 				F6EBC67B532D9BA5A55BBF19 /* ShopsRouter.swift in Sources */,
 				D462DB442250DDB50096E077 /* ImagePersonInfo.swift in Sources */,
@@ -980,6 +1003,7 @@
 				D4FC5D0E22271A6F00C3A7E5 /* ProductCollectionViewCell.swift in Sources */,
 				D48B3CB6224D5AC8000FE39C /* ShopCollectionViewCell.swift in Sources */,
 				4E4EC56BB0DC6E538B1307AF /* GARouterProtocol.swift in Sources */,
+				D4A22FAD230DD42A001F23A1 /* FilterViewModel.swift in Sources */,
 				D40BA2122225C8F200A9A0DE /* Product.swift in Sources */,
 				D4B99B0822062B1100DBF0BB /* ShadowView.swift in Sources */,
 				D4B99B122206EA9700DBF0BB /* RoundedTextField.swift in Sources */,

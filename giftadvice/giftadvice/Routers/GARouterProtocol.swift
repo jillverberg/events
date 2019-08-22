@@ -35,6 +35,7 @@ protocol AuthRouterInput: InitiallyPresentationRouter {
 protocol FeedRouterInput {
    func showProduct(_ product: Product)
    func showLogin()
+   func showFilter()
 }
 
 protocol ProfileRouterInput {

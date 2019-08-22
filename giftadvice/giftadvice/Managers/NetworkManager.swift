@@ -32,7 +32,9 @@ class NetworkManager: RequestAdapter {
         
         static let shop = "shopId"
         static let subscribe = "isSubscribed"
-        
+
+        static let value = "search_value"
+
         static let accessToken = "Authorization"
         static let contentType = "Content-Type"
     }
@@ -220,6 +222,20 @@ class NetworkManager: RequestAdapter {
         
     }
     
+    // MARK: - Search Method
+    
+    func searchShop(user: User, value: String, completion: @escaping NetworkCompletion) {
+        let parameters: [String: Any] = [Keys.value: value]
+        
+        _ = getRequest(withMethod: Paths.GET.shop, parameters: parameters, accessToken: user.accessToken, completion: completion)
+    }
+    
+    func searchProduct(user: User, value: String, completion: @escaping NetworkCompletion) {
+        let parameters: [String: Any] = [Keys.value: value]
+        
+        _ = getRequest(withMethod: Paths.GET.product, parameters: parameters, accessToken: user.accessToken, completion: completion)
+    }
+    
     // MARK: - Private Methods
     
     // MARK: Make Request
@@ -229,7 +245,6 @@ class NetworkManager: RequestAdapter {
         let url = methodPath(withMethod: endUrl) /* your API url */
         
         let headers: HTTPHeaders = [
-            /* "Authorization": "your_access_token",  in case you need authorization header */
             "Content-type": "multipart/form-data",
             Keys.accessToken: "Bearer " + accessToken
         ]
@@ -240,7 +255,7 @@ class NetworkManager: RequestAdapter {
             }
             
             if let data = imageData {
-                multipartFormData.append(data, withName: "photo", fileName: "", mimeType: "")
+                multipartFormData.append(data, withName: "photo", fileName: "image.png", mimeType: "image/png")
             }
             
         }, usingThreshold: UInt64.init(), to: url, method: .put, headers: headers) { (result) in

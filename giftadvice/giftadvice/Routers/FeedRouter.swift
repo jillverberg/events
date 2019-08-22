@@ -28,6 +28,13 @@ class FeedRouter: GARouter, FeedRouterInput {
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
 
+
+    func showFilter() {
+        let viewController = setupFilterViewController()
+        
+        self.rootNavigationController?.parent?.present(viewController, animated: true)
+    }
+    
     // MARK: Private Methods
 
     private func setupViewController() -> UIViewController {
@@ -36,4 +43,12 @@ class FeedRouter: GARouter, FeedRouterInput {
         
         return viewController
     }
+    
+    private func setupFilterViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .filter)
+        let viewController = self.createViewController(from: storyboardViewController)
+        
+        return viewController
+    }
+
 }
