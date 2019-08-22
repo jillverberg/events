@@ -34,7 +34,13 @@ class FeedViewController: GAViewController {
     
     private var sortingValue: SortingModel?
     private var filterEventValue = [FilterModel]()
-    private var filterPage = 0
+    private var filterPriceValue: FilterModel?
+    private var filterPage: Int {
+        if let tabBar = tabBarController {
+            return tabBar.view.subviews.count == 4 ? 1 : 0
+        }
+        return 0
+    }
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -276,14 +282,24 @@ private extension FeedViewController {
         let adapter = TableAdapter<FilterModel, FilterTableViewCell>()
         
         adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.model, selected: self.filterEventValue.contains(where: { ctx.model.key == $0.key }))
+            let currentSelected = self.filterPage == 0 ? self.filterEventValue : [self.filterPriceValue].compactMap({ $0 })
+            
+            ctx.cell?.render(props: ctx.model, selected: currentSelected.contains(where: { ctx.model.key == $0.key }))
         }
         
         adapter.on.tap = { [unowned self] ctx in
-            if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
-                self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
+            if self.filterPage == 0 {
+                if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
+                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
+                } else {
+                    self.filterEventValue.append(ctx.model)
+                }
             } else {
-                self.filterEventValue.append(ctx.model)
+                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.model.key {
+                    self.filterPriceValue = nil
+                } else {
+                    self.filterPriceValue = ctx.model
+                }
             }
             
             ctx.table?.reloadData()
