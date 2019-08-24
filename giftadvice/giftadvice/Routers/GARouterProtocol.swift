@@ -22,7 +22,7 @@ protocol OnboardRouterInput: InitiallyPresentationRouter {
 protocol LoginRouterInput: InitiallyPresentationRouter {
     func showLaunchViewController()
     func showLoginViewController()
-    func showResetViewController()
+    func showResetViewController(type: LoginRouter.SignUpType)
     func showSignUpViewController()
     func showAuthRouter()
     func showSignUpStepsViewControllerWith(type: LoginRouter.SignUpType)

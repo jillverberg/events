@@ -62,8 +62,10 @@ class LoginRouter: GARouter, LoginRouterInput {
         }
     }
     
-    func showResetViewController() {
-        let viewController = setupResetViewController()
+    func showResetViewController(type: SignUpType) {
+        let viewController = setupResetViewController() as! PasswordResetViewController
+        viewController.type = type
+
         self.rootNavigationController?.pushViewController(viewController, animated: true)
     }
     

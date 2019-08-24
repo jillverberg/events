@@ -43,6 +43,8 @@ class LoginViewController: GAViewController {
                 
         configureNavigationBar()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        UserDefaults.standard.set(loginType.selectedSegmentIndex == 0 ? LoginRouter.SignUpType.shop.rawValue : LoginRouter.SignUpType.buyer.rawValue, forKey: "type")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -137,7 +139,7 @@ class LoginViewController: GAViewController {
             fatalError("\(self) router isn't LoginRouter")
         }
         
-        router.showResetViewController()
+        router.showResetViewController(type: loginType.selectedSegmentIndex == 0 ? .shop : .buyer)
     }
     
     @IBAction func needsChangeCountry(_ sender: Any) {
@@ -200,6 +202,10 @@ class LoginViewController: GAViewController {
         let formatter = PartialFormatter(phoneNumberKit: phoneNumberKit, defaultRegion: region, withPrefix: false, maxDigits: nil)
 
         phoneTextField.text = formatter.formatPartial(phoneTextField.text ?? "")
+    }
+    
+    @IBAction func typeChanged(_ sender: Any) {
+        UserDefaults.standard.set(loginType.selectedSegmentIndex == 0 ? LoginRouter.SignUpType.shop.rawValue : LoginRouter.SignUpType.buyer.rawValue, forKey: "type")
     }
 }
 

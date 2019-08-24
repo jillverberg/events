@@ -18,6 +18,7 @@ class PasswordResetViewController: GAViewController {
     @IBOutlet weak var getButton: BorderedButton!
     @IBOutlet weak var saveButton: BorderedButton!
     
+    @IBOutlet weak var mainTitleLabel: UILabel!
     @IBOutlet weak var countryNameLabel: UILabel!
     @IBOutlet weak var countryPrefixButton: BorderedButton!
 
@@ -25,13 +26,20 @@ class PasswordResetViewController: GAViewController {
     @IBOutlet weak var passwordTextField: RoundedTextField!
     @IBOutlet weak var repeatPasswordTextField: RoundedTextField!
     @IBOutlet weak var codeTextField: RoundedTextField!
+    @IBOutlet weak var messageLabel: UILabel!
+    
+    // MARK: - Public Properties
+    var type: LoginRouter.SignUpType!
 
-    // MARK: - Private properties
+    // MARK: - Private Properties
 
     private var service: LoginService!
     private let phoneNumberKit = PhoneNumberKit()
     private var region = "RU"
     
+    private var timer = Timer()
+    private var countDouwnSeconds = 120
+
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -55,8 +63,19 @@ class PasswordResetViewController: GAViewController {
 //                errorMessage = "Registration.Error.Phone".localized
             }
             
-            service.getCode(for: countryPrefixButton.title(for: .normal)! + phone)
+            service.getCode(for: countryPrefixButton.title(for: .normal)! + phone, type: type)
         }
+        
+        if !self.timer.isValid {
+            self.countDouwnSeconds = 120
+        }
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                          target: self,
+                                          selector: #selector(self.countTimer),
+                                          userInfo: nil,
+                                          repeats: true)
+        self.countTimer()
     }
     
     @IBAction func phoneNumberChanged(_ sender: Any) {
@@ -118,11 +137,16 @@ class PasswordResetViewController: GAViewController {
 
 private extension PasswordResetViewController {
     func setupView() {
+        getButton.setTitle("Reset.SendCode".localized, for: .normal)
+
         getButton.layer.borderWidth = 1
         getButton.layer.borderColor = AppColors.Common.active().cgColor
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.tintColor = nil
+        
+        mainTitleLabel.textColor = AppColors.Common.active()
+        
     }
     
     var phoneItemAdapter: AbstractAdapterProtocol {
@@ -146,5 +170,25 @@ private extension PasswordResetViewController {
         }
         
         return adapter
+    }
+    
+    @objc func countTimer() {
+        if countDouwnSeconds > 0 {
+            countDouwnSeconds -= 1
+            
+            let minutes = Int(countDouwnSeconds) / 60 % 60
+            let seconds = Int(countDouwnSeconds) % 60
+            
+            UIView.setAnimationsEnabled(false)
+            getButton.setTitle(String(format:"%02i:%02i", minutes, seconds), for: .normal)
+            getButton.layoutIfNeeded()
+            UIView.setAnimationsEnabled(true)
+            
+            getButton.isEnabled = false
+        } else {
+            timer.invalidate()
+            getButton.setTitle("Reset.ResendCode".localized, for: .normal)
+            getButton.isEnabled = true
+        }
     }
 }

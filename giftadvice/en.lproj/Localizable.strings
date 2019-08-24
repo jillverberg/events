@@ -52,6 +52,9 @@
 "Registration.Error.Site"               = "Incorrect site address";
 "Registration.Error.Company"            = "Address must be more than 3 characters";
 
+"Reset.SendCode"                        = "Send code";
+"Reset.ResendCode"                      = "Resend code";
+
 "Collection.Title.Editing"              = "Change";
 "Collection.Title.Done"                 = "Done";
 

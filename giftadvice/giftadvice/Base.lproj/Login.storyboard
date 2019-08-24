@@ -247,6 +247,9 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="typeChanged:" destination="VPx-rM-sa2" eventType="valueChanged" id="8io-4t-a7Q"/>
+                                </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LqA-eK-m1C" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
                                 <rect key="frame" x="32" y="588.66666666666663" width="350" height="44"/>
@@ -833,6 +836,8 @@
                         <outlet property="countryNameLabel" destination="hoh-Am-Aww" id="IQi-yz-7Mj"/>
                         <outlet property="countryPrefixButton" destination="uC1-Zz-P5b" id="64x-1w-D5L"/>
                         <outlet property="getButton" destination="pXf-mK-7IO" id="6ez-4c-ocV"/>
+                        <outlet property="mainTitleLabel" destination="a2R-2g-mNk" id="1yO-Mx-mQn"/>
+                        <outlet property="messageLabel" destination="Yuf-xy-20V" id="MYa-kW-Dfd"/>
                         <outlet property="passwordTextField" destination="j9Q-Cw-zoD" id="cVA-2o-beG"/>
                         <outlet property="phoneTextField" destination="6jZ-gc-JhP" id="Pkv-bC-S11"/>
                         <outlet property="repeatPasswordTextField" destination="NXn-xR-H4N" id="2nq-tn-V6t"/>

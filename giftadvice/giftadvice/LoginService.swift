@@ -14,7 +14,7 @@ private protocol PublicMethods {
     func saveUserModel(_ model: User)
     func removeUserModel()
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
-    func getCode(for phone: String)
+    func getCode(for phone: String, type: LoginRouter.SignUpType)
     func signUp(withUser user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func verify(withCode code: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func update(user: User, image: UIImage?, completion: ((String?, User?) -> ())?)
@@ -98,7 +98,8 @@ extension LoginService: PublicMethods {
     }
     
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ()) {
-        networkManager.login(withPhone: phone, password: password, type: type) { (cancelled, error, response) in
+        let phone = phone.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .symbols)
+        networkManager.login(withPhone: "+\(phone)", password: password, type: type) { (cancelled, error, response) in
             var userModel: User?
             if let data = response, let user = User(JSON: data) {
                 userModel = user
@@ -112,13 +113,12 @@ extension LoginService: PublicMethods {
         }
     }
     
-    func getCode(for phone: String) {
-        networkManager.getUsers { (canceled, error, response) in
+    func getCode(for phone: String, type: LoginRouter.SignUpType) {
+        let phone = phone.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "")
+
+        networkManager.getCode(type: type, phone: phone) { (cancelled, error, response) in
             print(response)
         }
-//        if let user = userModel {
-//            networkManager.getCode(user: user, completion: {_, _, _ in })
-//        }
     }
     
     func removeUserModel() {

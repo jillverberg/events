@@ -52,6 +52,9 @@
 "Registration.Error.Site"               = "Неправильно указан адрес сайта";
 "Registration.Error.Company"            = "Адрес должен быть больше, чем 3 символа";
 
+"Reset.SendCode"                        = "Отправить код";
+"Reset.ResendCode"                      = "Отправить код";
+
 "Collection.Title.Editing"              = "Изменить";
 "Collection.Title.Done"                 = "Готово";
 

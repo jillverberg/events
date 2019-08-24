@@ -101,8 +101,10 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.POST.user, parameters: [:], accessToken: nil, completion: completion)
     }
     
-    func getCode(user: String, completion: @escaping NetworkCompletion) {
-        _ = getRequest(withMethod: Paths.POST.user + "/\(user)/" + Paths.GET.code, parameters: [:], accessToken: nil, completion: completion)
+    func getCode(type: LoginRouter.SignUpType, phone: String, completion: @escaping NetworkCompletion) {
+        let method = type == .buyer ? Paths.POST.user : Paths.POST.shop
+
+        _ = getRequest(withMethod: method + "/\(phone)/" + Paths.GET.code, parameters: [:], accessToken: nil, completion: completion)
     }
     
     func signUp(withUser user: User, completion: @escaping NetworkCompletion) {
