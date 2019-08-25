@@ -12,6 +12,7 @@ class ProductTitleTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet Properties
 
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
@@ -28,6 +29,13 @@ class ProductTitleTableViewCell: UITableViewCell {
         
         nameLabel.text = props.title
         likeButton.setImage(props.isFavorite ? #imageLiteral(resourceName: "button_like") : #imageLiteral(resourceName: "button_unliked"), for: .normal)
+        priceLabel.textColor = AppColors.Common.active()
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "ru_RU")
+        
+        priceLabel.text = formatter.string(from: NSNumber(value: props.price))!
     }
     
     // MARK: Actions

@@ -26,6 +26,7 @@ class AuthRouter: GARouter, AuthRouterInput {
         viewController.router = self
         
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
+        NotificationCenter.default.addObserver(self, selector: #selector(need), name: NSNotification.Name(rawValue: "Some"), object: nil)
     }
 
     func presentCamera() {
@@ -37,6 +38,17 @@ class AuthRouter: GARouter, AuthRouterInput {
     func showSearchWith(keyword: [String]) {
         if let tabBar = rootNavigationController?.viewControllers[0] as? TabBarViewController {
             tabBar.selectedIndex = 3
+        }
+    }
+    
+    @objc func need(notification: Notification) {
+        if let root = rootNavigationController?.viewControllers.first as? TabBarViewController,
+            let shop = notification.object as? User {
+            root.selectedIndex = 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                self.shopsRouter?.showShop(shop)
+            }
         }
     }
     

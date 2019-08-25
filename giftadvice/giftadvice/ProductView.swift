@@ -48,6 +48,7 @@ class ProductView: UIView {
     }
     
     struct ProductTitle: StaticCellModel {
+        var price: Double
         let title: String
         var isFavorite: Bool
         let shareCommand: Command?
@@ -106,7 +107,7 @@ class ProductView: UIView {
             if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
                 dispatch.enter()
                 self.service?.isProductFavorite(user: user, product: identifier, completion: { (error, favorite) in
-                    title = ProductTitle(title: product.name ?? "", isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
+                    title = ProductTitle(price: product.price, title: product.name ?? "", isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
                     dispatch.leave()
                 })
                 
@@ -146,10 +147,14 @@ class ProductView: UIView {
         }
     }
     
+    
     @IBAction func performAction(_ sender: Any) {
         if let viewController = delegate as? ProductViewController, type == .shop {
             viewController.needToHide()
             viewController.profileRouter().showEditing(product)
+        } else if let viewController = delegate as? ProductViewController, let shop = product?.shop {
+            viewController.needToHide()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Some"), object: shop)            
         }
     }
 }
