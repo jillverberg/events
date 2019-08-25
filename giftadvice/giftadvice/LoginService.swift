@@ -14,7 +14,8 @@ private protocol PublicMethods {
     func saveUserModel(_ model: User)
     func removeUserModel()
     func login(withPhone phone: String, password: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
-    func getCode(for phone: String, type: LoginRouter.SignUpType)
+    func getCode(for phone: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
+    func setNew(password: String, withCode code: String, user: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func signUp(withUser user: User, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func verify(withCode code: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ())
     func update(user: User, image: UIImage?, completion: ((String?, User?) -> ())?)
@@ -113,11 +114,31 @@ extension LoginService: PublicMethods {
         }
     }
     
-    func getCode(for phone: String, type: LoginRouter.SignUpType) {
+    func getCode(for phone: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ()) {
         let phone = phone.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "")
 
         networkManager.getCode(type: type, phone: phone) { (cancelled, error, response) in
-            print(response)
+            var userModel: User?
+            if let data = response, let user = User(JSON: data) {
+                userModel = user
+            }
+            
+            DispatchQueue.main.async {
+                completion(error, userModel)
+            }
+        }
+    }
+    
+    func setNew(password: String, withCode code: String, user: String, type: LoginRouter.SignUpType, completion: @escaping (_ error: String?, _ userModel: User?) -> ()) {
+        networkManager.setNew(password: password, withCode: code, user: user, type: type) { (cancelled, error, response) in
+            var userModel: User?
+            if let data = response, let user = User(JSON: data) {
+                userModel = user
+            }
+            
+            DispatchQueue.main.async {
+                completion(error, userModel)
+            }
         }
     }
     

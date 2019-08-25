@@ -59,13 +59,39 @@ enum SortingModel: String, ModelProtocol {
         return rawValue.hashValue
     }
     
-    case likes
-    case date
-    case rate
+    case likesASC
+    case dateASC
+    case rateASC
+    case likesDESC
+    case dateDESC
+    case rateDESC
     
     static let value: [SortingModel: String] = [
-        .likes: "Sorting.Key.Likes".localized,
-        .date: "Sorting.Key.Date".localized,
-        .rate: "Sorting.Key.Review".localized
+        .likesASC: "Sorting.Key.Likes.ASC".localized,
+        .dateASC: "Sorting.Key.Date.ASC".localized,
+        .rateASC: "Sorting.Key.Review.ASC".localized,
+        .likesDESC: "Sorting.Key.Likes.DESC".localized,
+        .dateDESC: "Sorting.Key.Date.DESC".localized,
+        .rateDESC: "Sorting.Key.Review.DESC".localized
     ]
+    
+    var order: String {
+        switch self {
+        case .likesASC, .dateASC, .rateASC:
+            return "asc"
+        case .likesDESC, .dateDESC, .rateDESC:
+            return "desc"
+        }
+    }
+    
+    var key: String {
+        switch self {
+        case .likesASC, .likesDESC:
+            return "likes"
+        case .dateASC, .dateDESC:
+            return "create_time"
+        case .rateASC, .rateDESC:
+            return "reviews"
+        }
+    }
 }

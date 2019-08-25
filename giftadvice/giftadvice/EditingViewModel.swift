@@ -93,6 +93,7 @@ class EditingViewModel: NSObject {
         case five = 50000
         case six
         
+        // Price String Values for table view representation
         static let value: [Prices: String] = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .currency
@@ -111,6 +112,38 @@ class EditingViewModel: NSObject {
             
             return dictionary
         }()
+        
+        init?(_ value: String?) {
+            if let value = value, let intValue = Int(value), let price = Prices(rawValue: intValue) {
+                self = price
+            } else {
+                return nil
+            }
+        }
+        
+        // Price range for API
+        var range: (String, String?) {
+            var range: (Int, Int)
+            
+            switch self {
+            case .one:
+                range = (Prices.zero.rawValue, Prices.one.rawValue)
+            case .two:
+                range = (Prices.one.rawValue, Prices.two.rawValue)
+            case .three:
+                range = (Prices.two.rawValue, Prices.three.rawValue)
+            case .four:
+                range = (Prices.three.rawValue, Prices.four.rawValue)
+            case .five:
+                range = (Prices.four.rawValue, Prices.five.rawValue)
+            case .six:
+                return (String(Prices.six.rawValue), nil)
+            default:
+                return ("", nil)
+            }
+            
+            return (String(range.0), String(range.1))
+        }
     }
     
     enum ProductError: Error {
@@ -226,6 +259,8 @@ private extension EditingViewModel {
                                     .web: "",
                                     .price: ""])
         }
+        
+        tableView.isLoading = false
     }
     
     func createEditings(values: [EditingCells: String]) {

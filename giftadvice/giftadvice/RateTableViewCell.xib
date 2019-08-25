@@ -26,6 +26,9 @@
                             <constraint firstAttribute="height" constant="44" id="EWx-Q0-JCr"/>
                         </constraints>
                         <state key="normal" image="like"/>
+                        <connections>
+                            <action selector="likeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2Wd-gp-tRt"/>
+                        </connections>
                     </button>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6m-yT-bU0">
                         <rect key="frame" x="26" y="18" width="110" height="8"/>
@@ -35,14 +38,14 @@
                             <constraint firstAttribute="width" constant="110" id="uCK-KQ-zeV"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="2Mr-zF-Ws2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like_static" translatesAutoresizingMaskIntoConstraints="NO" id="2Mr-zF-Ws2">
                         <rect key="frame" x="12" y="17" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="KQw-rn-b6c"/>
                             <constraint firstAttribute="width" constant="10" id="Rp2-dz-NBm"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="FEB-vc-8Fu">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dislike_static" translatesAutoresizingMaskIntoConstraints="NO" id="FEB-vc-8Fu">
                         <rect key="frame" x="140" y="17" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="nmE-2a-XEO"/>
@@ -56,6 +59,9 @@
                             <constraint firstAttribute="width" constant="44" id="oRN-2l-pPU"/>
                         </constraints>
                         <state key="normal" image="dislike"/>
+                        <connections>
+                            <action selector="disLikeAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="fGz-lc-5M8"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -73,7 +79,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="disLikeButton" destination="vuu-gm-IvX" id="g5d-7H-60C"/>
                 <outlet property="disLikeImageView" destination="FEB-vc-8Fu" id="e9Q-BC-BXM"/>
+                <outlet property="likeButton" destination="3jU-yU-KML" id="mA7-tG-uRO"/>
                 <outlet property="rateView" destination="L6m-yT-bU0" id="U5P-AH-grk"/>
             </connections>
             <point key="canvasLocation" x="232" y="-31.484257871064472"/>
@@ -81,6 +89,8 @@
     </objects>
     <resources>
         <image name="dislike" width="25" height="24"/>
+        <image name="dislike_static" width="12" height="13"/>
         <image name="like" width="27" height="25"/>
+        <image name="like_static" width="12" height="13"/>
     </resources>
 </document>

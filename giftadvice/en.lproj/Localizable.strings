@@ -18,6 +18,7 @@
 "Alert.Camera"                          = "Take a photo";
 
 "Popup.Done"                            = "Done";
+"Popup.Save"                            = "Save";
 
 "Onboarding.1"                          = "1 eng";
 "Onboarding.2"                          = "2 eng";
@@ -45,6 +46,7 @@
 
 "Registration.Error"                    = "Error in form";
 "Registration.Error.Phone"              = "Wrong phone format";
+"Registration.Error.Code"               = "Enter a 4-digit code";
 "Registration.Error.Name"               = "Username must be more than 3 letters";
 "Registration.Error.Password"           = "Passwords must match";
 "Registration.Error.PasswordCount"      = "Password must be more than 5 letters";
@@ -52,8 +54,18 @@
 "Registration.Error.Site"               = "Incorrect site address";
 "Registration.Error.Company"            = "Address must be more than 3 characters";
 
+"Reset.Succesed"                        = "Successfully";
+"Reset.Succesed.Message"                = "Password changed successfully";
+"Reset.Title"                           = "Password recovery";
+"Reset.Code"                            = "Code";
 "Reset.SendCode"                        = "Send code";
 "Reset.ResendCode"                      = "Resend code";
+"Reset.Message"                         = "To save the password, enter the code from SMS";
+
+"User.Field.Phone"                      = "Phone number";
+"User.Field.Password"                   = "Password";
+"User.Field.RePassword"                 = "Repeat password";
+"User.Field.NewPassword"                = "Repeat new password";
 
 "Collection.Title.Editing"              = "Change";
 "Collection.Title.Done"                 = "Done";
@@ -101,9 +113,12 @@
 "Search.Section.Outter"                 = "Other site";
 
 "Sorting"                               = "Sorting";
-"Sorting.Key.Likes"                     = "By likes";
-"Sorting.Key.Date"                      = "By date";
-"Sorting.Key.Review"                    = "By review";
+"Sorting.Key.Likes.ASC"                 = "By likes (from smallest to largest)";
+"Sorting.Key.Date.ASC"                  = "By date (old first)";
+"Sorting.Key.Review.ASC"                = "By reviews (from smaller to larger)";
+"Sorting.Key.Likes.DESC"                = "By likes (larger to smaller)";
+"Sorting.Key.Date.DESC"                 = "By date (new first)";
+"Sorting.Key.Review.DESC"               = "By reviews (from larger to smaller)";
 "Filtering.Event"                       = "Filter by event";
 "Filtering.Price"                       = "Filter by price";
 "Filtering.Next"                        = "Next (Price)";

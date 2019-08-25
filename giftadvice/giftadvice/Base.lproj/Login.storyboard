@@ -620,7 +620,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="22"/>
@@ -818,20 +818,30 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableShadow" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="saveAction:" destination="6qm-4b-wHZ" eventType="touchUpInside" id="RR9-t3-mbJ"/>
+                                </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="f1L-gc-oyf">
+                                <rect key="frame" x="42" y="644" width="20" height="20"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="FLa-jb-qzP" firstAttribute="centerX" secondItem="kEn-r5-bDG" secondAttribute="centerX" id="3MP-dV-gCp"/>
                             <constraint firstItem="FLa-jb-qzP" firstAttribute="width" secondItem="zSw-x5-TCE" secondAttribute="width" id="C1H-Tf-Yye"/>
+                            <constraint firstItem="f1L-gc-oyf" firstAttribute="centerX" secondItem="FLa-jb-qzP" secondAttribute="centerX" id="CFY-Tl-eIF"/>
                             <constraint firstItem="FLa-jb-qzP" firstAttribute="top" secondItem="zSw-x5-TCE" secondAttribute="bottom" constant="32" id="MOd-g2-FSP"/>
                             <constraint firstItem="zSw-x5-TCE" firstAttribute="leading" secondItem="SM8-xQ-GTQ" secondAttribute="leading" constant="32" id="Uil-yS-yVX"/>
                             <constraint firstItem="SM8-xQ-GTQ" firstAttribute="trailing" secondItem="zSw-x5-TCE" secondAttribute="trailing" constant="32" id="deQ-Z4-Xd4"/>
+                            <constraint firstItem="f1L-gc-oyf" firstAttribute="centerY" secondItem="FLa-jb-qzP" secondAttribute="centerY" id="llV-yo-QUE"/>
                             <constraint firstItem="zSw-x5-TCE" firstAttribute="centerY" secondItem="kEn-r5-bDG" secondAttribute="centerY" constant="-32" id="vrR-xP-u0J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SM8-xQ-GTQ"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="f1L-gc-oyf" id="g39-iA-OlW"/>
                         <outlet property="codeTextField" destination="pK4-I0-vT9" id="lTt-8a-3tm"/>
                         <outlet property="countryNameLabel" destination="hoh-Am-Aww" id="IQi-yz-7Mj"/>
                         <outlet property="countryPrefixButton" destination="uC1-Zz-P5b" id="64x-1w-D5L"/>

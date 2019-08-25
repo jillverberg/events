@@ -31,17 +31,7 @@ class FeedViewController: GAViewController {
     
     private var loginService: LoginService!
     private var productService: ProductService!
-    
-    private var sortingValue: SortingModel?
-    private var filterEventValue = [FilterModel]()
-    private var filterPriceValue: FilterModel?
-    private var filterPage: Int {
-        if let tabBar = tabBarController {
-            return tabBar.view.subviews.count == 4 ? 1 : 0
-        }
-        return 0
-    }
-    
+
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
@@ -81,7 +71,77 @@ class FeedViewController: GAViewController {
 
         viewModel.setupTableView(adapters: [productItemAdapter])
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let navigationBar = navigationController?.navigationBar {
+            topBackgroundView.constant = -navigationBar.frame.size.height - UIApplication.shared.statusBarFrame.height
+        }
+    
+        configureNavigationBar()
+        
+        DispatchQueue.main.async {
+            if self.firstCellInitFrame == nil {
+                var firstCellFrame = self.viewModel.tableView.rectForRow(at: IndexPath(row: 0, section: 0 ))
+                firstCellFrame = self.viewModel.tableView.convert(firstCellFrame, to: self.view)
+                self.firstCellInitFrame = firstCellFrame
+                let height = self.view.frame.height - firstCellFrame.origin.y + self.tabBarHeight
+                self.placeholderConstraint.constant = height
+            }
+        }
+        
+        setupView()
+        requestData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
+        loginService = assembly.loginService
+        productService = assembly.productService
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+    }
+}
+
+private extension FeedViewController {
+    // MARK: Configure Views
+    func setupView() {
+        backgroundView.backgroundColor = AppColors.Common.active()
+        view.backgroundColor = AppColors.Common.active()
+    }
+    
+    func configureNavigationBar() {
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    }
+
+    func scale(from transform: CGAffineTransform) -> CGFloat {
+        return CGFloat(sqrt(Double(transform.a * transform.a + transform.c * transform.c)))
+    }
+    
+    func feedRouter() -> FeedRouterInput {
+        guard let router = router as? FeedRouterInput else {
+            fatalError("\(self) router isn't LaunchRouter")
+        }
+        
+        return router
+    }
+
+    func requestData() {
         if let user = loginService.userModel {
+            viewModel.tableView.isLoading = true
+            
             productService.getProducts(user: user, completion: { error, models in
                 if let models = models {
                     let section = TableSection(models)
@@ -111,101 +171,6 @@ class FeedViewController: GAViewController {
                 }
             })
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let navigationBar = navigationController?.navigationBar {
-            topBackgroundView.constant = -navigationBar.frame.size.height - UIApplication.shared.statusBarFrame.height
-        }
-    
-        configureNavigationBar()
-        
-        DispatchQueue.main.async {
-            var firstCellFrame = self.viewModel.tableView.rectForRow(at: IndexPath(row: 0, section: 0 ))
-            firstCellFrame = self.viewModel.tableView.convert(firstCellFrame, to: self.view)
-            self.firstCellInitFrame = firstCellFrame
-            let height = self.view.frame.height - firstCellFrame.origin.y + self.tabBarHeight
-            self.placeholderConstraint.constant = height
-        }
-        
-        setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func inject(propertiesWithAssembly assembly: AssemblyManager) {
-        loginService = assembly.loginService
-        productService = assembly.productService
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        
-    }
-    
-    // MARK: - Actions
-    @IBAction func sortingAction(_ sender: Any) {
-        poluteSortingData()
-    }
-    
-    @IBAction func filterAction(_ sender: Any) {
-        poluteFilterData()
-    }
-}
-
-private extension FeedViewController {
-    // MARK: Configure Views
-    func setupView() {
-        backgroundView.backgroundColor = AppColors.Common.active()
-        view.backgroundColor = AppColors.Common.active()
-    }
-    
-    func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    }
-
-    func scale(from transform: CGAffineTransform) -> CGFloat {
-        return CGFloat(sqrt(Double(transform.a * transform.a + transform.c * transform.c)))
-    }
-    
-    func feedRouter() -> FeedRouterInput {
-        guard let router = router as? FeedRouterInput else {
-            fatalError("\(self) router isn't LaunchRouter")
-        }
-        
-        return router
-    }
-    
-    func poluteSortingData() {
-        let title = "Sorting".localized
-        
-        showPopupView(title: title, adapters: [sortingItemAdapter], sections: [TableSection([SortingModel.likes, SortingModel.date, SortingModel.rate])], CommandWith<Any>(action: { [unowned self] models in
-            self.hidePopupView()            
-        }))
-    }
-    
-    func poluteFilterData() {
-        let title = "Filtering.Event".localized
-        
-        let models: [FilterModel] = EditingViewModel.Events.value.map({ FilterModel(value: $0.value, key: $0.key.rawValue) })
-        
-        showPopupView(title: title, adapters: [filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
-            let title = "Filtering.Price".localized
-            let models: [FilterModel] = EditingViewModel.Prices.value
-                .sorted(by: { $0.key.rawValue < $1.key.rawValue })
-                .map({ FilterModel(value: $0.value, key: String($0.key.rawValue)) })
-            
-            self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
-                self.hidePopupView()
-            }), actionTitle: "Filtering.Save".localized)
-        }), actionTitle: "Filtering.Next".localized)
     }
 }
 
@@ -251,60 +216,6 @@ private extension FeedViewController {
             let model = ctx.model
             
             self.feedRouter().showProduct(model)
-        }
-        
-        return adapter
-    }
-    
-    var sortingItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<SortingModel, FilterTableViewCell>()
-        
-        adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.model, selected: self.sortingValue == ctx.model)
-        }
-        
-        adapter.on.tap = { [unowned self] ctx in
-            if self.sortingValue == ctx.model {
-                self.sortingValue = nil
-            } else {
-                self.sortingValue = ctx.model
-            }
-                        
-            ctx.table?.reloadData()
-            
-            return .none
-        }
-        
-        return adapter
-    }
-    
-    var filterItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<FilterModel, FilterTableViewCell>()
-        
-        adapter.on.dequeue = { [unowned self] ctx in
-            let currentSelected = self.filterPage == 0 ? self.filterEventValue : [self.filterPriceValue].compactMap({ $0 })
-            
-            ctx.cell?.render(props: ctx.model, selected: currentSelected.contains(where: { ctx.model.key == $0.key }))
-        }
-        
-        adapter.on.tap = { [unowned self] ctx in
-            if self.filterPage == 0 {
-                if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
-                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
-                } else {
-                    self.filterEventValue.append(ctx.model)
-                }
-            } else {
-                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.model.key {
-                    self.filterPriceValue = nil
-                } else {
-                    self.filterPriceValue = ctx.model
-                }
-            }
-            
-            ctx.table?.reloadData()
-            
-            return .none
         }
         
         return adapter

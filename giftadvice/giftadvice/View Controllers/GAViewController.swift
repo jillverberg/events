@@ -137,23 +137,24 @@ class GAViewController: UIViewController {
         popupView.alpha = 0.0
         containerView.addSubview(popupView)
         popupView.autoPinEdgesToSuperviewEdges()
-        self.popupView = popupView
         
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .beginFromCurrentState, animations: {
             popupView.alpha = 1.0
-        }, completion: nil)
+        }, completion:  { _ in
+            self.popupView = popupView
+        })
     }
     
     func hidePopupView() {
         guard let popupView = popupView else {
             return
         }
-        
+        self.popupView = nil
+
         UIView.animate(withDuration: 0.25, animations: {
             popupView.alpha = 0.0
         }) { (succesed) in
             popupView.removeFromSuperview()
-            self.popupView = nil
         }
     }
     

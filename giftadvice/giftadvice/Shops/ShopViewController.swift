@@ -31,6 +31,8 @@ class ShopViewController: GAViewController {
     @IBOutlet weak var photoTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var subscribeActivityView: UIActivityIndicatorView!
     
+    @IBOutlet weak var sortingButton: UIButton!
+    @IBOutlet weak var filterButton: UIButton!
     // MARK: - Public Properties
 
     var shop: User!
@@ -40,6 +42,32 @@ class ShopViewController: GAViewController {
     private var shopService: ShopService!
     private var loginService: LoginService!
     private var isSubscribed = false
+    
+    private var sortingValue: SortingModel? {
+        didSet {
+            let enabled = sortingValue != nil
+            set(enabled: enabled, forButton: sortingButton)
+        }
+    }
+    private var filterEventValue = [FilterModel]() {
+        didSet {
+            let enabled = filterPriceValue != nil || filterEventValue.count > 0
+            set(enabled: enabled, forButton: filterButton)
+        }
+    }
+    private var filterPriceValue: FilterModel? {
+        didSet {
+            let enabled = filterPriceValue != nil || filterEventValue.count > 0
+            set(enabled: enabled, forButton: filterButton)
+        }
+    }
+    private var filterPage: Int {
+        if let title = popupView?.titleLabel.text, title == "Filtering.Event".localized {
+            return 0
+        } else {
+            return 1
+        }
+    }
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -53,15 +81,11 @@ class ShopViewController: GAViewController {
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
         
         shop.accessToken = loginService.getAccessToken()
-        shopService.getShopProducts(user: shop) { (error, response) in
-            DispatchQueue.main.async {
-                self.viewModel.reloadCollectionData(sections: [CollectionSection(response)])
-            }
-        }
         
         shopService.getShopInfo(user: shop) { (error, response) in
             if let response = response {
                 self.shop = response
+                self.shop.accessToken = self.loginService.getAccessToken()
             }
         }
         if let user = loginService?.userModel, let identifier = shop.identifier {
@@ -80,6 +104,7 @@ class ShopViewController: GAViewController {
         
         setupView()
         configureNavigationBar()
+        reloadData()
     }
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
@@ -111,6 +136,15 @@ class ShopViewController: GAViewController {
             shopService.subscribeToggle(user: user, shop: identifier, subscribed: isSubscribed)
         }
     }
+    
+    // MARK: - Actions
+    @IBAction func sortingAction(_ sender: Any) {
+        poluteSortingData()
+    }
+    
+    @IBAction func filterAction(_ sender: Any) {
+        poluteFilterData()
+    }
 }
 
 private extension ShopViewController {
@@ -140,6 +174,25 @@ private extension ShopViewController {
         }
     }
     
+    func set(enabled: Bool, forButton button: UIButton) {
+        let indicatorTag = 99
+        button.subviews.filter({ $0.tag == indicatorTag }).first?.removeFromSuperview()
+        
+        if enabled {
+            let view = UIView()
+            view.tag = indicatorTag
+            view.backgroundColor = AppColors.Common.red()
+            view.clipsToBounds = true
+            view.layer.cornerRadius = 6
+            
+            button.addSubview(view)
+            
+            view.autoSetDimensions(to: .init(width: 12, height: 12))
+            view.autoPinEdge(.leading, to: .trailing, of: button, withOffset: -8)
+            view.autoPinEdge(.bottom, to: .top, of: button, withOffset: 8)
+        }
+    }
+    
     func setUpSubscribeButton() {
         subscribeActivityView.stopAnimating()
         subscribeButton.isHidden = false
@@ -155,6 +208,79 @@ private extension ShopViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func shopRouter() -> ShopsRouterInput {
+        guard let router = router as? ShopsRouterInput else {
+            fatalError("\(self) router isn't ShopsRouterInput")
+        }
+        
+        return router
+    }
+    
+    @objc func reloadData() {
+        shopService.getShopProducts(user: shop, sorting: sortingValue, events: filterEventValue, price: filterPriceValue) { (error, response) in
+            DispatchQueue.main.async {
+                self.viewModel.reloadCollectionData(sections: [CollectionSection(response)])
+            }
+        }
+    }
+}
+
+// MARK: - Table View Properties
+private extension ShopViewController {
+    var sortingItemAdapter: AbstractAdapterProtocol {
+        let adapter = TableAdapter<SortingModel, FilterTableViewCell>()
+        
+        adapter.on.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.model, selected: self.sortingValue == ctx.model)
+        }
+        
+        adapter.on.tap = { [unowned self] ctx in
+            if self.sortingValue == ctx.model {
+                self.sortingValue = nil
+            } else {
+                self.sortingValue = ctx.model
+            }
+            
+            ctx.table?.reloadData()
+            
+            return .none
+        }
+        
+        return adapter
+    }
+    
+    var filterItemAdapter: AbstractAdapterProtocol {
+        let adapter = TableAdapter<FilterModel, FilterTableViewCell>()
+        
+        adapter.on.dequeue = { [unowned self] ctx in
+            let currentSelected = self.filterPage == 0 ? self.filterEventValue : [self.filterPriceValue].compactMap({ $0 })
+            
+            ctx.cell?.render(props: ctx.model, selected: currentSelected.contains(where: { ctx.model.key == $0.key }))
+        }
+        
+        adapter.on.tap = { [unowned self] ctx in
+            if self.filterPage == 0 {
+                if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
+                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
+                } else {
+                    self.filterEventValue.append(ctx.model)
+                }
+            } else {
+                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.model.key {
+                    self.filterPriceValue = nil
+                } else {
+                    self.filterPriceValue = ctx.model
+                }
+            }
+            
+            ctx.table?.reloadData()
+            
+            return .none
+        }
+        
+        return adapter
     }
     
     var productCollectionAdapter: AbstractAdapterProtocol {
@@ -176,12 +302,41 @@ private extension ShopViewController {
         
         return adapter
     }
+}
+
+// MARK: - Filter Methods
+
+private extension ShopViewController {
+    func poluteSortingData() {
+        let title = "Sorting".localized
+        let models: [SortingModel] = [
+            .likesASC, .likesDESC,
+            .dateASC, .dateDESC,
+            .rateASC, .rateDESC
+        ]
+        showPopupView(title: title, adapters: [sortingItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+            self.hidePopupView()
+            self.reloadData()
+        }))
+    }
     
-    private func shopRouter() -> ShopsRouterInput {
-        guard let router = router as? ShopsRouterInput else {
-            fatalError("\(self) router isn't ShopsRouterInput")
-        }
+    func poluteFilterData() {
+        let title = "Filtering.Event".localized
         
-        return router
+        let models: [FilterModel] = EditingViewModel.Events.value.map({ FilterModel(value: $0.value, key: $0.key.rawValue) })
+        
+        showPopupView(title: title, adapters: [filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+            self.hidePopupView()
+            
+            let title = "Filtering.Price".localized
+            let models: [FilterModel] = EditingViewModel.Prices.value
+                .sorted(by: { $0.key.rawValue < $1.key.rawValue })
+                .map({ FilterModel(value: $0.value, key: String($0.key.rawValue)) })
+            
+            self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+                self.hidePopupView()
+                self.reloadData()
+            }), actionTitle: "Filtering.Save".localized)
+        }), actionTitle: "Filtering.Next".localized)
     }
 }

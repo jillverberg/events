@@ -38,6 +38,7 @@ class FeedViewModel: NSObject {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
         tableDirector.reloadData()
+        tableView.isLoading = false
     }
     
     func setupCollectionView(adapters: [AbstractAdapterProtocol]) {

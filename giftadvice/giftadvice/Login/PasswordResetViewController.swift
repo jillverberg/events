@@ -27,6 +27,7 @@ class PasswordResetViewController: GAViewController {
     @IBOutlet weak var repeatPasswordTextField: RoundedTextField!
     @IBOutlet weak var codeTextField: RoundedTextField!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     // MARK: - Public Properties
     var type: LoginRouter.SignUpType!
@@ -39,6 +40,8 @@ class PasswordResetViewController: GAViewController {
     
     private var timer = Timer()
     private var countDouwnSeconds = 120
+    
+    private var userID: String?
 
     // MARK: - Life Cycle
 
@@ -55,27 +58,35 @@ class PasswordResetViewController: GAViewController {
     // MARK: - Actions
 
     @IBAction func sendCodeAction(_ sender: Any) {
-        if let phone = phoneTextField.text {
-            do {
-                let phoneNumber = try phoneNumberKit.parse(phone, withRegion: region, ignoreType: false)
-                phoneTextField.text = phoneNumber.adjustedNationalNumber()
-            } catch {
-//                errorMessage = "Registration.Error.Phone".localized
+        if let error = isValid() {
+            let alert = UIAlertController(title: "Registration.Error".localized, message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            if let phone = phoneTextField.text {
+                service.getCode(for: countryPrefixButton.title(for: .normal)! + phone, type: type, completion: { [unowned self] error, model in
+                    self.userID = model?.identifier
+                    if error != nil {
+                        self.timer.invalidate()
+                        self.getButton.setTitle("Reset.ResendCode".localized, for: .normal)
+                        self.getButton.isEnabled = true
+                    }
+                })
             }
             
-            service.getCode(for: countryPrefixButton.title(for: .normal)! + phone, type: type)
+            if !timer.isValid {
+                countDouwnSeconds = 120
+            }
+            
+            timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                         target: self,
+                                         selector: #selector(countTimer),
+                                         userInfo: nil,
+                                         repeats: true)
+            countTimer()
+            setSaveButtonStyle(active: true)
         }
-        
-        if !self.timer.isValid {
-            self.countDouwnSeconds = 120
-        }
-        
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0,
-                                          target: self,
-                                          selector: #selector(self.countTimer),
-                                          userInfo: nil,
-                                          repeats: true)
-        self.countTimer()
     }
     
     @IBAction func phoneNumberChanged(_ sender: Any) {
@@ -131,6 +142,32 @@ class PasswordResetViewController: GAViewController {
         
         showPopupView(title: "Phone.CountryCode.Title".localized, adapters: [phoneItemAdapter], sections: sections)
     }
+    
+    @IBAction func saveAction(_ sender: Any) {
+        if let error = isValid(withCode: true) {
+            let alert = UIAlertController(title: "Registration.Error".localized, message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
+            
+            present(alert, animated: true, completion: nil)
+        } else {
+            guard let password = passwordTextField.text, let userID = userID else { return }
+            guard let code = codeTextField.text, code.count == 4 else { return }
+            activityIndicatorView.startAnimating()
+            setSaveButtonStyle(active: false)
+            
+            service.setNew(password: password, withCode: code, user: userID, type: type) { [unowned self] (error, user) in
+                if user != nil {
+                    let alert = UIAlertController(title: "Reset.Succesed".localized, message: "Reset.Succesed.Message".localized, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Alert.Understand".localized, style: .default, handler: nil))
+                    
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.present(alert, animated: true, completion: nil)
+                } else {
+                    self.setSaveButtonStyle(active: true)
+                }
+            }
+        }
+    }
 }
 
 // MARK - Private methods
@@ -143,10 +180,29 @@ private extension PasswordResetViewController {
         getButton.layer.borderColor = AppColors.Common.active().cgColor
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationController?.navigationBar.tintColor = nil
+        navigationController?.navigationBar.tintColor = AppColors.Common.active()
         
         mainTitleLabel.textColor = AppColors.Common.active()
+        countryNameLabel.textColor = AppColors.Common.active()
+        countryPrefixButton.setTitleColor(AppColors.Common.active(), for: .normal)
+        messageLabel.textColor = AppColors.Common.active()
+        getButton.setTitleColor(AppColors.Common.active(), for: .normal)
+        saveButton.backgroundColor = AppColors.Common.active()
         
+        setSaveButtonStyle(active: false)
+        
+        mainTitleLabel.text = "Reset.Title".localized
+        phoneTextField.placeholder = "User.Field.Phone".localized
+        passwordTextField.placeholder = "User.Field.Password".localized
+        repeatPasswordTextField.placeholder = "User.Field.NewPassword".localized
+        messageLabel.text = "Reset.Message".localized
+        codeTextField.placeholder = "Reset.Code".localized
+        saveButton.setTitle("Popup.Save".localized, for: .normal)
+    }
+    
+    func setSaveButtonStyle(active: Bool) {
+        saveButton.isEnabled = active
+        saveButton.alpha = active ? 1.0 : 0.3
     }
     
     var phoneItemAdapter: AbstractAdapterProtocol {
@@ -190,5 +246,25 @@ private extension PasswordResetViewController {
             getButton.setTitle("Reset.ResendCode".localized, for: .normal)
             getButton.isEnabled = true
         }
+    }
+    
+    func isValid(withCode: Bool = false) -> String? {
+        if let phone = phoneTextField.text {
+            do {
+                _ = try phoneNumberKit.parse(phone, withRegion: region, ignoreType: false)
+            } catch {
+                return "Registration.Error.Phone".localized
+            }
+        }
+        
+        if let password = passwordTextField.text, let rePassword = repeatPasswordTextField.text, password.count < 5, password != rePassword {
+            return "Registration.Error.Password".localized
+        }
+        
+        if withCode, let code = codeTextField.text, code.count != 4 {
+            return "Registration.Error.Code".localized
+        }
+        
+        return nil
     }
 }

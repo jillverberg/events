@@ -55,10 +55,16 @@ class ProductView: UIView {
     }
     
     struct ProductRate: StaticCellModel {
+        enum Interaction: String {
+            case like = "Like"
+            case dislike = "Disike"
+            case none = "None"
+        }
+        
         let like: Int?
         let dislike: Int?
-        let likeCommand: Command?
-        let dislikeCommand: Command?
+        var interaction: Interaction
+        let interactionCommand: CommandWith<Interaction>?
     }
     
     struct ProductDescription: StaticCellModel {
@@ -85,20 +91,34 @@ class ProductView: UIView {
         
         setupTableView(adapters: [galleryAdapter, titleAdapter, rateAdapter, descriptionAdapter])
         
+        let interactionCommand = CommandWith<ProductRate.Interaction> { interaction in
+            if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
+                self.service?.setProductInteraction(user: user, product: identifier, interaction: interaction.rawValue)
+            }
+        }
+        
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             let gallery = ProductGallery()
             gallery.product = product
             
             var title: ProductTitle?
+            var rate: ProductRate?
             if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
                 dispatch.enter()
                 self.service?.isProductFavorite(user: user, product: identifier, completion: { (error, favorite) in
                     title = ProductTitle(title: product.name ?? "", isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
                     dispatch.leave()
                 })
-            }
+                
+                dispatch.enter()
+                self.service?.productInteraction(user: user, product: identifier, completion: { (error, interaction) in
+                    if let interaction = interaction {
+                        rate = ProductRate(like: product.likes, dislike: product.dislikes, interaction: ProductRate.Interaction(rawValue: interaction)!, interactionCommand: interactionCommand)
+                    }
+                    dispatch.leave()
+                })
+            }            
             
-            let rate = ProductRate(like: product.likes, dislike: product.dislikes, likeCommand: nil, dislikeCommand: nil)
             let descriptiopn = ProductDescription(title: "Описание", description: product.description)
             
             dispatch.notify(queue: .global()) { [unowned self] in

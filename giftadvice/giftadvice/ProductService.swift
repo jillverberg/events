@@ -14,7 +14,11 @@ private protocol PublicMethods {
     func getProducts(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
     func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
+    
     func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ())
+    func productInteraction(user: User, product: String, completion: @escaping (_ error: String?, _ interaction: String?) -> ())
+    func setProductInteraction(user: User, product: String, interaction: String)
+    
     func toggleProductFavorite(user: User, product: String, favorite: Bool)
     func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func remove(user: User, product: Product)
@@ -79,6 +83,20 @@ extension ProductService: PublicMethods {
                 completion(nil, false)
             }
         }
+    }
+    
+    func productInteraction(user: User, product: String, completion: @escaping (_ error: String?, _ interaction: String?) -> ()) {
+        networkManager.userInteraction(user: user, product: product) { (ended, error, response) in
+            if let interaction = response?["type"] as? String {
+                completion(error, interaction)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
+    }
+    
+    func setProductInteraction(user: User, product: String, interaction: String) {
+        networkManager.setInteraction(user: user, product: product, interaction: interaction)
     }
     
     func toggleProductFavorite(user: User, product: String, favorite: Bool) {

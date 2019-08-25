@@ -525,6 +525,15 @@
 			name = Shop;
 			sourceTree = "<group>";
 		};
+		D49F5CB9231289D80082E105 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				D4A22FB3230E630F001F23A1 /* FilterTableViewCell.swift */,
+				D4A22FB4230E630F001F23A1 /* FilterTableViewCell.xib */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
 		D4B7F3EB222413F600AFCACD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,8 +638,7 @@
 				D4F6032C223C013F00277F54 /* Settings */,
 				D48B3CB8224D5ACC000FE39C /* Shop */,
 				D462DB312250CC690096E077 /* Camera */,
-				D4A22FB3230E630F001F23A1 /* FilterTableViewCell.swift */,
-				D4A22FB4230E630F001F23A1 /* FilterTableViewCell.xib */,
+				D49F5CB9231289D80082E105 /* Filter */,
 			);
 			name = Views;
 			sourceTree = "<group>";

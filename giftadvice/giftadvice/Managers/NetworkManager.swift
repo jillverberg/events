@@ -34,6 +34,12 @@ class NetworkManager: RequestAdapter {
         static let subscribe = "isSubscribed"
 
         static let value = "search_value"
+        static let sorting = "sort"
+        static let order = "order"
+        static let event = "event_name"
+        static let lowPrice = "lower_price"
+        static let uppPrice = "upper_price"
+        static let type = "type"
 
         static let accessToken = "Authorization"
         static let contentType = "Content-Type"
@@ -48,10 +54,12 @@ class NetworkManager: RequestAdapter {
             static let product  = "product"
             static let rate  = "rate"
             static let subscribe = "subscribe"
+            static let interaction = "interaction"
         }
         
         struct PUT {
             static let verify  = "verify"
+            static let password  = "password"
         }
         
         struct GET {
@@ -60,6 +68,7 @@ class NetworkManager: RequestAdapter {
             static let shop  = "shop"
             static let favorite  = "favorite"
             static let code = "code"
+            static let interaction = "interaction"
         }
     }
     
@@ -105,6 +114,14 @@ class NetworkManager: RequestAdapter {
         let method = type == .buyer ? Paths.POST.user : Paths.POST.shop
 
         _ = getRequest(withMethod: method + "/\(phone)/" + Paths.GET.code, parameters: [:], accessToken: nil, completion: completion)
+    }
+    
+    func setNew(password: String, withCode code: String, user: String, type: LoginRouter.SignUpType, completion: @escaping NetworkCompletion) {
+        let method = type == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String : Any] = [Keys.code: code,
+                                          Keys.password: password]
+        
+        _ = putRequest(withMethod: method + "/\(user)/" + Paths.PUT.password, parameters: parameters, accessToken: nil, completion: completion)
     }
     
     func signUp(withUser user: User, completion: @escaping NetworkCompletion) {
@@ -166,12 +183,30 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite + "/\(product)", parameters: [:], accessToken: user.accessToken, completion: completion)
     }
     
+    func userInteraction(user: User, product: String, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        
+        _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.interaction + "/\(product)", parameters: [:], accessToken: user.accessToken, completion: completion)
+    }
+    
     func setFavorite(user: User, product: String, favorite: Bool) {
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
-        let parameters: [String : Any] = [Keys.product: product,
-                          Keys.favorite: favorite]
+        let parameters: [String : Any] = [
+            Keys.product: product,
+            Keys.favorite: favorite
+        ]
         
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.rate, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
+    }
+    
+    func setInteraction(user: User, product: String, interaction: String) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String : Any] = [
+            Keys.product: product,
+            Keys.type: interaction
+        ]
+        
+        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.interaction, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
     }
     
     func getShops(user: User, completion: @escaping NetworkCompletion) {
@@ -187,11 +222,26 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
-    func getShopProducts(user: User, completion: @escaping NetworkCompletion) {
+    func getShopProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
         let identifier = user.identifier
+        var parameters = [String: Any]()
         
-        _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/product", parameters: [:], accessToken: accessToken, completion: completion)
+        if let sorting = sorting, let order = order {
+            parameters[Keys.sorting] = sorting
+            parameters[Keys.order] = order
+        }
+        
+        if let events = events {
+            parameters[Keys.event] = events
+        }
+        
+        if let lower = lowerPrice, let upper = upperPrice {
+            parameters[Keys.lowPrice] = lower
+            parameters[Keys.uppPrice] = upper
+        }
+        
+        _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/product", parameters: parameters, accessToken: accessToken, completion: completion)
     }
     
     func isSubscribed(user: User, shop: String, completion: @escaping NetworkCompletion) {

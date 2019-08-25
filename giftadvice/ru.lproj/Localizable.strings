@@ -18,6 +18,7 @@
 "Alert.Camera"                          = "Сделать снимок";
 
 "Popup.Done"                            = "Готово";
+"Popup.Save"                            = "Сохранить";
 
 "Onboarding.1"                          = "1";
 "Onboarding.2"                          = "2";
@@ -45,6 +46,7 @@
 
 "Registration.Error"                    = "Ошибка в форме";
 "Registration.Error.Phone"              = "Неправильный формат телефона";
+"Registration.Error.Code"               = "Введите 4-х значный код";
 "Registration.Error.Name"               = "Имя пользователя должно состоять, как миннимум из 3-х символов";
 "Registration.Error.Password"           = "Пароли должны совпадать";
 "Registration.Error.PasswordCount"      = "Пароль должен быть больше, чем 4 символа";
@@ -52,8 +54,16 @@
 "Registration.Error.Site"               = "Неправильно указан адрес сайта";
 "Registration.Error.Company"            = "Адрес должен быть больше, чем 3 символа";
 
+"Reset.Succesed"                        = "Успешно";
+"Reset.Succesed.Message"                = "Пароль успешно изменен";
 "Reset.SendCode"                        = "Отправить код";
 "Reset.ResendCode"                      = "Отправить код";
+"Reset.Message"                         = "Для сохранения пароля введите код из СМС";
+
+"User.Field.Phone"                      = "Номер телефона";
+"User.Field.Password"                   = "Пароль";
+"User.Field.RePassword"                 = "Повторите пароль";
+"User.Field.NewPassword"                = "Повторите новый пароль";
 
 "Collection.Title.Editing"              = "Изменить";
 "Collection.Title.Done"                 = "Готово";
@@ -101,9 +111,12 @@
 "Search.Section.Outter"                 = "Другие сайты";
 
 "Sorting"                               = "Сортировка";
-"Sorting.Key.Likes"                     = "По лайкам";
-"Sorting.Key.Date"                      = "По дате";
-"Sorting.Key.Review"                    = "По отзывам";
+"Sorting.Key.Likes.ASC"                 = "По лайкам (от меньшего к большему)";
+"Sorting.Key.Date.ASC"                  = "По дате (сначала старые)";
+"Sorting.Key.Review.ASC"                = "По отзывам (от меньшего к большему)";
+"Sorting.Key.Likes.DESC"                = "По лайкам (от большего к меньшему)";
+"Sorting.Key.Date.DESC"                 = "По дате (сначала новые)";
+"Sorting.Key.Review.DESC"               = "По отзывам (от большего к меньшему)";
 "Filtering.Event"                       = "Фильтр по событию";
 "Filtering.Price"                       = "Фильтр по цене";
 "Filtering.Next"                        = "Далее (цена)";

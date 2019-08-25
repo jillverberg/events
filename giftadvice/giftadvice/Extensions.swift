@@ -99,6 +99,30 @@ class GATableView: UITableView {
         
         return true
     }
+    
+    private let activity = UIActivityIndicatorView(style: .gray)
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        activity.color = AppColors.Common.active()
+        activity.startAnimating()
+        activity.hidesWhenStopped = true
+        
+        addSubview(activity)
+        
+        activity.autoCenterInSuperview()
+    }
+    
+    var isLoading = false {
+        didSet {
+            if isLoading {
+                activity.startAnimating()
+            } else {
+                activity.stopAnimating()
+            }
+        }
+    }
 }
 
 /// Passes through all touch events to views behind it, except when the
