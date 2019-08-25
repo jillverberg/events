@@ -11,7 +11,7 @@ import FlowKitManager
 
 class ProfileViewModel: NSObject {
 
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var collectionView: GACollectionView!
     lazy var collectionDirector = FlowCollectionDirector(self.collectionView)
     
     private let noOrder = UIImageView(image: UIImage(named: "Empty.Image".localized))
@@ -32,5 +32,6 @@ class ProfileViewModel: NSObject {
         }
         
         collectionDirector.add(sections: sections)
+        collectionView.isLoading = false
     }
 }

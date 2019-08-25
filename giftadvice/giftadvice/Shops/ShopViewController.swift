@@ -219,6 +219,7 @@ private extension ShopViewController {
     }
     
     @objc func reloadData() {
+        viewModel.collectionView.isLoading = true
         shopService.getShopProducts(user: shop, sorting: sortingValue, events: filterEventValue, price: filterPriceValue) { (error, response) in
             DispatchQueue.main.async {
                 self.viewModel.reloadCollectionData(sections: [CollectionSection(response)])

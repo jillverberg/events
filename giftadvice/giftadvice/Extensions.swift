@@ -125,6 +125,32 @@ class GATableView: UITableView {
     }
 }
 
+class GACollectionView: UICollectionView {
+    private let activity = UIActivityIndicatorView(style: .gray)
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        activity.color = AppColors.Common.active()
+        activity.startAnimating()
+        activity.hidesWhenStopped = true
+        
+        addSubview(activity)
+        
+        activity.autoCenterInSuperview()
+    }
+    
+    var isLoading = false {
+        didSet {
+            if isLoading {
+                activity.startAnimating()
+            } else {
+                activity.stopAnimating()
+            }
+        }
+    }
+}
+
 /// Passes through all touch events to views behind it, except when the
 /// touch occurs in a contained UIControl or view with a gesture
 /// recognizer attached
@@ -373,6 +399,21 @@ extension UISearchBar {
                 setTextField(color: .white)
                 setText(color: .white)
                 activityIndicator?.removeFromSuperview()
+            }
+        }
+    }
+}
+
+extension DispatchWorkItem {
+    @available(iOS 10.0, *)
+    static func performOnMainQueue(at mode: [RunLoop.Mode], _ block: @escaping ()->()) {
+        RunLoop.main.perform(inModes: mode) {
+            let workItem = DispatchWorkItem(block: block)
+            
+            if Thread.isMainThread {
+                workItem.perform()
+            } else {
+                DispatchQueue.main.async(execute: workItem)
             }
         }
     }

@@ -221,7 +221,7 @@
                                             <action selector="startEditing:" destination="30g-L7-QNV" eventType="touchUpInside" id="jxi-En-l61"/>
                                         </connections>
                                     </button>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MQc-Ix-qjg">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MQc-Ix-qjg" customClass="GACollectionView" customModule="giftadvice" customModuleProvider="target">
                                         <rect key="frame" x="18" y="59" width="339" height="566"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="V9i-IU-QrA">
@@ -433,8 +433,8 @@
                                             <constraint firstAttribute="height" constant="150" id="RwP-vP-WXQ"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="69e-ZW-iQp">
-                                        <rect key="frame" x="122" y="28" width="240" height="97"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="69e-ZW-iQp">
+                                        <rect key="frame" x="250.66666666666663" y="14" width="22" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="22" id="9X7-3G-Sc6"/>
                                             <constraint firstAttribute="height" constant="16" id="Wso-2l-nO5"/>
@@ -533,9 +533,13 @@
                                             <action selector="showImagePicker:" destination="55m-5V-2Z7" eventType="touchUpInside" id="4Ii-Xv-wTl"/>
                                         </connections>
                                     </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9KS-y1-cc9">
+                                        <rect key="frame" x="177.66666666666666" y="83" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="9KS-y1-cc9" firstAttribute="centerX" secondItem="n0I-vz-LCK" secondAttribute="centerX" id="1b3-sH-ZcN"/>
                                     <constraint firstItem="AVy-Fb-Pti" firstAttribute="top" secondItem="n0I-vz-LCK" secondAttribute="top" constant="-12" id="40y-i2-7Km"/>
                                     <constraint firstItem="AVy-Fb-Pti" firstAttribute="trailing" secondItem="n0I-vz-LCK" secondAttribute="trailing" constant="12" id="6GF-Ol-Yhs"/>
                                     <constraint firstItem="aLY-5d-0qb" firstAttribute="top" secondItem="UyZ-KU-5eQ" secondAttribute="bottom" constant="18" id="A17-HD-7e2"/>
@@ -551,6 +555,7 @@
                                     <constraint firstItem="PXs-28-zV8" firstAttribute="centerX" secondItem="XF6-It-agW" secondAttribute="centerX" id="kIL-Ud-0rV"/>
                                     <constraint firstItem="69e-ZW-iQp" firstAttribute="leading" secondItem="n0I-vz-LCK" secondAttribute="trailing" constant="-12" id="qSe-pc-tR5"/>
                                     <constraint firstItem="AVy-Fb-Pti" firstAttribute="bottom" secondItem="n0I-vz-LCK" secondAttribute="bottom" id="qWr-tX-BoP"/>
+                                    <constraint firstItem="9KS-y1-cc9" firstAttribute="centerY" secondItem="n0I-vz-LCK" secondAttribute="centerY" id="sYR-sT-fS2"/>
                                     <constraint firstItem="UyZ-KU-5eQ" firstAttribute="top" secondItem="n0I-vz-LCK" secondAttribute="bottom" constant="18" id="tlh-kb-H1Y"/>
                                 </constraints>
                             </view>
@@ -585,6 +590,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editingImageView" destination="69e-ZW-iQp" id="3qo-2q-bNG"/>
+                        <outlet property="loadingIndicatorView" destination="9KS-y1-cc9" id="KYA-XD-pEl"/>
                         <outlet property="placeholder" destination="XF6-It-agW" id="ETc-jP-H8T"/>
                         <outlet property="profileImageView" destination="n0I-vz-LCK" id="Wy5-LA-Cg4"/>
                         <outlet property="reportButton" destination="aLY-5d-0qb" id="ndG-e1-omi"/>
@@ -729,7 +735,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0zz-Rw-dqQ">
                                 <rect key="frame" x="0.0" y="96" width="375" height="645"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="po4-xK-7qy">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="po4-xK-7qy" customClass="GACollectionView" customModule="giftadvice" customModuleProvider="target">
                                         <rect key="frame" x="18" y="18" width="339" height="615"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Qw9-Uo-7CR">
@@ -1151,7 +1157,7 @@
                                         <color key="textColor" red="0.14901960780000001" green="0.64705882349999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-B3-who">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-B3-who" customClass="GACollectionView" customModule="giftadvice" customModuleProvider="target">
                                         <rect key="frame" x="18" y="59" width="339" height="566"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cuR-ap-0qc">

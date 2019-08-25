@@ -11,7 +11,7 @@ import FlowKitManager
 
 class ShopViewModel: NSObject {
 
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var collectionView: GACollectionView!
     lazy var collectionDirector = FlowCollectionDirector(self.collectionView)
 
     private let noOrder = UIImageView(image: UIImage(named: "Empty.Image".localized))
@@ -41,5 +41,6 @@ class ShopViewModel: NSObject {
         collectionDirector.removeAll()
         collectionDirector.add(sections: sections)
         collectionDirector.reloadData()
+        collectionView.isLoading = false
     }
 }

@@ -20,8 +20,9 @@ class ProfileRouter: GARouter, ProfileRouterInput {
     func showProduct(_ product: Product) {
         let viewController = setupProductViewController() as! ProductViewController
         viewController.product = product
+        viewController.isOwner = true
         
-        self.rootNavigationController?.present(viewController, animated: false, completion: nil)
+        self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
 
     func showEditing(_ product: Product?) {

@@ -201,6 +201,8 @@ private extension ProductView {
             
             shopButton.setTitle(type == .buyer ? "Product.Action.Buyer".localized : "Product.Action.Shop".localized, for: .normal)
         }
+        
+        shopButton.backgroundColor = AppColors.Common.active()
     }
     
     func setupTableView(adapters: [AbstractAdapterProtocol]) {

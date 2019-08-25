@@ -53,7 +53,8 @@ class ProfileViewController: GAViewController {
         navigationItem.title = " "
 
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
-
+        
+        viewModel.collectionView.isLoading = true
         if let user = loginService.userModel {
             let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
                 if let response = response {

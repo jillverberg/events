@@ -22,7 +22,7 @@ class ShopsViewController: GAViewController {
     // MARK: Interface Builder Properties
     
     @IBOutlet weak var placeholderView: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: GACollectionView!
     @IBOutlet var viewModel: ShopViewModel!
 
     // MARK: Private Properties
@@ -39,6 +39,7 @@ class ShopsViewController: GAViewController {
         
         viewModel.setupCollectionView(adapters: [shopCollectionAdapter])
         if let user = loginService.userModel {
+            collectionView.isLoading = true
             shopService.getShops(user: user, completion: { error, models in
                 if let models = models {
                     let section = CollectionSection(models)

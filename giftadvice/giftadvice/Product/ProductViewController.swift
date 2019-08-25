@@ -18,6 +18,7 @@ class ProductViewController: GAViewController {
     // MARK: - Public Properties
 
     var product: Product!
+    var isOwner = false
 
     // MARK: Private Properties
 
@@ -86,6 +87,12 @@ private extension ProductViewController {
         productView.loadProduct()
         productView.delegate = self
         productView.viewController = self
+        
+        if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw), type == .shop {
+            if !isOwner {
+                productView.shopButton.isHidden = true
+            }
+        }
         
         productView.setupWith(product)
         //tableViewModel.tableView = choosingView.tableView

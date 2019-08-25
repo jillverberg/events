@@ -32,6 +32,8 @@ class FeedViewController: GAViewController {
     private var loginService: LoginService!
     private var productService: ProductService!
 
+    private var refreshControl = UIRefreshControl()
+
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
@@ -66,12 +68,19 @@ class FeedViewController: GAViewController {
             let hundr = self.firstCellInitFrame.origin.y - self.viewModel.tableView.frame.origin.y
             let cur = self.firstCellInitFrame.origin.y - firstCellFrame.origin.y
             
-            self.backgroundView.alpha = cur/hundr
+            self.viewModel.collectionView.alpha = 1 - cur/hundr
         }
 
         viewModel.setupTableView(adapters: [productItemAdapter])
         viewModel.setupCollectionView(adapters: [productCollectionAdapter])
         
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(requestData), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            viewModel.tableView.refreshControl = refreshControl
+        } else {
+            viewModel.tableView.addSubview(refreshControl)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -138,7 +147,7 @@ private extension FeedViewController {
         return router
     }
 
-    func requestData() {
+    @objc func requestData() {
         if let user = loginService.userModel {
             viewModel.tableView.isLoading = true
             
@@ -147,7 +156,10 @@ private extension FeedViewController {
                     let section = TableSection(models)
                     
                     DispatchQueue.main.async {
-                        self.viewModel.reloadData(sections: [section])
+                        DispatchWorkItem.performOnMainQueue(at: [.default], {
+                            self.refreshControl.endRefreshing()
+                            self.viewModel.reloadData(sections: [section])
+                        })
                     }
                 }
             })
@@ -177,11 +189,7 @@ private extension FeedViewController {
 private extension FeedViewController {
     var productItemAdapter: AbstractAdapterProtocol {
         let adapter = TableAdapter<Product, ProductTableViewCell>()
-        
-        adapter.on.prefetch = { (products, indexPaths) in
-            
-        }
-        
+    
         adapter.on.dequeue = { ctx in
             ctx.cell?.render(props: ctx.model)
         }

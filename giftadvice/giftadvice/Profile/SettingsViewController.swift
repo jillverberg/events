@@ -23,6 +23,7 @@ class SettingsViewController: GAViewController {
     @IBOutlet weak var reportButton: BorderedButton!
     @IBOutlet weak var editingImageView: UIImageView!
     @IBOutlet weak var signOutButton: BorderedButton!
+    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
     
     // MARK: - Private Properties
 
@@ -144,6 +145,7 @@ private extension SettingsViewController {
         view.backgroundColor = AppColors.Common.active()
         reportButton.backgroundColor = AppColors.Common.active()
         settingsButton.setTitleColor(AppColors.Common.active(), for: .normal)
+        loadingIndicatorView.color = AppColors.Common.active()
     }
     
     func poluteInfo() -> [TableSection] {
@@ -314,7 +316,10 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         }
         
         if let user = loginService.userModel {
-            loginService.update(user: user, image: image) { (error, user) in }
+            self.loadingIndicatorView.startAnimating()
+            loginService.update(user: user, image: image) { [unowned self] (error, user) in
+                self.loadingIndicatorView.stopAnimating()
+            }
         }
     }
 }

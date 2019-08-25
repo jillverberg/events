@@ -21,6 +21,16 @@ class ProductTitleTableViewCell: UITableViewCell {
     var favoriteToggleAction: ((Bool) -> ())?
     var shareAction: (() -> ())?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+     
+        if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw), type == .shop {
+            likeButton.isHidden = true
+        }
+        
+        likeButton.tintColor = AppColors.Common.active()
+        shareButton.tintColor = AppColors.Common.active()
+    }
     // MARK: Private Properties
     private var props: ProductView.ProductTitle!
     

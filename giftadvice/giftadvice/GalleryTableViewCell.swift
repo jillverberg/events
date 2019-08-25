@@ -40,6 +40,7 @@ class GalleryTableViewCell: UITableViewCell {
 
         titleLabel.text = "Product.Editing.Photo".localized
         setupCollectionView()
+        pageControll.tintColor = AppColors.Common.active()
     }
 
     // MARK: - Public Methods

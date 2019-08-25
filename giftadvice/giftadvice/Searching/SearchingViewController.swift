@@ -33,6 +33,8 @@ class SearchingViewController: GAViewController {
 
     private let initialImage = UIImageView(image: UIImage(named: "Search.Image".localized))
     
+    private let productSearchService = StoreProductSearchNetworkService()
+    
     // MARK: - Override Methods
 
     override func viewDidLoad() {
@@ -44,6 +46,8 @@ class SearchingViewController: GAViewController {
         title = "Title.Search".localized
         searchBar.placeholder = "Title.Search.Placeholder".localized
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        
+        setupViews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -57,7 +61,6 @@ class SearchingViewController: GAViewController {
         super.viewWillAppear(animated)
 
         configureNavigationBar()
-        setupViews()
     }
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
@@ -190,6 +193,11 @@ extension SearchingViewController: UISearchBarDelegate {
                     
                     group.leave()
                 })
+                
+                self.productSearchService.findProducts(byKeyword: value).asObservable()
+                    .subscribe( onNext: { entities in
+                        
+                    })
             }
             
             group.notify(queue: .main) { [unowned self] in

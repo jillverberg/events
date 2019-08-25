@@ -24,6 +24,7 @@ class FeedRouter: GARouter, FeedRouterInput {
     func showProduct(_ product: Product) {
         let viewController = setupViewController() as! ProductViewController
         viewController.product = product
+        viewController.isOwner = false
 
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }

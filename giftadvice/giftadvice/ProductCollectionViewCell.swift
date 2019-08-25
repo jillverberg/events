@@ -64,9 +64,11 @@ class ProductCollectionViewCell: UICollectionViewCell {
             }            
         }
         
-        priceShadowView.isHidden = props.price == 0
-        priceContainerView.isHidden = props.price == 0
- 
+        if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw), type == .buyer {
+            priceShadowView.isHidden = true
+            priceContainerView.isHidden = true
+        }
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = Locale(identifier: "ru_RU")
