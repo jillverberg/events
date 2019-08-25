@@ -29,7 +29,11 @@ class ProductView: UIView {
 
     // MARK: - Public Properties
 
-    var delegate: ProductViewDelegate?
+    var delegate: ProductViewDelegate? {
+        didSet {
+            setup()
+        }
+    }
     
     var service: ProductService?
     var loginService: LoginService?
@@ -74,18 +78,6 @@ class ProductView: UIView {
     }
     
     // MARK: Init Methods & Superclass Overriders
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setup()
-    }
  
     func setupWith(_ product: Product) {
         let dispatch = DispatchGroup()
@@ -149,7 +141,7 @@ class ProductView: UIView {
     
     
     @IBAction func performAction(_ sender: Any) {
-        if let viewController = delegate as? ProductViewController, type == .shop {
+        if let viewController = delegate as? ProductViewController, type == .shop, viewController.isOwner {
             viewController.needToHide()
             viewController.profileRouter().showEditing(product)
         } else if let viewController = delegate as? ProductViewController, let shop = product?.shop {
@@ -198,10 +190,15 @@ private extension ProductView {
         
         if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw) {
             self.type = type
-            
-            shopButton.setTitle(type == .buyer ? "Product.Action.Buyer".localized : "Product.Action.Shop".localized, for: .normal)
+        }
+
+        var type = self.type
+        if let viewController = delegate as? ProductViewController {
+            type = viewController.isOwner ? .shop : .buyer
         }
         
+        shopButton.setTitle(type == .buyer ? "Product.Action.Buyer".localized : "Product.Action.Shop".localized, for: .normal)
+
         shopButton.backgroundColor = AppColors.Common.active()
     }
     

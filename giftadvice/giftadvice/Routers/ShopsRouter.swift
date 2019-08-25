@@ -27,8 +27,8 @@ class ShopsRouter: GARouter, ShopsRouterInput {
     func showProduct(_ product: Product) {
         let viewController = setupProductViewController() as! ProductViewController
         viewController.product = product
-        viewController.isOwner = false
-
+        viewController.hideSaveButton = true
+        
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
     

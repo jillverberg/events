@@ -19,7 +19,8 @@ class ProductViewController: GAViewController {
 
     var product: Product!
     var isOwner = false
-
+    var hideSaveButton = false
+    
     // MARK: Private Properties
 
     private struct Const {
@@ -30,7 +31,7 @@ class ProductViewController: GAViewController {
     
     private var bottomConsraint: NSLayoutConstraint?
     private var lastCoordinate: CGFloat = 0
-    private let productView = ProductView(frame: .zero)
+    let productView = ProductView(frame: .zero)
     private var presentViewController: GAViewController?
 
     // MARK: - Override Methods
@@ -88,12 +89,6 @@ private extension ProductViewController {
         productView.delegate = self
         productView.viewController = self
         
-        if let raw = UserDefaults.standard.string(forKey: "type"), let type = LoginRouter.SignUpType(rawValue: raw), type == .shop {
-            if !isOwner {
-                productView.shopButton.isHidden = true
-            }
-        }
-        
         productView.setupWith(product)
         //tableViewModel.tableView = choosingView.tableView
         
@@ -112,6 +107,10 @@ private extension ProductViewController {
 //         Close gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissView))
         backgroundView.addGestureRecognizer(tapGesture)
+        
+        if hideSaveButton {
+            productView.shopButton.isHidden = true
+        }
     }
     
     func showContextView(completion: ((Bool) -> Void)? = nil) {
