@@ -193,7 +193,7 @@ private extension ProductView {
         }
 
         var type = self.type
-        if let viewController = delegate as? ProductViewController {
+        if let viewController = delegate as? ProductViewController, type == .shop {
             type = viewController.isOwner ? .shop : .buyer
         }
         

@@ -155,7 +155,9 @@ private extension ShopViewController {
         view.backgroundColor = AppColors.Common.active()
         view.backgroundColor = AppColors.Common.active()
         titleLabel.textColor = AppColors.Common.active()
- 
+        filterButton.tintColor = AppColors.Common.active()
+        sortingButton.tintColor = AppColors.Common.active()
+        
         nameLabel.text = shop.companyName
         titleLabel.text = "Profile.Title.Shop".localized
         
