@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import IQKeyboardManagerSwift
 
 class PopupView: UIView {
@@ -21,7 +21,7 @@ class PopupView: UIView {
     @IBOutlet var tableView: UITableView!
     @IBOutlet weak var tableViewHeighConstraint: NSLayoutConstraint!
     
-    lazy var tableDirector: TableDirector = TableDirector(self.tableView)
+    lazy var tableDirector: TableDirector = TableDirector(table: self.tableView)
     var command: CommandWith<Any>? {
         didSet {
             actionButton.isHidden = command == nil
@@ -30,15 +30,15 @@ class PopupView: UIView {
     
     // MARK: Public Methods
 
-    func setupTableView(adapters: [AbstractAdapterProtocol]) {
-        tableDirector.rowHeight = .autoLayout(estimated: 44.0)
-        tableDirector.register(adapters: adapters)
+    func setupTableView(adapters: [TableCellAdapterProtocol]) {
+        tableDirector.rowHeight = .auto(estimated: 44)
+        tableDirector.registerCellAdapters(adapters)
     }
     
     func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
-        tableDirector.reloadData()
+        tableDirector.reload()
         
         if command == nil {
             actionButton.removeFromSuperview()
@@ -59,7 +59,7 @@ class PopupView: UIView {
     
     // MARK: Init Methods & Superclass Overriders
 
-    init(frame: CGRect, adapters: [AbstractAdapterProtocol], title: String) {
+    init(frame: CGRect, adapters: [TableCellAdapterProtocol], title: String) {
         super.init(frame: frame)
         
         setupView()
@@ -115,6 +115,6 @@ class PopupView: UIView {
     }
     
     @IBAction func didTapOnAction(_ sender: Any) {
-        command?.perform(with: tableDirector.sections[0].models)
+        command?.perform(with: tableDirector.sections[0].elements)
     }
 }

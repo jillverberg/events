@@ -8,7 +8,7 @@
 
 import UIKit
 import Photos
-import FlowKitManager
+import OwlKit
 import CameraManager
 
 class CameraPickerViewController: GAViewController {
@@ -68,7 +68,7 @@ class CameraPickerViewController: GAViewController {
     @IBAction func claarifyAction(_ sender: Any) {
         showPopupView(title: "Camera.Action".localized,
                       adapters: [hobbyItemAdapter, priceItemAdapter],
-                      sections: [TableSection([priceFModel,hobbyFModel])],
+                      sections: [TableSection(elements: [priceFModel,hobbyFModel])],
                       CommandWith<Any>(action: { [unowned self] some in
                         self.hidePopupView()
                         var count = 0
@@ -122,21 +122,23 @@ class CameraPickerViewController: GAViewController {
 }
 
 private extension CameraPickerViewController {
-    var hobbyItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<HobbyFilterModel, HobbyTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+    var hobbyItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<HobbyFilterModel, HobbyTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "HobbyTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
         }
         
         return adapter
     }
     
-    var priceItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<PriceFilterModel, PriceTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+    var priceItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<PriceFilterModel, PriceTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "PriceTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
         }
         
         return adapter

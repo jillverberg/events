@@ -7,13 +7,18 @@
 //
 
 import ObjectMapper
-import FlowKitManager
+import OwlKit
 
-struct Photo: Mappable, ModelProtocol {
-    var modelID: Int {
-        return identifier.hashValue
+struct Photo: Mappable, ElementRepresentable {
+    var differenceIdentifier: String {
+        return identifier
     }
-    
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? Photo else { return false }
+        return other.identifier == self.identifier
+    }
+
     struct Keys {
         static let identifier = "id"
         static let productIdentifier = "product_id"
@@ -23,6 +28,7 @@ struct Photo: Mappable, ModelProtocol {
     var identifier: String!
     var productIdentifier: String!
     var photo: String?
+    var data: Data?
     
     init?(map: Map) {
         mapProperties(map)

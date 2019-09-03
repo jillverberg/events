@@ -6,11 +6,16 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import FlowKitManager
+import OwlKit
 
-class Setting: ModelProtocol {
-    var modelID: Int {
-        return title.hashValue
+class Setting: ElementRepresentable {
+    var differenceIdentifier: String {
+        return title
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? Setting else { return false }
+        return other.title == self.title
     }
 
     // MARK: - Public Properties

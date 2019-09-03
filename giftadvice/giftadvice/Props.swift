@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import FlowKitManager
+import OwlKit
 
 enum DataProps<T> {
     case loading
@@ -25,9 +25,14 @@ enum DataProps<T> {
     }
 }
 
-extension DataProps: ModelProtocol {
-    var modelID: Int {
+extension DataProps: ElementRepresentable {
+    var differenceIdentifier: String {
         let mirror = Mirror(reflecting: self)
-        return (mirror.children.first?.label ?? "").hashValue
+        return (mirror.children.first?.label ?? "")
+    }
+
+    func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? DataProps else { return false }
+        return other.differenceIdentifier == self.differenceIdentifier
     }
 }

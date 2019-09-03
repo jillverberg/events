@@ -6,13 +6,18 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import FlowKitManager
+import OwlKit
 
-class PriceFilterModel: ModelProtocol {
-    var modelID: Int {
-        return 0
+class PriceFilterModel: ElementRepresentable {
+    var differenceIdentifier: String {
+        return "0"
     }
-    
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? PriceFilterModel else { return false }
+        return other.maxPrice ?? 0 == self.maxPrice ?? 0
+    }
+
     // MARK: - Public Properties
     
     var maxPrice: Int?
@@ -26,9 +31,14 @@ class PriceFilterModel: ModelProtocol {
     }
 }
 
-class HobbyFilterModel: ModelProtocol {
-    var modelID: Int {
-        return 0
+class HobbyFilterModel: ElementRepresentable {
+    var differenceIdentifier: String {
+        return "0"
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? HobbyFilterModel else { return false }
+        return other.hobby ?? "" == self.hobby ?? ""
     }
     
     // MARK: - Public Properties
@@ -44,9 +54,14 @@ class HobbyFilterModel: ModelProtocol {
     }
 }
 
-struct FilterModel: ModelProtocol {
-    var modelID: Int {
-        return value.hashValue
+struct FilterModel: ElementRepresentable {
+    var differenceIdentifier: String {
+        return key
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? FilterModel else { return false }
+        return other.value == self.value
     }
     
     // MARK: - Public Properties
@@ -54,9 +69,14 @@ struct FilterModel: ModelProtocol {
     var key: String
 }
 
-enum SortingModel: String, ModelProtocol {
-    var modelID: Int {
-        return rawValue.hashValue
+enum SortingModel: String, ElementRepresentable {
+    var differenceIdentifier: String {
+        return self.rawValue
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? SortingModel else { return false }
+        return other.rawValue == self.rawValue
     }
     
     case likesASC

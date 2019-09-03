@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import IQKeyboardManagerSwift
 import PhotosUI
 
@@ -106,26 +106,27 @@ private extension EditingViewController {
         title = "Product.Editing.New".localized
     }
     
-    var galleryAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<ProductView.ProductGallery, GalleryTableViewCell>()
+    var galleryAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<ProductView.ProductGallery, GalleryTableViewCell>()
         
-        adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.model, isEditing: true)
+        adapter.events.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.element!, isEditing: true)
             ctx.cell?.delegate = self
         }
         
         return adapter
     }
     
-    var productAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Editing, EditingTableViewCell>()
+    var productAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Editing, EditingTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "EditingTableViewCell", bundle: nil)
 
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
-            ctx.cell?.valueTextField.tag = ctx.indexPath.row
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.valueTextField.tag = ctx.indexPath!.row
             ctx.cell?.delegate = self
             
-            if ctx.indexPath.row == self.categoryRowIndex {
+            if ctx.indexPath!.row == self.categoryRowIndex {
                 ctx.cell?.accessoryType = .disclosureIndicator
                 ctx.cell?.valueTextField.inputView = self.picker
             } else {
@@ -133,7 +134,7 @@ private extension EditingViewController {
             }
         }
         
-        adapter.on.tap = { [unowned self] ctx in
+        adapter.events.didSelect = { [unowned self] ctx in
             ctx.cell?.valueTextField.becomeFirstResponder()
             
             return .deselectAnimated

@@ -96,15 +96,50 @@
                         <viewLayoutGuide key="safeArea" id="l5Q-ei-gv6"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="X67-sb-SwX"/>
+                    <navigationItem key="navigationItem" id="X67-sb-SwX">
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" id="SZ6-KX-nsC">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="X6H-TV-kO2">
+                                    <rect key="frame" x="333" y="9" width="26" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="26" id="MJb-BI-oQG"/>
+                                        <constraint firstAttribute="height" constant="26" id="zpQ-0C-vLJ"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="navbar_sort"/>
+                                    <connections>
+                                        <action selector="sortAction:" destination="kN8-Md-0Uy" eventType="touchUpInside" id="7kR-Y6-eF1"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="V6a-Jr-bgl">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="la8-e1-e1Q">
+                                    <rect key="frame" x="299" y="9" width="26" height="26"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="26" id="4YB-fH-IxE"/>
+                                        <constraint firstAttribute="height" constant="26" id="EN9-cD-v04"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" image="navbar_filter"/>
+                                    <connections>
+                                        <action selector="filterAction:" destination="kN8-Md-0Uy" eventType="touchUpInside" id="Nr5-sp-ZGt"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="backgroundView" destination="rIb-yp-UXu" id="37D-0j-KZ9"/>
                         <outlet property="bottomBackgroundConstraint" destination="KTD-MI-hp7" id="OfG-pV-g6Y"/>
                         <outlet property="bottomTableViewContraint" destination="3A9-gS-ZSq" id="N9E-8P-W9O"/>
+                        <outlet property="filterButton" destination="la8-e1-e1Q" id="oh5-Ki-HuP"/>
                         <outlet property="pageControll" destination="DuS-5r-xCi" id="pU7-nh-Gvm"/>
                         <outlet property="placeholderConstraint" destination="DIz-Wy-3OJ" id="I8j-s0-0bG"/>
                         <outlet property="placeholderView" destination="M6T-5a-Meb" id="eFY-c8-5fT"/>
+                        <outlet property="sortingButton" destination="X6H-TV-kO2" id="M8G-Co-UxC"/>
                         <outlet property="topBackgroundView" destination="YCy-Ga-aaO" id="dja-0s-ICO"/>
                         <outlet property="topCollectionConstraint" destination="nWJ-eJ-5sx" id="VTI-yd-q6u"/>
                         <outlet property="viewModel" destination="x8x-52-lEH" id="MJ6-k6-acL"/>
@@ -1101,7 +1136,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Poh-ja-BS9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" image="Find_inactive" selectedImage="Find" id="gXJ-nA-PDv"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="F3b-1X-CQa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="F3b-1X-CQa" customClass="PassThroughNavigationBar" customModule="giftadvice" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
@@ -1129,7 +1164,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;name&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkA-LN-9gq">
-                                <rect key="frame" x="108" y="32" width="47" height="17"/>
+                                <rect key="frame" x="108" y="32" width="217" height="17"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1249,6 +1284,7 @@
                             <constraint firstItem="XQv-sV-zjF" firstAttribute="trailing" secondItem="RqP-M2-YWv" secondAttribute="trailing" constant="16" id="X4C-g7-nnn"/>
                             <constraint firstItem="cV8-pU-hS8" firstAttribute="leading" secondItem="RxM-U2-2qZ" secondAttribute="trailing" constant="8" id="XSm-0m-uU3"/>
                             <constraint firstItem="XQv-sV-zjF" firstAttribute="trailing" secondItem="cV8-pU-hS8" secondAttribute="trailing" constant="16" id="a1b-JC-dlW"/>
+                            <constraint firstItem="RqP-M2-YWv" firstAttribute="leading" secondItem="bkA-LN-9gq" secondAttribute="trailing" constant="8" id="hMh-si-Noc"/>
                             <constraint firstItem="npV-us-ZBu" firstAttribute="trailing" secondItem="XQv-sV-zjF" secondAttribute="trailing" id="n9j-aa-d0h"/>
                             <constraint firstItem="RqP-M2-YWv" firstAttribute="top" secondItem="UjL-mx-FOW" secondAttribute="top" id="oyE-B7-YGI"/>
                             <constraint firstItem="DaM-6v-zzV" firstAttribute="top" secondItem="bkA-LN-9gq" secondAttribute="bottom" constant="8" id="sgh-95-mfu"/>

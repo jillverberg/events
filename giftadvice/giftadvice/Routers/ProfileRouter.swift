@@ -33,7 +33,9 @@ class ProfileRouter: GARouter, ProfileRouterInput {
     }
     
     func showLoginRouter() {
-        if let authRouter = self.parentRouter as? AuthRouter, let launchRouter = authRouter.parentRouter as? LaunchRouter {
+        if let authRouter = self.parentRouter as? AuthRouter, let launchRouter = authRouter.parentRouter as? OnboardRouter {
+            launchRouter.showLoginRouter()
+        } else if let authRouter = self.parentRouter as? AuthRouter, let launchRouter = authRouter.parentRouter as? LaunchRouter {
             launchRouter.showLoginRouter()
         } else if let authRouter = self.parentRouter as? AuthRouter, let loginRouter = authRouter.parentRouter as? LoginRouter, let launchRouter = loginRouter.parentRouter as? LaunchRouter {
             launchRouter.showLoginRouter()

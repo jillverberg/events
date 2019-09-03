@@ -27,17 +27,18 @@ class RateTableViewCell: UITableViewCell {
     }
     
     var props: ProductView.ProductRate!
-    
+    let gradient: CAGradientLayer = CAGradientLayer()
+
     // MARK: - Public Methods
 
     func setup(props: ProductView.ProductRate) {
         self.props = props
-        
-        if let dislike = props.dislike, let like = props.like, dislike > 0 {
-            let gradient: CAGradientLayer = CAGradientLayer()
 
+        gradient.removeFromSuperlayer()
+        if props.dislike != 0 || props.like != 0 {
             gradient.colors = [AppColors.Common.green().cgColor, AppColors.Common.red().cgColor]
-            gradient.locations = [NSNumber(value: Double(like)/Double(dislike + like)), NSNumber(value: 1.0 - Double(dislike)/Double(like + dislike))]
+            gradient.locations = [NSNumber(value: Double(props.like)/Double(props.dislike + props.like)),
+                                  NSNumber(value: 1.0 - Double(props.dislike)/Double(props.like + props.dislike))]
             gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
             gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
             gradient.frame = rateView.bounds
@@ -47,30 +48,40 @@ class RateTableViewCell: UITableViewCell {
         } else {
             rateView.backgroundColor = .lightGray
         }
-        
+
         setupInteraction()
     }
     
     @IBAction func likeAction(_ sender: Any) {
         if props.interaction == .like {
             props.interaction = .none
+            props.like -= 1
         } else {
+            if props.interaction == .dislike {
+                props.dislike -= 1
+            }
             props.interaction = .like
+            props.like += 1
         }
-        
+
         props.interactionCommand?.perform(with: props.interaction)
-        setupInteraction()
+        setup(props: props)
     }
     
     @IBAction func disLikeAction(_ sender: Any) {
         if props.interaction == .dislike {
             props.interaction = .none
+            props.dislike -= 1
         } else {
+            if props.interaction == .like {
+                props.like -= 1
+            }
             props.interaction = .dislike
+            props.dislike += 1
         }
-        
+
         props.interactionCommand?.perform(with: props.interaction)
-        setupInteraction()
+        setup(props: props)
     }
 }
 

@@ -15,9 +15,12 @@ class RegistrationEndView: SignUpView {
     @IBOutlet weak var profilePhotoImageView: UIImageView!
     @IBOutlet weak var nextButton: BorderedButton!
     @IBOutlet weak var profileImage: UIImageView!
-    
+    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+
     var type: LoginRouter.SignUpType!
-    
+
+    var loginService: LoginService!
+
     // MARK: Init Methods & Superclass Overriders
     
     init(frame: CGRect, type: LoginRouter.SignUpType) {
@@ -88,6 +91,7 @@ private extension RegistrationEndView {
         profileImage.tintColor = AppColors.Common.active()
         nextButton.backgroundColor = AppColors.Common.active()
         titleLabel.textColor = AppColors.Common.active()
+        loadingIndicatorView.tintColor = AppColors.Common.active()
     }
     
     func checkPermission() -> Bool {
@@ -122,5 +126,12 @@ extension RegistrationEndView: UIImagePickerControllerDelegate, UINavigationCont
         }
         
         profilePhotoImageView.image = image
+
+        if let user = loginService.userModel {
+            self.loadingIndicatorView.startAnimating()
+            loginService.update(user: user, image: image) { [unowned self] (error, user) in
+                self.loadingIndicatorView.stopAnimating()
+            }
+        }
     }
 }

@@ -50,6 +50,12 @@ class ProductCollectionViewCell: UICollectionViewCell {
         photoImageView.layer.cornerRadius = 12
         removePlaceholder.layer.cornerRadius = 12
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        photoImageView.image = nil
+    }
     
     // MARK: - Public Methods
 

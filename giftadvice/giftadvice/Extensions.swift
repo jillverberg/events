@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 public extension String {
     var localized: String {
@@ -79,15 +79,20 @@ extension UIView {
     }
 }
 
-protocol StaticCellModel: ModelProtocol { }
+protocol StaticCellModel: ElementRepresentable { }
 
 extension StaticCellModel {
-    var modelID: Int {
-        return "\(type(of: self))".hashValue
+    var differenceIdentifier: String {
+        return "\(type(of: self))"
     }
     
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.modelID == rhs.modelID
+        return lhs.differenceIdentifier == rhs.differenceIdentifier
+    }
+
+    func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? StaticCellModel else { return false }
+        return other.differenceIdentifier == self.differenceIdentifier
     }
 }
 

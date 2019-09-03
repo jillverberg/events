@@ -16,4 +16,5 @@ struct StoreProductInfo {
     let storeURL: URL
     let imageURL: URL
     let price: Double
+    let descr: String
 }

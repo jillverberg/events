@@ -4,9 +4,9 @@ platform :ios, '10.0'
 use_frameworks!
 
 target 'giftadvice' do
-    pod 'FlowKitManager'
-    pod 'PureLayout'
-    pod 'PhoneNumberKit', '~> 2.6'
+  pod 'OwlKit', :git => 'https://github.com/malcommac/Owl.git', :branch => 'develop'
+  pod 'PureLayout'
+  pod 'PhoneNumberKit', '~> 2.6'
 
 	pod 'SwiftyJSON' 
 	pod 'Alamofire'

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import Kingfisher
 import MessageUI
 import PhotosUI
@@ -80,10 +80,10 @@ class SettingsViewController: GAViewController {
     
     @IBAction func report(_ sender: Any) {
         let models: [Report] = [Report(value: "")]
-        let section = TableSection(models)
+        let section = TableSection(elements: models)
         
         showPopupView(title: "Settings.Title.Report".localized, adapters: [reportItemAdapter], sections: [section], CommandWith<Any>(action: { [unowned self] some in
-            if let report = self.popupView?.tableDirector.sections[0].models.first as? Report {
+            if let report = self.popupView?.tableDirector.sections[0].elements.first as? Report {
                 self.sendEmail(withReport: report)
             }
             self.hidePopupView()
@@ -188,7 +188,7 @@ private extension SettingsViewController {
             }
         }
         
-        return [TableSection(models)]
+        return [TableSection(elements: models)]
     }
     
     func saveUserEditings(models: [Setting]) {
@@ -242,27 +242,29 @@ private extension SettingsViewController {
         }
     }
     
-    var infoItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Setting, SettingsTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+    var infoItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Setting, SettingsTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "SettingsTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
         return adapter
     }
     
-    var settingsItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Setting, SettingsTableViewCell>()
-   
-        adapter.on.dequeue = { ctx in
+    var settingsItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Setting, SettingsTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "SettingsTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
             ctx.cell?.tableView = ctx.table
-            ctx.cell?.render(props: ctx.model)
+            ctx.cell?.render(props: ctx.element!)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
-        adapter.on.tap = { [unowned self] ctx in
+        adapter.events.didSelect = { [unowned self] ctx in
             ctx.cell?.setFirstResponer()
             
             return .deselectAnimated
@@ -271,15 +273,16 @@ private extension SettingsViewController {
         return adapter
     }
     
-    var reportItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Report, ReportTableViewCell>()
+    var reportItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Report, ReportTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ReportTableViewCell", bundle: nil)
 
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
         }
         
-        adapter.on.tap = { [unowned self] ctx in
-            let model = ctx.model
+        adapter.events.didSelect = { [unowned self] ctx in
+            let model = ctx.element!
   
             return .deselectAnimated
         }

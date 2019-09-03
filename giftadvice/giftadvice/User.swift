@@ -7,12 +7,17 @@
 //
 
 import ObjectMapper
-import FlowKitManager
+import OwlKit
 
-struct User: Mappable, ModelProtocol {
+struct User: Mappable, ElementRepresentable {
     
-    var modelID: Int {
-        return identifier.hashValue
+    var differenceIdentifier: String {
+        return identifier ?? ""
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? User else { return false }
+        return other.identifier == self.identifier
     }
     
     struct Keys {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 class ShopViewController: GAViewController {
     
@@ -68,6 +68,9 @@ class ShopViewController: GAViewController {
             return 1
         }
     }
+
+    private var newPageRequested = false
+    private var currentPage = 0
     
     // MARK: Init Methods & Superclass Overriders
     
@@ -78,7 +81,7 @@ class ShopViewController: GAViewController {
         subscribeButton.setTitleColor(AppColors.Common.active(), for: .normal)
         subscribeButton.layer.borderColor = UIColor.white.cgColor
         
-        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+        viewModel.setupCollectionView(adapters: [productCollectionCellAdapter])
         
         shop.accessToken = loginService.getAccessToken()
         
@@ -97,6 +100,8 @@ class ShopViewController: GAViewController {
                 }
             }
         }
+
+        subscribeOnSccrollUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -125,7 +130,8 @@ class ShopViewController: GAViewController {
     }
     
     @IBAction func showInfo(_ sender: Any) {
-        shopRouter().showInfo(shop: shop)
+        shopRouter()?.showInfo(shop: shop)
+        searchRouter()?.showInfo(shop: shop)
     }
     
     @IBAction func subscribeAction(_ sender: Any) {
@@ -175,6 +181,14 @@ private extension ShopViewController {
             view.layoutSubviews()
         }
     }
+
+    func configureNavigationBar() {
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
     
     func set(enabled: Bool, forButton button: UIButton) {
         let indicatorTag = 99
@@ -204,103 +218,148 @@ private extension ShopViewController {
         subscribeButton.backgroundColor = isSubscribed ? AppColors.Common.active() : .white
         subscribeButton.layer.borderWidth = isSubscribed ? 1.0 : 0.0
     }
-    
-    func configureNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.tintColor = .white
+
+    func subscribeOnSccrollUpdate() {
+        viewModel.collectionDirector.scrollEvents.didScroll = { scrollView in
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+
+            if offsetY > contentHeight - scrollView.frame.size.height, !self.newPageRequested {
+                self.newPageRequested = true
+                self.currentPage += 1
+                self.requestMoreData()
+            }
+        }
     }
-    
-    func shopRouter() -> ShopsRouterInput {
+
+    func searchRouter() -> SearchRouterInput? {
+        guard let router = router as? SearchRouterInput else {
+            return nil
+        }
+
+        return router
+    }
+
+    func shopRouter() -> ShopsRouterInput? {
         guard let router = router as? ShopsRouterInput else {
-            fatalError("\(self) router isn't ShopsRouterInput")
+            return nil
         }
         
         return router
     }
-    
+
     @objc func reloadData() {
+        currentPage = 0
         viewModel.collectionView.isLoading = true
         shopService.getShopProducts(user: shop, sorting: sortingValue, events: filterEventValue, price: filterPriceValue) { (error, response) in
             DispatchQueue.main.async {
-                self.viewModel.reloadCollectionData(sections: [CollectionSection(response)])
+                self.viewModel.reloadCollectionData(sections: [CollectionSection(elements:response ?? [])])
             }
         }
+    }
+
+    func requestMoreData() {
+        shopService.getShopProducts(user: shop,
+                                    sorting: sortingValue,
+                                    events: filterEventValue,
+                                    price: filterPriceValue,
+                                    page: currentPage,
+                                    completion: { error, models in
+                                        if let models = models {
+                                            DispatchQueue.main.async {
+                                                DispatchWorkItem.performOnMainQueue(at: [.default], {
+                                                    self.viewModel.collectionDirector.reload(afterUpdate: { _ in
+                                                        if self.viewModel.collectionDirector.sections.count == 0 {
+                                                            self.viewModel.collectionDirector.add(section: CollectionSection(elements:models))
+                                                        } else {
+                                                            self.viewModel.collectionDirector.sectionAt(0)?.add(elements: models, at: nil)
+                                                        }
+                                                    }, completion: {
+                                                        self.newPageRequested = false
+                                                        self.viewModel.setEmpty()
+                                                    })
+                                                })
+                                            }
+                                        }
+        })
     }
 }
 
 // MARK: - Table View Properties
 private extension ShopViewController {
-    var sortingItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<SortingModel, FilterTableViewCell>()
-        
-        adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.model, selected: self.sortingValue == ctx.model)
+    var sortingItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<SortingModel, FilterTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "FilterTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.element!, selected: self.sortingValue == ctx.element!)
         }
         
-        adapter.on.tap = { [unowned self] ctx in
-            if self.sortingValue == ctx.model {
+        adapter.events.didSelect = { [unowned self] ctx in
+            if self.sortingValue == ctx.element! {
                 self.sortingValue = nil
             } else {
-                self.sortingValue = ctx.model
+                self.sortingValue = ctx.element!
             }
             
-            ctx.table?.reloadData()
-            
+            self.popupView?.tableDirector.reload()
+
             return .none
         }
         
         return adapter
     }
     
-    var filterItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<FilterModel, FilterTableViewCell>()
-        
-        adapter.on.dequeue = { [unowned self] ctx in
+    var filterItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<FilterModel, FilterTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "FilterTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { [unowned self] ctx in
             let currentSelected = self.filterPage == 0 ? self.filterEventValue : [self.filterPriceValue].compactMap({ $0 })
             
-            ctx.cell?.render(props: ctx.model, selected: currentSelected.contains(where: { ctx.model.key == $0.key }))
+            ctx.cell?.render(props: ctx.element!, selected: currentSelected.contains(where: { ctx.element!.key == $0.key }))
         }
         
-        adapter.on.tap = { [unowned self] ctx in
+        adapter.events.didSelect = { [unowned self] ctx in
             if self.filterPage == 0 {
-                if self.filterEventValue.contains(where: { ctx.model.key == $0.key }) {
-                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.model.key == $0.key })!)
+                if self.filterEventValue.contains(where: { ctx.element!.key == $0.key }) {
+                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.element!.key == $0.key })!)
                 } else {
-                    self.filterEventValue.append(ctx.model)
+                    self.filterEventValue.append(ctx.element!)
                 }
             } else {
-                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.model.key {
+                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.element!.key {
                     self.filterPriceValue = nil
                 } else {
-                    self.filterPriceValue = ctx.model
+                    self.filterPriceValue = ctx.element!
                 }
             }
             
-            ctx.table?.reloadData()
-            
+            self.popupView?.tableDirector.reload()
+
             return .none
         }
         
         return adapter
     }
     
-    var productCollectionAdapter: AbstractAdapterProtocol {
-        let adapter = CollectionAdapter<Product, ProductCollectionViewCell>()
-        
-        adapter.on.itemSize = { ctx in
+    var productCollectionCellAdapter: CollectionCellAdapterProtocol {
+        let adapter = CollectionCellAdapter<Product, ProductCollectionViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ProductCollectionViewCell", bundle: nil)
+
+        adapter.events.itemSize = { ctx in
             let width = (self.viewModel.collectionView.frame.size.width - 18) / 2
             return CGSize(width: width, height: 300)
         }
         
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.setIndicator(hidden: true)
         }
         
-        adapter.on.didSelect = { [unowned self] ctx in
-            self.shopRouter().showProduct(ctx.model)
+        adapter.events.didSelect = { [unowned self] ctx in
+            self.shopRouter()?.showProduct(ctx.element)
+            self.searchRouter()?.showProduct(ctx.element)
         }
         
         return adapter
@@ -317,7 +376,7 @@ private extension ShopViewController {
             .dateASC, .dateDESC,
             .rateASC, .rateDESC
         ]
-        showPopupView(title: title, adapters: [sortingItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+        showPopupView(title: title, adapters: [sortingItemAdapter], sections: [TableSection(elements: models)], CommandWith<Any>(action: { [unowned self] models in
             self.hidePopupView()
             self.reloadData()
         }))
@@ -328,7 +387,7 @@ private extension ShopViewController {
         
         let models: [FilterModel] = EditingViewModel.Events.value.map({ FilterModel(value: $0.value, key: $0.key.rawValue) })
         
-        showPopupView(title: title, adapters: [filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+        showPopupView(title: title, adapters: [filterItemAdapter], sections: [TableSection(elements: models)], CommandWith<Any>(action: { [unowned self] models in
             self.hidePopupView()
             
             let title = "Filtering.Price".localized
@@ -336,7 +395,7 @@ private extension ShopViewController {
                 .sorted(by: { $0.key.rawValue < $1.key.rawValue })
                 .map({ FilterModel(value: $0.value, key: String($0.key.rawValue)) })
             
-            self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(models)], CommandWith<Any>(action: { [unowned self] models in
+            self.showPopupView(title: title, adapters: [self.filterItemAdapter], sections: [TableSection(elements: models)], CommandWith<Any>(action: { [unowned self] models in
                 self.hidePopupView()
                 self.reloadData()
             }), actionTitle: "Filtering.Save".localized)

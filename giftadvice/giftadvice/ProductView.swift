@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import Kingfisher
 
 protocol ProductViewDelegate {
@@ -22,7 +22,7 @@ class ProductView: UIView {
     @IBOutlet weak var backgroundView: UIView!
     
     @IBOutlet weak var tableView: UITableView!
-    lazy var tableDirector = TableDirector(self.tableView)
+    lazy var tableDirector = TableDirector(table: self.tableView)
     @IBOutlet weak var backgroundTopConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var shopButton: UIButton!
@@ -62,12 +62,12 @@ class ProductView: UIView {
     struct ProductRate: StaticCellModel {
         enum Interaction: String {
             case like = "Like"
-            case dislike = "Disike"
+            case dislike = "Dislike"
             case none = "None"
         }
         
-        let like: Int?
-        let dislike: Int?
+        var like: Int = 0
+        var dislike: Int = 0
         var interaction: Interaction
         let interactionCommand: CommandWith<Interaction>?
     }
@@ -115,8 +115,8 @@ class ProductView: UIView {
             let descriptiopn = ProductDescription(title: "Описание", description: product.description)
             
             dispatch.notify(queue: .global()) { [unowned self] in
-                let models: [ModelProtocol?] = [gallery, title, rate, descriptiopn]
-                let section = TableSection(models.compactMap({ $0 }))
+                let models: [ElementRepresentable?] = [gallery, title, rate, descriptiopn]
+                let section = TableSection(elements: models.compactMap({ $0 }))
                 
                 DispatchQueue.main.async {
                     self.reloadData(sections: [section])
@@ -128,17 +128,16 @@ class ProductView: UIView {
     func loadProduct() {
         if let user = loginService?.userModel, let identifier = product?.identifier {
             service?.getProduct(user: user, identifier: identifier, completion: { [unowned self] (error, product) in
-                if let product = product {
+                if let product = product, error == nil {
                     DispatchQueue.main.async {
                         self.setupWith(product)
                     }
+
+                    self.product = product
                 }
-                
-                self.product = product
             })
         }
     }
-    
     
     @IBAction func performAction(_ sender: Any) {
         if let viewController = delegate as? ProductViewController, type == .shop, viewController.isOwner {
@@ -146,7 +145,13 @@ class ProductView: UIView {
             viewController.profileRouter().showEditing(product)
         } else if let viewController = delegate as? ProductViewController, let shop = product?.shop {
             viewController.needToHide()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Some"), object: shop)            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Some"), object: shop)
+        } else if product?.shop == nil, let urlString = product?.identifier, let url = URL(string: urlString) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 }
@@ -163,7 +168,7 @@ private extension ProductView {
         shopButton.layer.cornerRadius = shopButton.frame.height / 2
         tableView.tableFooterView = UIView()
 
-        tableDirector.onScroll?.didScroll = { scrollView in
+        tableDirector.scrollViewEvents.didScroll = { scrollView in
             
             if self.hidding { return }
             
@@ -202,15 +207,15 @@ private extension ProductView {
         shopButton.backgroundColor = AppColors.Common.active()
     }
     
-    func setupTableView(adapters: [AbstractAdapterProtocol]) {
-        tableDirector.rowHeight = .autoLayout(estimated: 44.0)
-        tableDirector.register(adapters: adapters)
+    func setupTableView(adapters: [TableCellAdapterProtocol]) {
+        tableDirector.rowHeight = .auto(estimated: 44.0)
+        tableDirector.registerCellAdapters( adapters)
     }
     
     func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
-        tableDirector.reloadData()
+        tableDirector.reload()
     }
     
     func showShare() {
@@ -228,25 +233,27 @@ private extension ProductView {
     
     // MARK: Adapters
     
-    var galleryAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<ProductGallery, GalleryTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+    var galleryAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<ProductGallery, GalleryTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "GalleryTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
         }
         
         return adapter
     }
     
-    var titleAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<ProductTitle, ProductTitleTableViewCell>()
-        
-        adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.setup(props: ctx.model)
+    var titleAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<ProductTitle, ProductTitleTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ProductTitleTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { [unowned self] ctx in
+            ctx.cell?.setup(props: ctx.element!)
             
             ctx.cell?.favoriteToggleAction = { [unowned self] favorite in
                 if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
-                    self.service?.toggleProductFavorite(user: user, product: identifier, favorite: favorite)
+                    self.service?.setProductFavorite(user: user, product: identifier, favorite: favorite)
                 }
             }
             ctx.cell?.shareAction = { [unowned self] in
@@ -257,21 +264,23 @@ private extension ProductView {
         return adapter
     }
     
-    var rateAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<ProductRate, RateTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.setup(props: ctx.model)
+    var rateAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<ProductRate, RateTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "RateTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.setup(props: ctx.element!)
         }
         
         return adapter
     }
     
-    var descriptionAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<ProductDescription, InfoTableViewCell>()
-        
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.setup(props: ctx.model)
+    var descriptionAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<ProductDescription, InfoTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "InfoTableViewCell", bundle: nil)
+
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.setup(props: ctx.element!)
         }
         
         return adapter

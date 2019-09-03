@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistrationEndView" customModule="giftadvice" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="U9G-ZK-h0d"/>
+                <outlet property="loadingIndicatorView" destination="5lv-q2-tpi" id="h7v-V9-QqJ"/>
                 <outlet property="nextButton" destination="5nS-dO-oXC" id="mDg-fq-9Nq"/>
                 <outlet property="profileImage" destination="fYM-qC-W3J" id="oTF-QR-XnL"/>
                 <outlet property="profilePhotoImageView" destination="fYM-qC-W3J" id="Pv1-kD-x2Y"/>
@@ -86,13 +87,18 @@
                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="11"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5lv-q2-tpi">
+                            <rect key="frame" x="161.5" y="304.5" width="20" height="20"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="9n3-Mj-aCb" firstAttribute="top" secondItem="xqh-lS-672" secondAttribute="top" constant="16" id="5ZD-dg-1DP"/>
                         <constraint firstItem="358-Vb-Eqn" firstAttribute="top" secondItem="fYM-qC-W3J" secondAttribute="bottom" constant="16" id="E5D-es-PYx"/>
                         <constraint firstItem="358-Vb-Eqn" firstAttribute="centerX" secondItem="xqh-lS-672" secondAttribute="centerX" id="EjA-Bg-eox"/>
+                        <constraint firstItem="5lv-q2-tpi" firstAttribute="top" secondItem="358-Vb-Eqn" secondAttribute="bottom" constant="8" id="Ev5-Ym-dE5"/>
                         <constraint firstItem="5nS-dO-oXC" firstAttribute="centerX" secondItem="xqh-lS-672" secondAttribute="centerX" id="JFL-mk-9sU"/>
+                        <constraint firstItem="5lv-q2-tpi" firstAttribute="centerX" secondItem="xqh-lS-672" secondAttribute="centerX" id="Wjt-X2-ysY"/>
                         <constraint firstItem="9n3-Mj-aCb" firstAttribute="centerX" secondItem="xqh-lS-672" secondAttribute="centerX" id="Wx3-I1-GRy"/>
                         <constraint firstItem="5nS-dO-oXC" firstAttribute="width" secondItem="xqh-lS-672" secondAttribute="width" multiplier="1:1.5" id="dNw-Kn-c1n"/>
                         <constraint firstItem="MMt-Bi-7rx" firstAttribute="top" secondItem="fYM-qC-W3J" secondAttribute="top" id="dnt-Qx-an9"/>

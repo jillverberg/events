@@ -107,10 +107,6 @@ private extension ProductViewController {
 //         Close gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissView))
         backgroundView.addGestureRecognizer(tapGesture)
-        
-        if hideSaveButton {
-            productView.shopButton.isHidden = true
-        }
     }
     
     func showContextView(completion: ((Bool) -> Void)? = nil) {

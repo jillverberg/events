@@ -26,8 +26,10 @@ class NetworkManager: RequestAdapter {
         static let message = "message"
         
         static let limit = "limit"
+        static let offset = "offset"
 
         static let product = "product_id"
+        static let products = "products_id"
         static let favorite = "is_favorite"
         
         static let shop = "shopId"
@@ -148,15 +150,39 @@ class NetworkManager: RequestAdapter {
         user.phoneNumber = nil
         user.identifier = nil
         user.photo = nil
-        
-        requestWith(endUrl: method + "/\(identifier ?? "")/", imageData: image, parameters: user.toJSON(), accessToken: accessToken, onCompletion: completion)
+
+        var imageData = [Data]()
+        if let image = image {
+            imageData.append(image)
+        }
+
+        requestWith(endUrl: method + "/\(identifier ?? "")/", method: .put, keyImage: "photo", imageData: imageData, parameters: user.toJSON(), accessToken: accessToken, onCompletion: completion)
     }
     
-    func getProducts(user: User, completion: @escaping NetworkCompletion) {
-        let method = user.type! == .buyer ? Paths.GET.product : Paths.GET.shop + "/\(user.identifier ?? "")/" + Paths.GET.product
+    func getProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, page: Int, completion: @escaping NetworkCompletion) {
+        let method = user.type! == .buyer ? Paths.GET.product : Paths.GET.shop + "/\(user.identifier ?? "")/" + Paths.GET.product + "/"
         let accessToken = user.accessToken
 
-        _ = getRequest(withMethod: method , parameters: [Keys.limit: "10"], accessToken: accessToken, completion: completion)
+        var parameters = [String: Any]()
+
+        parameters[Keys.limit] = "15"
+        parameters[Keys.offset] = String(page * 15)
+
+        if let sorting = sorting, let order = order {
+            parameters[Keys.sorting] = sorting
+            parameters[Keys.order] = order
+        }
+
+        if let events = events {
+            parameters[Keys.event] = events
+        }
+
+        if let lower = lowerPrice, let upper = upperPrice {
+            parameters[Keys.lowPrice] = lower
+            parameters[Keys.uppPrice] = upper
+        }
+
+        _ = getRequest(withMethod: method , parameters: parameters, accessToken: accessToken, completion: completion)
     }
     
     func getProduct(user: User, identifier: String, completion: @escaping NetworkCompletion) {
@@ -171,10 +197,15 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.latest, parameters: [Keys.limit: "1"], accessToken: accessToken, completion: completion)
     }
     
-    func getFavorite(user: User, completion: @escaping NetworkCompletion) {
+    func getFavorite(user: User, page: Int, completion: @escaping NetworkCompletion) {
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
-        
-        _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite, parameters: [:], accessToken: user.accessToken, completion: completion)
+
+        var parameters = [String: Any]()
+
+        parameters[Keys.limit] = "15"
+        parameters[Keys.offset] = String(page * 15)
+
+        _ = getRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.GET.favorite, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
     
     func isFavorite(user: User, product: String, completion: @escaping NetworkCompletion) {
@@ -195,8 +226,17 @@ class NetworkManager: RequestAdapter {
             Keys.product: product,
             Keys.favorite: favorite
         ]
-        
+
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.rate, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
+    }
+
+    func removeFavorite(user: User, shops: [String]) {
+        let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
+        let parameters: [String : Any] = [
+            Keys.products: shops
+        ]
+
+        _ = deleteRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.rate, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
     }
     
     func setInteraction(user: User, product: String, interaction: String) {
@@ -209,10 +249,15 @@ class NetworkManager: RequestAdapter {
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.interaction, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
     }
     
-    func getShops(user: User, completion: @escaping NetworkCompletion) {
+    func getShops(user: User, page: Int, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
-        
-        _ = getRequest(withMethod: Paths.GET.shop, parameters: [:], accessToken: accessToken, completion: completion)
+
+        var parameters = [String: Any]()
+
+        parameters[Keys.limit] = "15"
+        parameters[Keys.offset] = String(page * 15)
+
+        _ = getRequest(withMethod: Paths.GET.shop, parameters: parameters, accessToken: accessToken, completion: completion)
     }
     
     func getShopInfo(user: User, completion: @escaping NetworkCompletion) {
@@ -222,11 +267,14 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
-    func getShopProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, completion: @escaping NetworkCompletion) {
+    func getShopProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, page: Int, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
         let identifier = user.identifier
         var parameters = [String: Any]()
-        
+
+        parameters[Keys.limit] = "15"
+        parameters[Keys.offset] = String(page * 15)
+
         if let sorting = sorting, let order = order {
             parameters[Keys.sorting] = sorting
             parameters[Keys.order] = order
@@ -259,14 +307,28 @@ class NetworkManager: RequestAdapter {
         _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.subscribe, parameters: parameters, accessToken: user.accessToken, completion: { _,_,_ in })
     }
     
-    func addProduct(user: User, product: Product, completion: @escaping NetworkCompletion) {
+    func addProduct(user: User, product: Product, completion: (([String : Any]?) -> Void)?) {
+        guard let accessToken = user.accessToken else { return }
+
         let method = user.type! == .buyer ? Paths.POST.user : Paths.POST.shop
-        
+
         var product = product
+
+        var imageData = [Data]()
+        if let images = product.photo {            
+            for image in images {
+                if let data = image.data {
+                    imageData.append(data)
+                }
+            }
+        }
+
         product.photo = nil
         product.identifier = nil
-        
-        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.product, parameters: product.toJSON(), accessToken: user.accessToken, completion: completion)
+
+
+//        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.product, parameters: product.toJSON(), accessToken: user.accessToken, completion: completion)
+        requestWith(endUrl:method + "/\(user.identifier ?? "")/" + Paths.POST.product, method: .post, keyImage: "photos", imageData: imageData, parameters: product.toJSON(), accessToken: accessToken, onCompletion: completion)
     }
     
     func removeProduct(user: User, product: Product) {
@@ -292,7 +354,7 @@ class NetworkManager: RequestAdapter {
     
     // MARK: Make Request
     
-    private func requestWith(endUrl: String, imageData: Data?, parameters: [String : Any], accessToken: String, onCompletion: (([String : Any]?) -> Void)? = nil, onError: ((Error?) -> Void)? = nil){
+    private func requestWith(endUrl: String, method: HTTPMethod, keyImage: String, imageData: [Data]?, parameters: [String : Any], accessToken: String, onCompletion: (([String : Any]?) -> Void)? = nil, onError: ((Error?) -> Void)? = nil){
         
         let url = methodPath(withMethod: endUrl) /* your API url */
         
@@ -307,10 +369,12 @@ class NetworkManager: RequestAdapter {
             }
             
             if let data = imageData {
-                multipartFormData.append(data, withName: "photo", fileName: "image.png", mimeType: "image/png")
+                for image in data {
+                    multipartFormData.append(image, withName: keyImage, fileName: "image.png", mimeType: "image/png")
+                }
             }
             
-        }, usingThreshold: UInt64.init(), to: url, method: .put, headers: headers) { (result) in
+        }, usingThreshold: UInt64.init(), to: url, method: method, headers: headers) { (result) in
             switch result{
             case .success(let upload, _, _):
                 upload.responseJSON { response in
@@ -358,6 +422,14 @@ class NetworkManager: RequestAdapter {
         #endif
         
         return fireRequest(withMethod: method, type: .put, parameters: parameters, accessToken: accessToken, queue: postQueue, completion: completion)
+    }
+
+    private func deleteRequest(withMethod method: String, parameters: [String : Any], accessToken: String?, completion: @escaping NetworkCompletion) -> URLSessionTask? {
+        #if DEBUG
+        print("\(Date()) DELETE \(method) with \(parameters)")
+        #endif
+
+        return fireRequest(withMethod: method, type: .delete, parameters: parameters, accessToken: accessToken, queue: postQueue, completion: completion)
     }
     
     private func fireRequest(withMethod method: String, type: HTTPMethod, parameters: [String : Any], accessToken: String?, queue: DispatchQueue, completion: @escaping NetworkCompletion) -> URLSessionTask? {

@@ -6,21 +6,21 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import FlowKitManager
+import OwlKit
 import UIKit
 
 class ShopInfoViewModel: NSObject {
     @IBOutlet var tableView: UITableView!
-    lazy var tableDirector = TableDirector(self.tableView)
+    lazy var tableDirector = TableDirector(table: self.tableView)
     
-    func setupTableView(adapters: [AbstractAdapterProtocol]) {
-        tableDirector.rowHeight = .autoLayout(estimated: 44.0)
-        tableDirector.register(adapters: adapters)
+    func setupTableView(adapters: [TableCellAdapterProtocol]) {
+        tableDirector.rowHeight = .auto(estimated: 44.0)
+        tableDirector.registerCellAdapters( adapters)
     }
     
     func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
-        tableDirector.reloadData()
+        tableDirector.reload()
     }
 }

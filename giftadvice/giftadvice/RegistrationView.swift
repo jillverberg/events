@@ -69,6 +69,11 @@ class RegistrationView: SignUpView {
                 user.mapProperties(Map(mappingType: .fromJSON, JSON: par as [String : Any]))
                 
                 loginService.update(user: user) { (error, newUser) in
+                    if var newUser = newUser {
+                        newUser.accessToken = self.loginService.getAccessToken()
+                        self.loginService.saveUserModel(newUser)
+                    }
+
                     self.delegate?.didSelectNextWith(object: user.toJSON(), type: .info)
                 }
             }

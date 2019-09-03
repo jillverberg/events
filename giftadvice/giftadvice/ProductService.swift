@@ -11,15 +11,16 @@ import ObjectMapper
 private protocol PublicMethods {
     var recieveProduct: ((Product) -> ())? { get set }
 
-    func getProducts(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
+    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
     func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
-    
+
     func isProductFavorite(user: User, product: String, completion: @escaping (_ error: String?, _ favorite: Bool) -> ())
     func productInteraction(user: User, product: String, completion: @escaping (_ error: String?, _ interaction: String?) -> ())
     func setProductInteraction(user: User, product: String, interaction: String)
     
-    func toggleProductFavorite(user: User, product: String, favorite: Bool)
+    func setProductFavorite(user: User, product: String, favorite: Bool)
+    func removeProductsFromFavorite(user: User, products: [String])
     func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func remove(user: User, product: Product)
     func searchProduct(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [Product]?) -> ())
@@ -37,8 +38,15 @@ class ProductService {
 }
 
 extension ProductService: PublicMethods {
-    func getProducts(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
-        networkManager.getProducts(user: user) { (ended, error, response) in
+    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int = 0, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
+        let price = EditingViewModel.Prices(price?.key)
+        networkManager.getProducts(user: user,
+                                   sorting: sorting?.key,
+                                   order: sorting?.order,
+                                   events: events?.map({ $0.key }),
+                                   lowerPrice: price?.range.0,
+                                   upperPrice: price?.range.1,
+                                   page: page) { (ended, error, response) in
             if let data = response?["data"] as? [[String: Any]] {
                 let models = Mapper<Product>().mapArray(JSONArray: data)
                     
@@ -99,22 +107,32 @@ extension ProductService: PublicMethods {
         networkManager.setInteraction(user: user, product: product, interaction: interaction)
     }
     
-    func toggleProductFavorite(user: User, product: String, favorite: Bool) {
-        networkManager.setFavorite(user: user, product: product, favorite: favorite)
+    func setProductFavorite(user: User, product: String, favorite: Bool) {
+        if favorite {
+            networkManager.setFavorite(user: user, product: product, favorite: favorite)
+        } else {
+            networkManager.removeFavorite(user: user, shops: [product])
+        }
     }
-    
-    func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ()) {
-        networkManager.addProduct(user: user, product: product) { [weak self] (ended, error, response) in
-            if let data = response {
-                let model = Mapper<Product>().map(JSON: data)
-                
-                if let model = model {
-                    self?.recieveProduct?(model)
-                }
 
-                completion(error, model)
-            } else if let error = error {
-                completion(error, nil)
+    func removeProductsFromFavorite(user: User, products: [String]) {
+        networkManager.removeFavorite(user: user, shops: products)
+    }
+
+    func add(user: User, product: Product, completion: @escaping (_ error: String?, _ products: Product?) -> ()) {
+        networkManager.addProduct(user: user, product: product) { [weak self] (response) in
+            if let data = response {
+                if let message = data["message"] as? String {
+                    completion(message, nil)
+                } else {
+                    let model = Mapper<Product>().map(JSON: data)
+
+                    if let model = model {
+                        self?.recieveProduct?(model)
+                    }
+
+                    completion(nil, model)
+                }
             }
         }
     }

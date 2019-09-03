@@ -7,20 +7,20 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 class SettingsViewModel: NSObject {
     @IBOutlet var tableView: UITableView!
-    lazy var tableDirector = TableDirector(self.tableView)
+    lazy var tableDirector = TableDirector(table: self.tableView)
     
-    func setupTableView(adapters: [AbstractAdapterProtocol]) {
-        tableDirector.rowHeight = .autoLayout(estimated: 44.0)
-        tableDirector.register(adapters: adapters)
+    func setupTableView(adapters: [TableCellAdapterProtocol]) {
+        tableDirector.rowHeight = .auto(estimated: 44.0)
+        tableDirector.registerCellAdapters(adapters)
     }
     
     func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
-        tableDirector.reloadData()
+        tableDirector.reload()
     }
 }

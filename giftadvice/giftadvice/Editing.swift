@@ -6,11 +6,16 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import FlowKitManager
+import OwlKit
 
-class Editing: ModelProtocol {
-    var modelID: Int {
-        return place
+class Editing: ElementRepresentable {
+    var differenceIdentifier: String {
+        return place.description
+    }
+
+    public func isContentEqual(to other: Differentiable) -> Bool {
+        guard let other = other as? Editing else { return false }
+        return other.value == self.value
     }
     
     // MARK: - Public Properties

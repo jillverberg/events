@@ -6,35 +6,35 @@
 //  Copyright © 2019 George Efimenko. All rights reserved.
 //
 
-import FlowKitManager
+import OwlKit
 import UIKit
 
 class FilterViewModel: NSObject {
     var sortingCollectionView: UICollectionView!
     var filterCollectionView: UICollectionView!
     
-    lazy var sortingCollectionDirector = FlowCollectionDirector(self.sortingCollectionView)
-    lazy var filterCollectionDirector = FlowCollectionDirector(self.filterCollectionView)
+    lazy var sortingCollectionDirector = FlowCollectionDirector(collection: self.sortingCollectionView)
+    lazy var filterCollectionDirector = FlowCollectionDirector(collection: self.filterCollectionView)
 
     
-    func setupSortingCollectionView(adapters: [AbstractAdapterProtocol]) {
-        sortingCollectionDirector.register(adapters: adapters)        
+    func setupSortingCollectionView(adapters: [CollectionCellAdapterProtocol]) {
+        sortingCollectionDirector.registerAdapters(adapters)
     }
     
     func reloadSortingCollectionData(sections: [CollectionSection]) {
         sortingCollectionDirector.removeAll()
         sortingCollectionDirector.add(sections: sections)
-        sortingCollectionDirector.reloadData()
+        sortingCollectionDirector.reload()
     }
     
-    func setupFilterCollectionView(adapters: [AbstractAdapterProtocol]) {
-        filterCollectionDirector.register(adapters: adapters)
+    func setupFilterCollectionView(adapters: [CollectionCellAdapterProtocol]) {
+        filterCollectionDirector.registerAdapters(adapters)
     }
     
     func reloadFilterCollectionData(sections: [CollectionSection]) {
         filterCollectionDirector.removeAll()
         filterCollectionDirector.add(sections: sections)
-        filterCollectionDirector.reloadData()
+        filterCollectionDirector.reload()
     }
 }
 

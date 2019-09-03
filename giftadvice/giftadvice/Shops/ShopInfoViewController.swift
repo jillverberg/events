@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 class ShopInfoViewController: GAViewController {
 
@@ -61,10 +61,10 @@ class ShopInfoViewController: GAViewController {
 
     @IBAction func report(_ sender: Any) {
         let models: [Report] = [Report(value: "")]
-        let section = TableSection(models)
+        let section = TableSection(elements: models)
         
         showPopupView(title: "Settings.Title.Problem".localized, adapters: [reportItemAdapter], sections: [section], CommandWith<Any>(action: { [unowned self] some in
-            if let report = self.popupView?.tableDirector.sections[0].models.first as? Report {
+            if let report = self.popupView?.tableDirector.sections[0].elements.first as? Report {
                 
             }
             self.hidePopupView()
@@ -94,22 +94,24 @@ private extension ShopInfoViewController {
         navigationController?.navigationBar.tintColor = .white
     }
     
-    var settingsItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Setting, SettingsTableViewCell>()
+    var settingsItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Setting, SettingsTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "SettingsTableViewCell", bundle: nil)
 
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
         return adapter
     }
     
-    var reportItemAdapter: AbstractAdapterProtocol {
-        let adapter = TableAdapter<Report, ReportTableViewCell>()
+    var reportItemAdapter: TableCellAdapterProtocol {
+        let adapter = TableCellAdapter<Report, ReportTableViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ReportTableViewCell", bundle: nil)
 
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element!)
         }
 
         return adapter
@@ -139,6 +141,6 @@ private extension ShopInfoViewController {
             }
         }
         
-        return [TableSection(models)]
+        return [TableSection(elements: models)]
     }
 }

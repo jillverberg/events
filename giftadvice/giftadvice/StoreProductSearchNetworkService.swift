@@ -24,7 +24,7 @@ class StoreProductSearchNetworkService {
             var params = [
                 "apiKey": StoreProductSearchNetworkService.apiKey,
                 "query": byKeyword,
-                "merchant": "Amazon Marketplace",
+                "merchant": "",
                 "itemsPerPage": maxCount,
                 "format": "json"
                 ] as [String : Any]
@@ -64,8 +64,9 @@ class StoreProductSearchNetworkService {
             let imageURL = URL(string: rawItem["imageUrl"] as! String)!
             let storeURL = URL(string: rawItem["url"] as! String)!
             let price = Double(rawItem["price"] as! String)!
-            
-            result.append(StoreProductInfo(title: name, storeURL: storeURL, imageURL: imageURL, price: price))
+            let descr = rawItem["nameTerms"] as! String
+
+            result.append(StoreProductInfo(title: name, storeURL: storeURL, imageURL: imageURL, price: price, descr: descr))
         }
         
         return result

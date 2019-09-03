@@ -172,7 +172,7 @@ extension LoginService: PublicMethods {
         }
     }
     
-    func saveAccessToken(_ token: String) {
+    func saveAccessToken(_ token: String?) {
         UserDefaults.standard.setValue(token, forKey: UserDefaultsKeys.accessToken)
         UserDefaults.standard.synchronize()
     }
@@ -183,7 +183,8 @@ extension LoginService: PublicMethods {
     
     func saveUserModel(_ model: User) {
         userModel = model
-        
+        saveAccessToken(model.accessToken)
+
         let dictionary = model.toJSON()
         UserDefaults.standard.setValue(dictionary, forKey: UserDefaultsKeys.userModel)
         UserDefaults.standard.synchronize()

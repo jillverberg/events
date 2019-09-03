@@ -92,7 +92,10 @@ private extension SignUpPageViewController {
 
             contentView = registrationView
         case .photo:
-            contentView = RegistrationEndView(frame: .zero, type: parent.type)
+            let registrationView = RegistrationEndView(frame: .zero, type: parent.type)
+            registrationView.loginService = parent.loginService
+
+            contentView = registrationView
         }
         
         if let contentView = contentView as? SignUpView {

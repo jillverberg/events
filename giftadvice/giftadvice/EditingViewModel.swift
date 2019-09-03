@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 extension EditingViewModel.EditingCells {
     var key: String {
@@ -171,15 +171,15 @@ class EditingViewModel: NSObject {
     // MARK: - IBOutlet Properties
 
     @IBOutlet var tableView: GATableView!
-    lazy var tableDirector = TableDirector(self.tableView)
+    lazy var tableDirector = TableDirector(table: self.tableView)
     
     var gallery = ProductView.ProductGallery()
     
     // MARK: - Public Methods
 
-    func setupTableView(adapters: [AbstractAdapterProtocol]) {
-        tableDirector.rowHeight = .autoLayout(estimated: 56.0)
-        tableDirector.register(adapters: adapters)
+    func setupTableView(adapters: [TableCellAdapterProtocol]) {
+        tableDirector.rowHeight = .auto(estimated: 56.0)
+        tableDirector.registerCellAdapters( adapters)
         tableView.tableFooterView = UIView()
         
         generateView()
@@ -188,13 +188,13 @@ class EditingViewModel: NSObject {
     func reloadData(sections: [TableSection]) {
         tableDirector.removeAll()
         tableDirector.add(sections: sections)
-        tableDirector.reloadData()
+        tableDirector.reload()
     }
     
     func getProduct() throws ->  Product? {
         var product = gallery.product
         
-        var models = tableDirector.section(at: 0)?.models
+        var models = tableDirector.section(at: 0)?.elements
         models?.removeFirst()
         
         if let models = models as? [Editing] {
@@ -264,7 +264,7 @@ private extension EditingViewModel {
     }
     
     func createEditings(values: [EditingCells: String]) {
-        var models = [ModelProtocol]()
+        var models = [ElementRepresentable]()
         gallery.product = Product(JSON: [Product.Keys.photo: []])
         
         models.append(gallery)
@@ -275,7 +275,7 @@ private extension EditingViewModel {
             models.append(editing)
         }
         
-        reloadData(sections: [TableSection(models)])
+        reloadData(sections: [TableSection(elements: models)])
     }
     
     func isValidUrl(url: String) -> Bool {
@@ -324,8 +324,13 @@ extension EditingViewModel: UIImagePickerControllerDelegate, UINavigationControl
             }
             
             cell.appendModels(models: [absolutePath])
-            gallery.product?.photo?.append( Photo(JSON: [Photo.Keys.identifier: String(cell.collectionDirector.sections[0].models.count),
-                                                         Photo.Keys.photo: absolutePath])!)
+            var photo = Photo(JSON: [Photo.Keys.identifier: String(cell.collectionDirector.sections[0].elements.count),
+                                     Photo.Keys.photo: absolutePath])!
+
+            if let image = info[.originalImage] as? UIImage {
+                photo.data = image.jpeg(.medium)
+            }
+            gallery.product?.photo?.append(photo)
         }
     }
 }

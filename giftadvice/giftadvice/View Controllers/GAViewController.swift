@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import PureLayout
 import Photos
 
@@ -115,7 +115,7 @@ class GAViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showPopupView(title: String, adapters: [AbstractAdapterProtocol], sections: [TableSection], _ action: CommandWith<Any>? = nil, actionTitle: String? = nil) {
+    func showPopupView(title: String, adapters: [TableCellAdapterProtocol], sections: [TableSection], _ action: CommandWith<Any>? = nil, actionTitle: String? = nil) {
         var containerView: UIView!
                 
         if let tabBar = tabBarController {
@@ -127,6 +127,7 @@ class GAViewController: UIViewController {
         }
 
         let popupView = PopupView(frame: .zero, adapters: adapters, title: title)
+        self.popupView = popupView
         popupView.command = action
         popupView.reloadData(sections: sections)
         
@@ -140,8 +141,6 @@ class GAViewController: UIViewController {
         
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .beginFromCurrentState, animations: {
             popupView.alpha = 1.0
-        }, completion:  { _ in
-            self.popupView = popupView
         })
     }
     

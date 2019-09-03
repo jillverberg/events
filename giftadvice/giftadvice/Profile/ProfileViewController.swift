@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 import Kingfisher
 
 class ProfileViewController: GAViewController {
@@ -44,7 +44,10 @@ class ProfileViewController: GAViewController {
     private var loginService: LoginService!
     private var isListEditing = false
     private var selectedProducts: [Int: Product] = [:]
-    
+
+    private var newPageRequested = false
+    private var currentPage = 0
+
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
@@ -52,36 +55,11 @@ class ProfileViewController: GAViewController {
         
         navigationItem.title = " "
 
-        viewModel.setupCollectionView(adapters: [productCollectionAdapter])
+        viewModel.setupCollectionView(adapters: [productCollectionCellAdapter])
         
         viewModel.collectionView.isLoading = true
-        if let user = loginService.userModel {
-            let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
-                if let response = response {
-                    DispatchQueue.main.async {
-                        self.reloadWith(product: response)
-                    }
-                }
-            }
-            
-            if user.type! == .buyer {
-                profileService.getFavorite(user: user, completion: completion)
-            } else {
-                productService.getProducts(user: user, completion: completion)
-            }
-            
-            productService.recieveProduct = { [weak self] product in
-                DispatchQueue.main.async {
-                    if let count = self?.viewModel.collectionDirector.sections.count, count == 0 {
-                        self?.reloadWith(product: [product])
-                    } else {
-                        self?.viewModel.collectionDirector.reloadData(after: { () -> (Void) in
-                            self?.viewModel.collectionDirector.section(at: 0)?.add(model: product, at: 0)
-                        })
-                    }                    
-                }
-            }
-        }
+        loadShopData()
+        subscribeOnSccrollUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +67,7 @@ class ProfileViewController: GAViewController {
         
         setupViews()
         configureNavigationBar()
+        loadBuyerData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,20 +116,28 @@ class ProfileViewController: GAViewController {
     private func reloadWith(product: [Product]) {
         var collectionSection = [CollectionSection]()
 
-        collectionSection.append(CollectionSection(product))
+        collectionSection.append(CollectionSection(elements:product.reversed()))
         
-        _ = collectionSection.map({$0.sectionInsets = {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            }})
+        _ = collectionSection.map({$0.sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) })
         
-        _ = collectionSection.map({$0.minimumLineSpacing = {
-            return 18
-            }})
+        _ = collectionSection.map({$0.minimumLineSpacing = 18 })
         
         viewModel.addCollectionData(sections: collectionSection)
-        viewModel.collectionDirector.reloadData()
     }
-    
+
+    func subscribeOnSccrollUpdate() {
+        viewModel.collectionDirector.scrollEvents.didScroll = { scrollView in
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+
+            if offsetY > contentHeight - scrollView.frame.size.height, !self.newPageRequested {
+                self.newPageRequested = true
+                self.currentPage += 1
+                self.requestMoreData()
+            }
+        }
+    }
+
     private func configureNavigationBar() {
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -189,28 +176,30 @@ class ProfileViewController: GAViewController {
         toolBar.barTintColor = AppColors.Common.active()
     }
     
-    var productCollectionAdapter: AbstractAdapterProtocol {
-        let adapter = CollectionAdapter<Product, ProductCollectionViewCell>()
-        
-        adapter.on.itemSize = { ctx in
+    var productCollectionCellAdapter: CollectionCellAdapterProtocol {
+        let adapter = CollectionCellAdapter<Product, ProductCollectionViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ProductCollectionViewCell", bundle: nil)
+
+        adapter.events.itemSize = { ctx in
             let width = (self.viewModel.collectionView.frame.size.width - 18) / 2
             return CGSize(width: width, height: 300)
         }
         
-        adapter.on.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.setIndicator(hidden: !self.isListEditing)
+            ctx.cell?.setIndicator(active: self.selectedProducts[ctx.indexPath!.row] != nil)
         }
         
-        adapter.on.didSelect = { [unowned self] ctx in
+        adapter.events.didSelect = { [unowned self] ctx in
             self.didSelect(at: ctx)
         }
         
-        adapter.on.willDisplay = { [unowned self] (cell, indexPath) in
-            if self.selectedProducts[indexPath.row] != nil {
-                cell.setIndicator(active: true)
+        adapter.events.willDisplay = { [unowned self] event in
+            if self.selectedProducts[event.indexPath!.row] != nil {
+                event.cell?.setIndicator(active: true)
             } else {
-                cell.setIndicator(active: false)
+                event.cell?.setIndicator(active: false)
             }
         }
         
@@ -221,38 +210,30 @@ class ProfileViewController: GAViewController {
         profileRouter().showProduct(product)
     }
     
-    private func didSelect(at ctx: (CollectionAdapter<Product, ProductCollectionViewCell>.Context<Product, ProductCollectionViewCell>)) {
+    private func didSelect(at ctx: CollectionCellAdapter<Product, ProductCollectionViewCell>.Event) {
         if isListEditing {
-            if self.selectedProducts[ctx.indexPath.row] != nil {
-                ctx.cell?.setIndicator(active: false)
-                self.selectedProducts[ctx.indexPath.row] = nil
+            if self.selectedProducts[ctx.indexPath!.row] != nil {
+                self.selectedProducts[ctx.indexPath!.row] = nil
             } else {
-                ctx.cell?.setIndicator(active: true)
-                self.selectedProducts[ctx.indexPath.row] = ctx.model
+                self.selectedProducts[ctx.indexPath!.row] = ctx.element
             }
             
             self.removeButton.isEnabled = self.selectedProducts.count > 0
         } else {
             if let user = self.loginService.userModel {
                 if user.type! == .buyer {
-                    self.didSelectInUser(ctx: ctx)
+                    self.showProduct(ctx.element)
                 } else {
-                    self.didSelectInShop(ctx: ctx)
+                    self.showProduct(ctx.element)
                 }
             }
         }
+
+        viewModel.collectionDirector.reload()
     }
     
     @IBAction func createNewProduct(_ sender: Any) {
         profileRouter().showEditing(nil)
-    }
-    
-    private func didSelectInUser(ctx: (CollectionAdapter<Product, ProductCollectionViewCell>.Context<Product, ProductCollectionViewCell>)) {
-        self.showProduct(ctx.model)
-    }
-    
-    private func didSelectInShop(ctx: (CollectionAdapter<Product, ProductCollectionViewCell>.Context<Product, ProductCollectionViewCell>)) {
-        self.showProduct(ctx.model)
     }
     
     // MARK: Show view controller
@@ -288,10 +269,17 @@ class ProfileViewController: GAViewController {
         
         alert.addAction(UIAlertAction(title: "Alert.Remove".localized, style: .destructive, handler: { [unowned self] (alert) in
 
-            self.viewModel.collectionDirector.reloadData(after: { () -> (Void) in
-                self.viewModel.collectionDirector.section(at: 0)?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
-            }, onEnd: {
-                self.startEditing(self)
+            self.viewModel.collectionDirector.reload(afterUpdate: { _ in
+                self.viewModel.collectionDirector.sectionAt(0)?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
+                if let user = self.loginService.userModel {
+                    self.productService.removeProductsFromFavorite(user: user, products: self.selectedProducts.values.map({ $0.identifier }))
+                }
+                self.selectedProducts.removeAll()
+            }, completion: {
+                if self.isListEditing {
+                    self.startEditing(self)
+                    self.viewModel.setEmpty()
+                }
             })
         }))
         
@@ -302,6 +290,76 @@ class ProfileViewController: GAViewController {
     
     @IBAction func openSettings(_ sender: Any) {
         profileRouter().showSettings()
+    }
+
+    func loadShopData() {
+        if let user = loginService.userModel, user.type! == .shop {
+            let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
+                if let response = response {
+                    DispatchQueue.main.async {
+                        self.viewModel.collectionDirector.removeAll()
+                        self.reloadWith(product: response)
+                    }
+                }
+            }
+
+            productService.getProducts(user: user, sorting: nil, events: nil, price: nil, page: currentPage, completion: completion)
+
+            productService.recieveProduct = { [weak self] product in
+                DispatchQueue.main.async {
+                    if let count = self?.viewModel.collectionDirector.sections.count, count == 0 {
+                        self?.reloadWith(product: [product])
+                    } else {
+                        self?.viewModel.collectionDirector.reload(afterUpdate: { _ in
+                            (self?.viewModel.collectionDirector.sectionAt(0)?.add(element: product, at: 0))!
+                        }, completion: { self?.viewModel.setEmpty() })
+                    }
+                }
+            }
+        }
+    }
+
+    func loadBuyerData() {
+        if let user = loginService.userModel, user.type! == .buyer {
+            let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
+                if let response = response {
+                    DispatchQueue.main.async {
+                        self.reloadWith(product: response)
+                    }
+                }
+            }
+
+            profileService.getFavorite(user: user, page: currentPage, completion: completion)
+        }
+    }
+
+    func requestMoreData() {
+        if let user = loginService.userModel {
+            let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
+                if let response = response {
+                    DispatchQueue.main.async {
+                        DispatchWorkItem.performOnMainQueue(at: [.default], {
+                            self.viewModel.collectionDirector.reload(afterUpdate: { _ in
+                                if self.viewModel.collectionDirector.sections.count == 0 {
+                                    self.viewModel.collectionDirector.add(section: CollectionSection(elements: response))
+                                } else {
+                                    self.viewModel.collectionDirector.sectionAt(0)?.add(elements: response, at: nil)
+                                }
+                            }, completion: {
+                                self.newPageRequested = false
+                                self.viewModel.setEmpty()
+                            })
+                        })
+                    }
+                }
+            }
+
+            if user.type! == .buyer {
+                profileService.getFavorite(user: user, page: currentPage, completion: completion)
+            } else {
+                productService.getProducts(user: user, sorting: nil, events: nil, price: nil, page: currentPage, completion: completion)
+            }
+        }
     }
 }
 

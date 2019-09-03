@@ -23,7 +23,12 @@ class OnboardRouter:  GARouter, OnboardRouterInput {
         let router = AuthRouter(parentRouter: self)
         self.showRouter(router)
     }
-    
+
+    func showLoginRouter() {
+        let router = LoginRouter(parentRouter: self)
+        self.showRouter(router)
+    }
+
     // MARK: Private Methods
     
     private func setupLaunchViewController() -> UIViewController {

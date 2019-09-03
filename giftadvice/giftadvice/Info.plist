@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>15</string>
 	<key>ConstantsDictionary</key>
 	<dict>
 		<key>hockeyapp_app_identifier</key>
@@ -44,6 +44,10 @@
 	<string>Media needs to add profile photo</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera needs to take photo for profile</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location is need for improve search</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is need for improve search</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Media needs to add profile photo</string>
 	<key>UILaunchStoryboardName</key>

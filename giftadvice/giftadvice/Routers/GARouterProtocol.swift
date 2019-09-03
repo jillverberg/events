@@ -56,7 +56,9 @@ protocol AdviceRouterInput: InitiallyPresentationRouter {
 }
 
 protocol SearchRouterInput {
-    func showProduct(product: Product)
+    func showShop(_ shop: User)
+    func showProduct(_ product: Product)
+    func showInfo(shop: User)
 }
 
 // MARK: Common Protocols

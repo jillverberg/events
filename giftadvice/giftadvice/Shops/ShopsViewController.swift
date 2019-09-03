@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FlowKitManager
+import OwlKit
 
 class ShopsViewController: GAViewController {
     
@@ -30,6 +30,9 @@ class ShopsViewController: GAViewController {
     private var shopService: ShopService!
     private var loginService: LoginService!
 
+    private var newPageRequested = false
+    private var currentPage = 0
+
     // MARK: Init Methods & Superclass Overriders
     
     override func viewDidLoad() {
@@ -37,12 +40,12 @@ class ShopsViewController: GAViewController {
         
         title = "Title.Shops".localized
         
-        viewModel.setupCollectionView(adapters: [shopCollectionAdapter])
+        viewModel.setupCollectionView(adapters: [shopCollectionCellAdapter])
         if let user = loginService.userModel {
             collectionView.isLoading = true
             shopService.getShops(user: user, completion: { error, models in
                 if let models = models {
-                    let section = CollectionSection(models)
+                    let section = CollectionSection(elements:models)
                     
                     DispatchQueue.main.async {
                         self.viewModel.reloadCollectionData(sections: [section])
@@ -50,6 +53,8 @@ class ShopsViewController: GAViewController {
                 }
             })
         }
+
+        subscribeOnSccrollUpdate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,20 +87,57 @@ private extension ShopsViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
-    
-    var shopCollectionAdapter: AbstractAdapterProtocol {
-        let adapter = CollectionAdapter<User, ShopCollectionViewCell>()
-        
-        adapter.on.itemSize = { ctx in
-            return CGSize(width: (self.viewModel.collectionView.frame.size.width)/3, height: (self.viewModel.collectionView.frame.size.width)/3)
+
+    func subscribeOnSccrollUpdate() {
+        viewModel.collectionDirector.scrollEvents.didScroll = { scrollView in
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+
+            if offsetY > contentHeight - scrollView.frame.size.height, !self.newPageRequested {
+                self.newPageRequested = true
+                self.currentPage += 1
+                self.requestMoreData()
+            }
+        }
+    }
+
+    func requestMoreData() {
+        if let user = loginService.userModel {
+            shopService.getShops(user: user, page: currentPage, completion: { error, models in
+                if let models = models {
+                    DispatchQueue.main.async {
+                        DispatchWorkItem.performOnMainQueue(at: [.default], {
+                            self.viewModel.collectionDirector.reload(afterUpdate: { _ in
+                                if self.viewModel.collectionDirector.sections.count == 0 {
+                                    self.viewModel.collectionDirector.add(section: CollectionSection(elements:models))
+                                } else {
+                                    self.viewModel.collectionDirector.sectionAt(0)?.add(elements: models, at: nil)
+                                }
+                            }, completion: {
+                                self.newPageRequested = false
+                                self.viewModel.setEmpty()
+                            })
+                        })
+                    }
+                }
+            })
+        }
+    }
+
+    var shopCollectionCellAdapter: CollectionCellAdapterProtocol {
+        let adapter = CollectionCellAdapter<User, ShopCollectionViewCell>()
+        adapter.reusableViewLoadSource = .fromXib(name: "ShopCollectionViewCell", bundle: nil)
+
+        adapter.events.itemSize = { ctx in
+            return CGSize(width: (self.viewModel.collectionView.frame.size.width - 22)/3, height: (self.viewModel.collectionView.frame.size.width - 22)/3)
         }
         
-        adapter.on.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.model)
+        adapter.events.dequeue = { ctx in
+            ctx.cell?.render(props: ctx.element)
         }
         
-        adapter.on.didSelect = { [unowned self] ctx in
-            self.shopRouter().showShop(ctx.model)
+        adapter.events.didSelect = { [unowned self] ctx in
+            self.shopRouter().showShop(ctx.element)
         }
         
         return adapter
