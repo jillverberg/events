@@ -28,7 +28,7 @@ struct Phone: Mappable, ElementRepresentable {
     var id: String!
     var name: String!
     var prefix: String!
-
+    
     init?(map: Map) {
         self.id <- map[Keys.id]
         self.name <- map[Keys.name]

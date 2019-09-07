@@ -30,7 +30,8 @@ class ShopViewController: GAViewController {
     @IBOutlet weak var subscribeButton: UIButton!
     @IBOutlet weak var photoTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var subscribeActivityView: UIActivityIndicatorView!
-    
+
+    @IBOutlet weak var countryButton: UIButton!
     @IBOutlet weak var sortingButton: UIButton!
     @IBOutlet weak var filterButton: UIButton!
     // MARK: - Public Properties
@@ -42,7 +43,13 @@ class ShopViewController: GAViewController {
     private var shopService: ShopService!
     private var loginService: LoginService!
     private var isSubscribed = false
-    
+
+    private var countryValue: String? {
+        didSet {
+            let enabled = countryValue != nil
+            set(enabled: enabled, forButton: countryButton)
+        }
+    }
     private var sortingValue: SortingModel? {
         didSet {
             let enabled = sortingValue != nil
@@ -150,6 +157,17 @@ class ShopViewController: GAViewController {
     
     @IBAction func filterAction(_ sender: Any) {
         poluteFilterData()
+    }
+
+    @IBAction func countryAction(_ sender: Any) {
+        if countryValue == nil {
+            let phonePresenter = PhoneAlertPresenter(viewController: self, isPhonePrefixHidden: true, itemSelected: { [unowned self] item in
+                self.countryValue = item.id
+            })
+            phonePresenter.show()
+        } else {
+            countryValue = nil
+        }
     }
 }
 

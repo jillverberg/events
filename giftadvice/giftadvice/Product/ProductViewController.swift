@@ -11,6 +11,12 @@ import pop
 
 class ProductViewController: GAViewController {
 
+    enum ProductType {
+        case ownProduct
+        case product
+        case productInShop
+    }
+
     // MARK: Interface Builder Properties
     
     @IBOutlet weak var backgroundView: UIView!
@@ -18,8 +24,7 @@ class ProductViewController: GAViewController {
     // MARK: - Public Properties
 
     var product: Product!
-    var isOwner = false
-    var hideSaveButton = false
+    var type: ProductType!
     
     // MARK: Private Properties
 

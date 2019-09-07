@@ -24,6 +24,7 @@ class FeedViewController: GAViewController {
     @IBOutlet weak var topCollectionConstraint: NSLayoutConstraint!
     @IBOutlet weak var topBackgroundView: NSLayoutConstraint!
 
+    @IBOutlet weak var countryButton: UIButton!
     @IBOutlet weak var sortingButton: UIButton!
     @IBOutlet weak var filterButton: UIButton!
 
@@ -37,6 +38,12 @@ class FeedViewController: GAViewController {
 
     private var refreshControl = UIRefreshControl()
 
+    private var countryValue: String? {
+        didSet {
+            let enabled = countryValue != nil
+            set(enabled: enabled, forButton: countryButton)
+        }
+    }
     private var sortingValue: SortingModel? {
         didSet {
             let enabled = sortingValue != nil
@@ -136,6 +143,17 @@ class FeedViewController: GAViewController {
 
     @IBAction func filterAction(_ sender: Any) {
         poluteFilterData()
+    }
+
+    @IBAction func countryAction(_ sender: Any) {
+        if countryValue == nil {
+            let phonePresenter = PhoneAlertPresenter(viewController: self, isPhonePrefixHidden:  true, itemSelected: { [unowned self] item in
+                self.countryValue = item.id
+            })
+            phonePresenter.show()
+        } else {
+            countryValue = nil
+        }
     }
 }
 

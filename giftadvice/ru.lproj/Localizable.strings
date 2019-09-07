@@ -84,19 +84,26 @@
 "Product.Editing.Photo"                 = "Фотографии";
 "Product.Editing.Name"                  = "Название";
 "Product.Editing.Category"              = "Категория";
+"Product.Editing.Interest"              = "Категория интереса";
 "Product.Editing.Description"           = "Описание";
 "Product.Editing.Web"                   = "Веб-сайт";
 "Product.Editing.Price"                 = "Цена";
+"Product.Editing.Webpage"               = "Показывать ссылку на товар с моего сайта";
+"Product.Editing.Country"               = "Страна";
+"Product.Editing.Placeholder.Webpage"   = "Ссылка на товар";
 
 "Product.Editing.New"                   = "Новый товар";
+"Product.Editing.Message"               = "При заказе товара Вам придет уведомление на почту с информацией о покупателе. Вы сможете связаться с ним для уточнения деталей заказа.";
 
 "Product.Error.Photo"                   = "Необходимо добавить хоят бы одну фотографию товара!";
 "Product.Error.Name"                    = "Необходимо, чтобы имя товара было больше 3-х букв!";
 "Product.Error.Category"                = "Необходимо выбрать категорию товара!";
+"Product.Error.Interest"                = "Необходимо выбрать категорию интереса товара!";
 "Product.Error.Description"             = "Необходимо заполнить описание. Также, как и имя, длина - больше 3-х букв!";
 "Product.Error.Website"                 = "Необходимо ввести корректный веб-адрес!";
 "Product.Error.Price"                   = "Цена должна быть больше 0 руб.";
 
+"Product.Action.Buy"                    = "Хочу купить!";
 "Product.Action.Buyer"                  = "Перейти в магазин";
 "Product.Action.Shop"                   = "Редактировать";
 
@@ -140,3 +147,20 @@
 
 "Empty.Image"                           = "empty";
 "Search.Image"                          = "search_initial";
+
+"MUSIC"                                 = "Музыка";
+"MOVIE"                                 = "Кино";
+"SPORT"                                 = "Спорт";
+"MAKEUP"                                = "Макияж";
+"TRAVELS"                               = "Путешествия";
+"COOKERY"                               = "Кулинария";
+"ART"                                   = "Искусство";
+"ROMANCE"                               = "Романтика";
+"COMIC"                                 = "Вселенная комиксов";
+"ANIME"                                 = "Аниме";
+"PROGRAMMING"                           = "Программирование";
+"GAMING"                                = "Гейминг";
+"NEEDLEWORK"                            = "Рукоделие";
+"PSYCHOLOGY"                            = "Психология";
+"LITERATURE"                            = "Литература";
+

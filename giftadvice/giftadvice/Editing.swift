@@ -21,6 +21,7 @@ class Editing: ElementRepresentable {
     // MARK: - Public Properties
     
     var value: String!
+    var title: String!
     var placeholder: String!
     var place: Int!
     var keyboardType: UIKeyboardType?
@@ -28,11 +29,12 @@ class Editing: ElementRepresentable {
 
     // MARK: - Init Methods
     
-    init(type: EditingViewModel.EditingCells, value: String, place: Int) {
+    init(type: EditingViewModel.EditingCells, value: String, place: Int, placeholder: String? = nil) {
         self.value = value
         self.place = place
         self.type = type
         self.keyboardType = type.type
-        self.placeholder = type.key
+        self.title = type.key
+        self.placeholder = placeholder == nil ? type.key : placeholder!
     }
 }

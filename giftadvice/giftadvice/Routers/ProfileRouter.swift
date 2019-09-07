@@ -17,11 +17,11 @@ class ProfileRouter: GARouter, ProfileRouterInput {
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
     }
 
-    func showProduct(_ product: Product) {
+    func showProduct(_ product: Product, userType: LoginRouter.SignUpType) {
         let viewController = setupProductViewController() as! ProductViewController
         viewController.product = product
-        viewController.isOwner = true
-        
+        viewController.type = userType == .shop ? .ownProduct : .product
+
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
 

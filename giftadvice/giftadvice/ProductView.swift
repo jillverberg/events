@@ -140,19 +140,28 @@ class ProductView: UIView {
     }
     
     @IBAction func performAction(_ sender: Any) {
-        if let viewController = delegate as? ProductViewController, type == .shop, viewController.isOwner {
+        guard let viewController = delegate as? ProductViewController else { return }
+
+        switch viewController.type! {
+        case .ownProduct:
             viewController.needToHide()
             viewController.profileRouter().showEditing(product)
-        } else if let viewController = delegate as? ProductViewController, let shop = product?.shop {
-            viewController.needToHide()
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Some"), object: shop)
-        } else if product?.shop == nil, let urlString = product?.identifier, let url = URL(string: urlString) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                UIApplication.shared.openURL(url)
+        case .product:
+            if let shop = product?.shop {
+                viewController.needToHide()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Shop.Open"), object: shop)
             }
+        case .productInShop:
+            break
         }
+
+//       if product?.shop == nil, let urlString = product?.identifier, let url = URL(string: urlString) {
+//            if #available(iOS 10.0, *) {
+//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//            } else {
+//                UIApplication.shared.openURL(url)
+//            }
+//        }
     }
 }
 
@@ -197,12 +206,16 @@ private extension ProductView {
             self.type = type
         }
 
-        var type = self.type
-        if let viewController = delegate as? ProductViewController, type == .shop {
-            type = viewController.isOwner ? .shop : .buyer
+        if let viewController = delegate as? ProductViewController {
+            switch viewController.type! {
+            case .ownProduct:
+                shopButton.setTitle("Product.Action.Shop".localized, for: .normal)
+            case .product:
+                shopButton.setTitle("Product.Action.Buyer".localized, for: .normal)
+            case .productInShop:
+                shopButton.setTitle("Product.Action.Buy".localized, for: .normal)
+            }
         }
-        
-        shopButton.setTitle(type == .buyer ? "Product.Action.Buyer".localized : "Product.Action.Shop".localized, for: .normal)
 
         shopButton.backgroundColor = AppColors.Common.active()
     }

@@ -30,21 +30,68 @@ class EditingViewModel: NSObject {
     enum EditingCells: String, CaseIterable {
         case name
         case category
+        case interest
         case description
         case web
+        case webpage
         case price
-        
+        case country
+
         static let key: [EditingCells: String] = [
             .name: "Product.Editing.Name".localized,
             .category: "Product.Editing.Category".localized,
+            .interest: "Product.Editing.Interest".localized,
             .description: "Product.Editing.Description".localized,
             .web: "Product.Editing.Web".localized,
-            .price: "Product.Editing.Price".localized
+            .price: "Product.Editing.Price".localized,
+            .webpage: "Product.Editing.Webpage".localized,
+            .country: "Product.Editing.Country".localized
         ]
         
         static let type: [EditingCells: UIKeyboardType] = [
             .web: .URL,
-            .price: .decimalPad
+            .price: .decimalPad,
+            .webpage: .URL,
+        ]
+
+        static let placeholder: [EditingCells: String] = [
+            .webpage: "Product.Editing.Placeholder.Webpage".localized
+        ]
+    }
+
+    enum Interest: String, CaseIterable {
+        case music = "MUSIC"
+        case movie = "MOVIE"
+        case sport = "SPORT"
+        case makeup = "MAKEUP"
+        case travels = "TRAVELS"
+        case cookery = "COOKERY"
+        case art = "ART"
+        case romance = "ROMANCE"
+        case comic = "COMIC"
+        case anime = "ANIME"
+        case programming = "PROGRAMMING"
+        case gaming = "GAMING"
+        case needlework = "NEEDLEWORK"
+        case psychology = "PSYCHOLOGY"
+        case literature = "LITERATURE"
+
+        static let value: [Interest: String] = [
+            .music:  "MUSIC".localized,
+            .movie:  "MOVIE".localized,
+            .sport:  "SPORT".localized,
+            .makeup:  "MAKEUP".localized,
+            .travels:  "TRAVELS".localized,
+            .cookery:  "COOKERY".localized,
+            .art:  "ART".localized,
+            .romance:  "ROMANCE".localized,
+            .comic:  "COMIC".localized,
+            .anime:  "ANIME".localized,
+            .programming:  "PROGRAMMING".localized,
+            .gaming:  "GAMING".localized,
+            .needlework:  "NEEDLEWORK".localized,
+            .psychology:  "PSYCHOLOGY".localized,
+            .literature:  "LITERATURE".localized
         ]
     }
 
@@ -150,6 +197,7 @@ class EditingViewModel: NSObject {
         case photo
         case name
         case category
+        case interest
         case description
         case webSite
         case price
@@ -158,6 +206,7 @@ class EditingViewModel: NSObject {
             .photo: "Product.Error.Photo".localized,
             .name: "Product.Error.Name".localized,
             .category: "Product.Error.Category".localized,
+            .interest: "Product.Error.Interest".localized,
             .description: "Product.Error.Description".localized,
             .webSite: "Product.Error.Website".localized,
             .price: "Product.Error.Price".localized,
@@ -180,7 +229,6 @@ class EditingViewModel: NSObject {
     func setupTableView(adapters: [TableCellAdapterProtocol]) {
         tableDirector.rowHeight = .auto(estimated: 56.0)
         tableDirector.registerCellAdapters( adapters)
-        tableView.tableFooterView = UIView()
         
         generateView()
     }
@@ -214,6 +262,13 @@ class EditingViewModel: NSObject {
                         } else {
                             throw ProductError.category
                         }
+                    case .interest:
+                        if value.count > 0 {
+                            let event = Interest.value.filter({ $0.value == value }).first!.key
+                            product?.event = event.rawValue
+                        } else {
+                            throw ProductError.category
+                        }
                     case .description:
                         if value.count >= Constant.minLeght {
                             product?.description = value
@@ -232,6 +287,10 @@ class EditingViewModel: NSObject {
                         } else {
                             throw ProductError.price
                         }
+                    case .webpage:
+                        break
+                    case .country:
+                        break
                     }
                 }
             }
@@ -270,7 +329,7 @@ private extension EditingViewModel {
         models.append(gallery)
 
         for (index, key) in EditingCells.allCases.enumerated()  {
-            let editing = Editing(type: key, value: values[key] ?? "", place: index)
+            let editing = Editing(type: key, value: values[key] ?? "", place: index, placeholder: EditingCells.placeholder[key])
             
             models.append(editing)
         }
@@ -292,17 +351,29 @@ extension EditingViewModel: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Events.allCases.count
+        guard let picker = pickerView as? AdvancedUIPickerView, let type = picker.textField?.type else { return 0 }
+
+        if case EditingCells.category = type {
+            return Events.allCases.count
+        } else if case EditingCells.interest = type {
+            return Interest.allCases.count
+        }
+
+        return 0
     }
 }
 
 extension EditingViewModel: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Events.value[Events.allCases[row]]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
+        guard let picker = pickerView as? AdvancedUIPickerView, let type = picker.textField?.type else { return nil }
+
+        if case EditingCells.category = type {
+            return Events.value[Events.allCases[row]]
+        } else if case EditingCells.interest = type {
+            return Interest.value[Interest.allCases[row]]
+        }
+
+        return nil
     }
 }
 

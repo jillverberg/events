@@ -19,15 +19,16 @@ class EditingViewController: GAViewController {
     @IBOutlet weak var placeholder: UIView!
     @IBOutlet weak var saveButton: BorderedButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var messageLabel: UILabel!
+
     // MARK: - Public Properties
 
     var product: Product?
     
     // MARK: - Private Properties
 
-    private let categoryRowIndex = 2
-    private let picker = UIPickerView()
+    private let categoryPicker = AdvancedUIPickerView()
+    private let interestPicker = AdvancedUIPickerView()
     private var service: ProductService!
     private var loginService: LoginService!
 
@@ -40,8 +41,10 @@ class EditingViewController: GAViewController {
         viewModel.setupTableView(adapters: [galleryAdapter, productAdapter])
         viewModel.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 86, right: 0)
         
-        picker.delegate = viewModel
-        picker.dataSource = viewModel
+        categoryPicker.delegate = viewModel
+        categoryPicker.dataSource = viewModel
+        interestPicker.delegate = viewModel
+        interestPicker.dataSource = viewModel
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,11 +107,13 @@ private extension EditingViewController {
         saveButton.backgroundColor = AppColors.Common.active()
         activityIndicator.tintColor = AppColors.Common.active()
         title = "Product.Editing.New".localized
+        messageLabel.text = "Product.Editing.Message".localized
     }
     
     var galleryAdapter: TableCellAdapterProtocol {
         let adapter = TableCellAdapter<ProductView.ProductGallery, GalleryTableViewCell>()
-        
+        adapter.reusableViewLoadSource = .fromXib(name: "GalleryTableViewCell", bundle: nil)
+
         adapter.events.dequeue = { [unowned self] ctx in
             ctx.cell?.render(props: ctx.element!, isEditing: true)
             ctx.cell?.delegate = self
@@ -121,21 +126,36 @@ private extension EditingViewController {
         let adapter = TableCellAdapter<Editing, EditingTableViewCell>()
         adapter.reusableViewLoadSource = .fromXib(name: "EditingTableViewCell", bundle: nil)
 
-        adapter.events.dequeue = { ctx in
+        adapter.events.dequeue = { [unowned self] ctx in
             ctx.cell?.render(props: ctx.element!)
             ctx.cell?.valueTextField.tag = ctx.indexPath!.row
+            ctx.cell?.valueTextField.isUserInteractionEnabled = true
             ctx.cell?.delegate = self
             
-            if ctx.indexPath!.row == self.categoryRowIndex {
-                ctx.cell?.accessoryType = .disclosureIndicator
-                ctx.cell?.valueTextField.inputView = self.picker
+            if let type = ctx.element?.type  {
+                if type == .category {
+                    ctx.cell?.accessoryType = .disclosureIndicator
+                    self.categoryPicker.textField = ctx.cell?.valueTextField
+                } else if type == .interest {
+                    ctx.cell?.accessoryType = .disclosureIndicator
+                    self.interestPicker.textField = ctx.cell?.valueTextField
+                } else if type == .country {
+                    ctx.cell?.valueTextField.isUserInteractionEnabled = false
+                    ctx.cell?.accessoryType = .disclosureIndicator
+                }
             } else {
                 ctx.cell?.accessoryType = .none
             }
         }
         
         adapter.events.didSelect = { [unowned self] ctx in
-            ctx.cell?.valueTextField.becomeFirstResponder()
+            if let cell = self.viewModel.tableView.cellForRow(at: ctx.indexPath!) as? EditingTableViewCell {
+                if cell.valueTextField.type! == .country {
+                    self.showCountry(model: ctx.element)
+                } else {
+                    cell.valueTextField.becomeFirstResponder()
+                }
+            }
             
             return .deselectAnimated
         }
@@ -155,6 +175,14 @@ private extension EditingViewController {
             view.isUserInteractionEnabled = true
             navigationController?.navigationBar.isUserInteractionEnabled = true
         }
+    }
+
+    func showCountry(model: Editing?) {
+        let phonePresenter = PhoneAlertPresenter(viewController: self, isPhonePrefixHidden:  true, itemSelected: { [unowned self] item in
+            model?.value = item.name
+            self.viewModel.tableDirector.reload()
+        })
+        phonePresenter.show()
     }
 }
 

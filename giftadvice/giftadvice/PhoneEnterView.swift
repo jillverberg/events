@@ -80,82 +80,18 @@ class PhoneEnterView: SignUpView {
     
     @IBAction func needsChangeCountry(_ sender: Any) {
         phoneTextField.resignFirstResponder()
-        
-        var sections = [TableSection]()
-        
-        let resource: String = "countryCodes"
-        let jsonPath = Bundle.main.path(forResource: resource, ofType: "json")
-        
-        let objects = try? Mapper<Phone>().mapArray(JSONString: String(contentsOf: URL(fileURLWithPath: jsonPath!), encoding: .utf8))!
-        
-        let aScalars = "a".unicodeScalars
-        let aCode = aScalars[aScalars.startIndex].value
-        
-        let letters: [Character] = (0..<26).map {
-            i in Character(UnicodeScalar(aCode + i)!)
-        }
-        
-        for letter in letters {
-            let section = TableSection(elements: objects!.filter({$0.id.lowercased().first! == letter}), headerView: tableHeader, footerView: nil)
-            section.headerTitle = String(letter).capitalized
-            section.indexTitle = String(letter).capitalized
-
-            sections.append(section)
-        }
 
         if let delegate = delegate as? UIPageViewController, let ctr = delegate.parent as? GAViewController {
-            ctr.showPopupView(title: "Phone.CountryCode.Title".localized, adapters: [phoneItemAdapter], sections: sections)
+            let phonePresenter = PhoneAlertPresenter(viewController: ctr, isPhonePrefixHidden:  false, itemSelected: { item in
+                self.region = item.id
+                self.phoneNumberChanged(self)
+                self.nameCountryLabel.text = item.name
+                self.prefixButton.setTitle(item.prefix, for: .normal)
+
+                self.phoneNumberChanged(self)
+            })
+            phonePresenter.show()
         }
-    }
-
-    var tableHeader: TableHeaderFooterAdapterProtocol {
-        let adapter = TableHeaderFooterAdapter<TableHeaderView>()
-
-        let aScalars = "a".unicodeScalars
-        let aCode = aScalars[aScalars.startIndex].value
-
-        let letters: [Character] = (0..<26).map {
-            i in Character(UnicodeScalar(aCode + i)!)
-        }
-
-        adapter.reusableViewLoadSource = .fromXib(name: "TableHeaderView", bundle: nil)
-
-        adapter.events.dequeue = { ctx in // register for view dequeue events to setup some data
-            ctx.view?.titleLabel?.text = String(letters[ctx.section]).capitalized
-            ctx.view?.backgroundColor = .white
-        }
-
-        adapter.events.height = { _ in
-            return 24
-        }
-        
-        return adapter
-    }
-
-    private var phoneItemAdapter: TableCellAdapterProtocol {
-        let adapter = TableCellAdapter<Phone, PhoneTableViewCell>()
-        adapter.reusableViewLoadSource = .fromXib(name: "PhoneTableViewCell", bundle: nil)
-
-        adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
-        }
-        
-        adapter.events.didSelect = { [unowned self] ctx in
-            let model = ctx.element!
-            
-            self.region = model.id
-            self.phoneNumberChanged(self)
-            self.nameCountryLabel.text = model.name
-            self.prefixButton.setTitle(model.prefix, for: .normal)
-            
-            if let delegate = self.delegate as? UIPageViewController, let ctr = delegate.parent as? GAViewController {
-                ctr.hidePopupView()
-            }
-
-            return .deselectAnimated
-        }
-        
-        return adapter
     }
     
     @IBAction func phoneNumberChanged(_ sender: Any) {

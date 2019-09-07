@@ -67,7 +67,10 @@ class ProfileViewController: GAViewController {
         
         setupViews()
         configureNavigationBar()
+
+        currentPage = 0
         loadBuyerData()
+        loadShopData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -103,9 +106,9 @@ class ProfileViewController: GAViewController {
         
         let layer = addProductShadow.layer
         layer.shadowColor = UIColor.white.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowOpacity = 1
-        layer.shadowRadius = 8
+        layer.shadowOffset = CGSize(width: 0, height: 12)
+        layer.shadowOpacity = 0.3
+        layer.shadowRadius = 12
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: addProductShadow.bounds, cornerRadius: 30).cgPath
         layer.backgroundColor = nil
@@ -207,7 +210,9 @@ class ProfileViewController: GAViewController {
     }
     
     private func showProduct(_ product: Product) {
-        profileRouter().showProduct(product)
+        if let user = loginService.userModel, let type = user.type {
+            profileRouter().showProduct(product, userType: type)
+        }
     }
     
     private func didSelect(at ctx: CollectionCellAdapter<Product, ProductCollectionViewCell>.Event) {

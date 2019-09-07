@@ -40,7 +40,7 @@ protocol FeedRouterInput {
 
 protocol ProfileRouterInput {
     func showLoginRouter()
-    func showProduct(_ product: Product)
+    func showProduct(_ product: Product, userType: LoginRouter.SignUpType)
     func showEditing(_ product: Product?)
     func showSettings()
 }

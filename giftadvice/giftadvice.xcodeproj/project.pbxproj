@@ -50,6 +50,7 @@
 		D40C1203224E970500665DB7 /* CameraPickerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40C11FC224E970400665DB7 /* CameraPickerResult.swift */; };
 		D40C1204224E970500665DB7 /* CameraPickerMaxPriceFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40C11FD224E970500665DB7 /* CameraPickerMaxPriceFilterManager.swift */; };
 		D40C1205224E970500665DB7 /* CameraPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40C11FE224E970500665DB7 /* CameraPickerViewModel.swift */; };
+		D4206B4D23231C1E0083308A /* PhoneAlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4206B4C23231C1E0083308A /* PhoneAlertPresenter.swift */; };
 		D42B01A8221DD71A00EA5868 /* SignUpStepsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01A7221DD71A00EA5868 /* SignUpStepsViewController.swift */; };
 		D42B01AA221DE98A00EA5868 /* PhoneEnterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B01A9221DE98A00EA5868 /* PhoneEnterView.swift */; };
 		D42B344D228E034000354413 /* ShopInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42B344C228E034000354413 /* ShopInfoViewController.swift */; };
@@ -202,6 +203,7 @@
 		D40C11FC224E970400665DB7 /* CameraPickerResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPickerResult.swift; sourceTree = "<group>"; };
 		D40C11FD224E970500665DB7 /* CameraPickerMaxPriceFilterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPickerMaxPriceFilterManager.swift; sourceTree = "<group>"; };
 		D40C11FE224E970500665DB7 /* CameraPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPickerViewModel.swift; sourceTree = "<group>"; };
+		D4206B4C23231C1E0083308A /* PhoneAlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAlertPresenter.swift; sourceTree = "<group>"; };
 		D42B01A7221DD71A00EA5868 /* SignUpStepsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStepsViewController.swift; sourceTree = "<group>"; };
 		D42B01A9221DE98A00EA5868 /* PhoneEnterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneEnterView.swift; sourceTree = "<group>"; };
 		D42B344C228E034000354413 /* ShopInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoViewController.swift; sourceTree = "<group>"; };
@@ -743,6 +745,7 @@
 			isa = PBXGroup;
 			children = (
 				D462DB272250B1EE0096E077 /* AssetImageFetcher.swift */,
+				D4206B4C23231C1E0083308A /* PhoneAlertPresenter.swift */,
 				18CC2AC895DAB50821A00B72 /* StoryboardViewController.swift */,
 				D4B99AFF22062A7800DBF0BB /* Application Resource */,
 				3D5C6D759F649C371A643ECE /* Reachability.swift */,
@@ -957,6 +960,7 @@
 				D4E96C092250DF1C00F2E4C1 /* TextProductCategories.swift in Sources */,
 				A423CEC6F00931A8566F035C /* LoginViewController.swift in Sources */,
 				D40C1205224E970500665DB7 /* CameraPickerViewModel.swift in Sources */,
+				D4206B4D23231C1E0083308A /* PhoneAlertPresenter.swift in Sources */,
 				018DDCED8FB078FC54B000A0 /* SignUpViewController.swift in Sources */,
 				D4DA86B5221F5CBB006B2489 /* PageIndicatorView.swift in Sources */,
 				1E6475A85AA4D7FCBF8F1622 /* AuthRouter.swift in Sources */,

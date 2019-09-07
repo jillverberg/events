@@ -26,7 +26,7 @@ class AuthRouter: GARouter, AuthRouterInput {
         viewController.router = self
         
         setViewControllersWithFadeAnimation([viewController], navigationController: navigationController)
-        NotificationCenter.default.addObserver(self, selector: #selector(need), name: NSNotification.Name(rawValue: "Some"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(need), name: NSNotification.Name(rawValue: "Shop.Open"), object: nil)
     }
 
     func presentCamera() {
