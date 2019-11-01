@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class ProductTitleTableViewCell: UITableViewCell {
 
@@ -16,7 +17,8 @@ class ProductTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    
+    @IBOutlet weak var countryCodeImage: UIImageView!
+
     // MARK: Public Properties
     var favoriteToggleAction: ((Bool) -> ())?
     var shareAction: (() -> ())?
@@ -33,7 +35,7 @@ class ProductTitleTableViewCell: UITableViewCell {
     }
     // MARK: Private Properties
     private var props: ProductView.ProductTitle!
-    
+
     func setup(props: ProductView.ProductTitle) {
         self.props = props
         
@@ -46,6 +48,8 @@ class ProductTitleTableViewCell: UITableViewCell {
         formatter.locale = Locale(identifier: "ru_RU")
         
         priceLabel.text = formatter.string(from: NSNumber(value: props.price))!
+
+        countryCodeImage.image = UIImage(named: props.country ?? "")
     }
     
     // MARK: Actions

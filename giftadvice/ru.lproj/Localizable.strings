@@ -102,6 +102,7 @@
 "Product.Error.Description"             = "Необходимо заполнить описание. Также, как и имя, длина - больше 3-х букв!";
 "Product.Error.Website"                 = "Необходимо ввести корректный веб-адрес!";
 "Product.Error.Price"                   = "Цена должна быть больше 0 руб.";
+"Product.Error.Country"                 = "Необходимо выбрать страну для товара.";
 
 "Product.Action.Buy"                    = "Хочу купить!";
 "Product.Action.Buyer"                  = "Перейти в магазин";

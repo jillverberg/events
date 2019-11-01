@@ -8,6 +8,7 @@
 
 import UIKit
 import OwlKit
+import PhoneNumberKit
 
 class ShopViewController: GAViewController {
     
@@ -48,6 +49,9 @@ class ShopViewController: GAViewController {
         didSet {
             let enabled = countryValue != nil
             set(enabled: enabled, forButton: countryButton)
+            if let countryValue = countryValue {
+                self.countryValue = PhoneNumberKit().countryCode(for: countryValue)?.description
+            }
         }
     }
     private var sortingValue: SortingModel? {
@@ -163,10 +167,12 @@ class ShopViewController: GAViewController {
         if countryValue == nil {
             let phonePresenter = PhoneAlertPresenter(viewController: self, isPhonePrefixHidden: true, itemSelected: { [unowned self] item in
                 self.countryValue = item.id
+                self.reloadData()
             })
             phonePresenter.show()
         } else {
             countryValue = nil
+            reloadData()
         }
     }
 }
@@ -269,7 +275,7 @@ private extension ShopViewController {
     @objc func reloadData() {
         currentPage = 0
         viewModel.collectionView.isLoading = true
-        shopService.getShopProducts(user: shop, sorting: sortingValue, events: filterEventValue, price: filterPriceValue) { (error, response) in
+        shopService.getShopProducts(user: shop, sorting: sortingValue, events: filterEventValue, price: filterPriceValue, countryValue: countryValue) { (error, response) in
             DispatchQueue.main.async {
                 self.viewModel.reloadCollectionData(sections: [CollectionSection(elements:response ?? [])])
             }
@@ -281,6 +287,7 @@ private extension ShopViewController {
                                     sorting: sortingValue,
                                     events: filterEventValue,
                                     price: filterPriceValue,
+                                    countryValue: countryValue,
                                     page: currentPage,
                                     completion: { error, models in
                                         if let models = models {

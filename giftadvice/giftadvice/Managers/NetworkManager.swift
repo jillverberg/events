@@ -17,6 +17,7 @@ class NetworkManager: RequestAdapter {
     let getQueue = DispatchQueue(label: "get-response-queue", qos: .utility, attributes: [.concurrent])
     
     private struct Keys {
+        static let user = "user_id"
         static let number = "phone_number"
         static let password = "password"
 
@@ -39,6 +40,7 @@ class NetworkManager: RequestAdapter {
         static let sorting = "sort"
         static let order = "order"
         static let event = "event_name"
+        static let country = "countries"
         static let lowPrice = "lower_price"
         static let uppPrice = "upper_price"
         static let type = "type"
@@ -70,6 +72,7 @@ class NetworkManager: RequestAdapter {
             static let shop  = "shop"
             static let favorite  = "favorite"
             static let code = "code"
+            static let integration = "check_auth_status"
             static let interaction = "interaction"
         }
     }
@@ -107,7 +110,13 @@ class NetworkManager: RequestAdapter {
         
         _ = postRequest(withMethod: method + "/\(Paths.POST.login)", parameters: parameters, accessToken: nil, completion: completion)
     }
-    
+
+    func integrated(user: User, completion: @escaping NetworkCompletion) {
+        let parameters: [String : Any] = [Keys.user: user.identifier  ?? ""]
+
+        _ = getRequest(withMethod: Paths.GET.integration, parameters: parameters, accessToken: nil, completion: completion)
+    }
+
     func getUsers(completion: @escaping NetworkCompletion) {
         _ = getRequest(withMethod: Paths.POST.user, parameters: [:], accessToken: nil, completion: completion)
     }
@@ -159,7 +168,7 @@ class NetworkManager: RequestAdapter {
         requestWith(endUrl: method + "/\(identifier ?? "")/", method: .put, keyImage: "photo", imageData: imageData, parameters: user.toJSON(), accessToken: accessToken, onCompletion: completion)
     }
     
-    func getProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, page: Int, completion: @escaping NetworkCompletion) {
+    func getProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, countryValue: String?, page: Int, completion: @escaping NetworkCompletion) {
         let method = user.type! == .buyer ? Paths.GET.product : Paths.GET.shop + "/\(user.identifier ?? "")/" + Paths.GET.product + "/"
         let accessToken = user.accessToken
 
@@ -180,6 +189,10 @@ class NetworkManager: RequestAdapter {
         if let lower = lowerPrice, let upper = upperPrice {
             parameters[Keys.lowPrice] = lower
             parameters[Keys.uppPrice] = upper
+        }
+
+        if let countryValue = countryValue {
+            parameters[Keys.country] = countryValue
         }
 
         _ = getRequest(withMethod: method , parameters: parameters, accessToken: accessToken, completion: completion)
@@ -267,7 +280,7 @@ class NetworkManager: RequestAdapter {
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/", parameters: [:], accessToken: accessToken, completion: completion)
     }
     
-    func getShopProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, page: Int, completion: @escaping NetworkCompletion) {
+    func getShopProducts(user: User, sorting: String?, order: String?, events: [String]?, lowerPrice: String?, upperPrice: String?, countryValue: String?, page: Int, completion: @escaping NetworkCompletion) {
         let accessToken = user.accessToken
         let identifier = user.identifier
         var parameters = [String: Any]()
@@ -287,6 +300,10 @@ class NetworkManager: RequestAdapter {
         if let lower = lowerPrice, let upper = upperPrice {
             parameters[Keys.lowPrice] = lower
             parameters[Keys.uppPrice] = upper
+        }
+
+        if let countryValue = countryValue {
+            parameters[Keys.country] = countryValue
         }
         
         _ = getRequest(withMethod: Paths.GET.shop + "/\(identifier ?? "")/product", parameters: parameters, accessToken: accessToken, completion: completion)
@@ -326,14 +343,7 @@ class NetworkManager: RequestAdapter {
         product.photo = nil
         product.identifier = nil
 
-
-//        _ = postRequest(withMethod: method + "/\(user.identifier ?? "")/" + Paths.POST.product, parameters: product.toJSON(), accessToken: user.accessToken, completion: completion)
         requestWith(endUrl:method + "/\(user.identifier ?? "")/" + Paths.POST.product, method: .post, keyImage: "photos", imageData: imageData, parameters: product.toJSON(), accessToken: accessToken, onCompletion: completion)
-    }
-    
-    func removeProduct(user: User, product: Product) {
-        
-        
     }
     
     // MARK: - Search Method

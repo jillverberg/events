@@ -142,6 +142,8 @@ private extension EditingViewController {
                 } else if type == .country {
                     ctx.cell?.valueTextField.isUserInteractionEnabled = false
                     ctx.cell?.accessoryType = .disclosureIndicator
+                } else {
+                     ctx.cell?.accessoryType = .none
                 }
             } else {
                 ctx.cell?.accessoryType = .none

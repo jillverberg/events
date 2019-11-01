@@ -8,6 +8,7 @@
 
 import UIKit
 import OwlKit
+import PhoneNumberKit
 
 extension EditingViewModel.EditingCells {
     var key: String {
@@ -201,7 +202,8 @@ class EditingViewModel: NSObject {
         case description
         case webSite
         case price
-        
+        case country
+
         static var message: [ProductError: String] = [
             .photo: "Product.Error.Photo".localized,
             .name: "Product.Error.Name".localized,
@@ -210,6 +212,7 @@ class EditingViewModel: NSObject {
             .description: "Product.Error.Description".localized,
             .webSite: "Product.Error.Website".localized,
             .price: "Product.Error.Price".localized,
+            .country: "Product.Error.Country".localized
         ]
         
         var errorMessage: String {
@@ -290,7 +293,11 @@ class EditingViewModel: NSObject {
                     case .webpage:
                         break
                     case .country:
-                        break
+                        if value.count > 0, let country = PhoneAlertPresenter.countries?.filter(({ $0.name == value })).first {
+                            product?.countries =  PhoneNumberKit().countryCode(for: country.id)?.description
+                        } else {
+                            throw ProductError.country
+                        }
                     }
                 }
             }

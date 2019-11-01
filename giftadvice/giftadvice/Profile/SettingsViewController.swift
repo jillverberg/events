@@ -11,6 +11,7 @@ import OwlKit
 import Kingfisher
 import MessageUI
 import PhotosUI
+import SafariServices
 
 class SettingsViewController: GAViewController {
 
@@ -24,7 +25,8 @@ class SettingsViewController: GAViewController {
     @IBOutlet weak var editingImageView: UIImageView!
     @IBOutlet weak var signOutButton: BorderedButton!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
-    
+    @IBOutlet weak var autorizeButton: BorderedButton!
+
     // MARK: - Private Properties
 
     private var loginService: LoginService!
@@ -124,6 +126,12 @@ class SettingsViewController: GAViewController {
             present(alert, animated: true, completion: nil)
         }
     }
+
+    @IBAction func socialAction(_ sender: Any) {
+        let url = URL(string: "https://oauth.vk.com/authorize?client_id=7174687&redirect_uri=https://ml.ideaback.net/auth&display=mobile&scope=friends&response_type=code&v=5.102&state=\(loginService.userModel?.identifier ?? "")")!
+        let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+        present(vc, animated: true)
+    }
 }
 
 private extension SettingsViewController {
@@ -146,6 +154,18 @@ private extension SettingsViewController {
         reportButton.backgroundColor = AppColors.Common.active()
         settingsButton.setTitleColor(AppColors.Common.active(), for: .normal)
         loadingIndicatorView.color = AppColors.Common.active()
+
+        if let user = loginService.userModel, user.type! == .buyer {
+            autorizeButton.isHidden = false
+
+            loginService.checkIntegrationStatus(withUser: user) { (error, intagrated) in
+
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.autorizeButton.isHidden = true
+            }
+        }
     }
     
     func poluteInfo() -> [TableSection] {

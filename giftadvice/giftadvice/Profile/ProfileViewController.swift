@@ -308,7 +308,7 @@ class ProfileViewController: GAViewController {
                 }
             }
 
-            productService.getProducts(user: user, sorting: nil, events: nil, price: nil, page: currentPage, completion: completion)
+            productService.getProducts(user: user, sorting: nil, events: nil, price: nil, countryValue: nil, page: currentPage, completion: completion)
 
             productService.recieveProduct = { [weak self] product in
                 DispatchQueue.main.async {
@@ -362,7 +362,7 @@ class ProfileViewController: GAViewController {
             if user.type! == .buyer {
                 profileService.getFavorite(user: user, page: currentPage, completion: completion)
             } else {
-                productService.getProducts(user: user, sorting: nil, events: nil, price: nil, page: currentPage, completion: completion)
+                productService.getProducts(user: user, sorting: nil, events: nil, price: nil, countryValue: nil, page: currentPage, completion: completion)
             }
         }
     }

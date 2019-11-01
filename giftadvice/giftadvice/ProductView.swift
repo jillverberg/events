@@ -9,6 +9,7 @@
 import UIKit
 import OwlKit
 import Kingfisher
+import PhoneNumberKit
 
 protocol ProductViewDelegate {
     func needToHide()
@@ -46,6 +47,7 @@ class ProductView: UIView {
     private var initFrame: CGRect?
     private var hidding = false
     private var type: LoginRouter.SignUpType = .buyer
+    private let phoneNumberKit = PhoneNumberKit()
 
     class ProductGallery: StaticCellModel {
         var product: Product? = nil
@@ -54,6 +56,7 @@ class ProductView: UIView {
     struct ProductTitle: StaticCellModel {
         var price: Double
         let title: String
+        let country: String?
         var isFavorite: Bool
         let shareCommand: Command?
         let favoriteCommand: Command?
@@ -89,7 +92,12 @@ class ProductView: UIView {
                 self.service?.setProductInteraction(user: user, product: identifier, interaction: interaction.rawValue)
             }
         }
-        
+
+        var code = ""
+        if let countries = product.countries, let countryID = UInt64(countries), let findCode = phoneNumberKit.countries(withCode: countryID)?.first {
+            code = findCode
+        }
+
         DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
             let gallery = ProductGallery()
             gallery.product = product
@@ -99,7 +107,7 @@ class ProductView: UIView {
             if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
                 dispatch.enter()
                 self.service?.isProductFavorite(user: user, product: identifier, completion: { (error, favorite) in
-                    title = ProductTitle(price: product.price, title: product.name ?? "", isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
+                    title = ProductTitle(price: product.price, title: product.name ?? "", country: code, isFavorite: favorite, shareCommand: nil, favoriteCommand: nil)
                     dispatch.leave()
                 })
                 

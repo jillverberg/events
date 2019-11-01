@@ -8,6 +8,7 @@
 
 import UIKit
 import OwlKit
+import PhoneNumberKit
 
 class FeedViewController: GAViewController {
 
@@ -42,6 +43,9 @@ class FeedViewController: GAViewController {
         didSet {
             let enabled = countryValue != nil
             set(enabled: enabled, forButton: countryButton)
+            if let countryValue = countryValue {
+                self.countryValue = PhoneNumberKit().countryCode(for: countryValue)?.description
+            }
         }
     }
     private var sortingValue: SortingModel? {
@@ -149,10 +153,12 @@ class FeedViewController: GAViewController {
         if countryValue == nil {
             let phonePresenter = PhoneAlertPresenter(viewController: self, isPhonePrefixHidden:  true, itemSelected: { [unowned self] item in
                 self.countryValue = item.id
+                self.requestData()
             })
             phonePresenter.show()
         } else {
             countryValue = nil
+            requestData()
         }
     }
 }
@@ -222,8 +228,8 @@ private extension FeedViewController {
 
         if let user = loginService.userModel {
             viewModel.tableView.isLoading = true
-            
-            productService.getProducts(user: user, sorting: sortingValue, events: filterEventValue, price: filterPriceValue, completion: { error, models in
+
+            productService.getProducts(user: user, sorting: sortingValue, events: filterEventValue, price: filterPriceValue, countryValue: countryValue, completion: { error, models in
                 if let models = models {
                     let section = TableSection(elements: models)
                     
@@ -265,6 +271,7 @@ private extension FeedViewController {
                                        sorting: sortingValue,
                                        events: filterEventValue,
                                        price: filterPriceValue,
+                                       countryValue: countryValue,
                                        page: currentPage,
                                        completion: { error, models in
                                         if let models = models {

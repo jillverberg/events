@@ -11,7 +11,7 @@ import ObjectMapper
 private protocol PublicMethods {
     var recieveProduct: ((Product) -> ())? { get set }
 
-    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
+    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, countryValue: String?, page: Int, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
     func getProduct(user: User, identifier: String, completion: @escaping (_ error: String?, _ products: Product?) -> ())
     func getLatest(user: User, completion: @escaping (_ error: String?, _ products: [Product]?) -> ())
 
@@ -38,7 +38,7 @@ class ProductService {
 }
 
 extension ProductService: PublicMethods {
-    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int = 0, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
+    func getProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, countryValue: String?, page: Int = 0, completion: @escaping (_ error: String?, _ products: [Product]?) -> ()) {
         let price = EditingViewModel.Prices(price?.key)
         networkManager.getProducts(user: user,
                                    sorting: sorting?.key,
@@ -46,6 +46,7 @@ extension ProductService: PublicMethods {
                                    events: events?.map({ $0.key }),
                                    lowerPrice: price?.range.0,
                                    upperPrice: price?.range.1,
+                                   countryValue: countryValue,
                                    page: page) { (ended, error, response) in
             if let data = response?["data"] as? [[String: Any]] {
                 let models = Mapper<Product>().mapArray(JSONArray: data)

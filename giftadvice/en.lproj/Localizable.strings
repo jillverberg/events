@@ -101,6 +101,8 @@
 "Product.Error.Description"             = "You must fill out a description. As well as the name, the length is more than 3 letters!";
 "Product.Error.Website"                 = "You must enter a valid web address!";
 "Product.Error.Price"                   = "The price must be more than 0!";
+"Product.Error.Country"                 = "You must select a country!";
+
 "Product.Editing.Webpage"               = "Show product link from my site";
 "Product.Editing.Country"               = "Country";
 "Product.Editing.Placeholder.Webpage"   = "Link to product";

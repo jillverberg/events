@@ -60,7 +60,7 @@ DEPENDENCIES:
   - "UITextView+Placeholder"
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - Alamofire
     - CameraManager
@@ -111,4 +111,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d5762296ba24b0c04dd3ae05714c27b2b44735a6
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.8.1

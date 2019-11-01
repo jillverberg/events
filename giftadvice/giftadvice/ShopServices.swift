@@ -10,7 +10,7 @@ import ObjectMapper
 
 private protocol PublicMethods {
     func getShops(user: User, page: Int, completion: @escaping (_ error: String?, _ users: [User]?) -> ())
-    func getShopProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int, completion: @escaping (String?, [Product]?) -> ())
+    func getShopProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, countryValue: String?, page: Int, completion: @escaping (String?, [Product]?) -> ())
     func getShopInfo(user: User, completion: @escaping (_ error: String?, _ users: User?) -> ())
     func isSubscribed(user: User, shop: String, completion: @escaping (_ error: String?, _ subscribed: Bool) -> ())
     func subscribeToggle(user: User, shop: String, subscribed: Bool)
@@ -38,7 +38,7 @@ extension ShopService: PublicMethods {
         }
     }
     
-    func getShopProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, page: Int = 0, completion: @escaping (String?, [Product]?) -> ()) {
+    func getShopProducts(user: User, sorting: SortingModel?, events: [FilterModel]?, price: FilterModel?, countryValue: String?, page: Int = 0, completion: @escaping (String?, [Product]?) -> ()) {
         let price = EditingViewModel.Prices(price?.key)
         networkManager.getShopProducts(user: user,
                                        sorting: sorting?.key,
@@ -46,6 +46,7 @@ extension ShopService: PublicMethods {
                                        events: events?.map({ $0.key }),
                                        lowerPrice: price?.range.0,
                                        upperPrice: price?.range.1,
+                                       countryValue: countryValue,
                                        page: page) { (canceled, error, response) in
             if let data = response?["data"] as? [[String: Any]] {
                 let models = Mapper<Product>().mapArray(JSONArray: data)

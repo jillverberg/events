@@ -21,6 +21,7 @@ private protocol PublicMethods {
     func update(user: User, image: UIImage?, completion: ((String?, User?) -> ())?)
     func getAccessToken() -> String?
     func isFirstOpen() -> Bool
+    func checkIntegrationStatus(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ())
 }
 
 class LoginService {
@@ -192,6 +193,12 @@ extension LoginService: PublicMethods {
     
     func isFirstOpen() -> Bool {
         return !UserDefaults.standard.bool(forKey: UserDefaultsKeys.firstTime)
+    }
+
+    func checkIntegrationStatus(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ()) {
+        NetworkManager.shared.integrated(user: user) { (canceled, error, response) in
+            
+        }
     }
 }
 
