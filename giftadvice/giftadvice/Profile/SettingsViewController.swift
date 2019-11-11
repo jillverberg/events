@@ -26,6 +26,7 @@ class SettingsViewController: GAViewController {
     @IBOutlet weak var signOutButton: BorderedButton!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var autorizeButton: BorderedButton!
+    @IBOutlet weak var autorizeIndicatorView: UIActivityIndicatorView!
 
     // MARK: - Private Properties
 
@@ -136,6 +137,7 @@ class SettingsViewController: GAViewController {
 
 private extension SettingsViewController {
     func setupViews() {
+        setAuthStyle(hidden: true)
         editingImageView.tintColor = AppColors.Common.active()
         signOutButton.backgroundColor = AppColors.Common.active()
         
@@ -158,8 +160,13 @@ private extension SettingsViewController {
         if let user = loginService.userModel, user.type! == .buyer {
             autorizeButton.isHidden = false
 
-            loginService.checkIntegrationStatus(withUser: user) { (error, intagrated) in
-
+            loginService.checkIntegrationStatus(withUser: user) { [weak self] (error, intagrated) in
+                if let intagrated = intagrated {
+                    DispatchQueue.main.async {
+                        self?.setAuthStyle(hidden: false)
+                        self?.autorizeButton.setTitle(intagrated ? "User.Auth.NoNeeds".localized : "User.Auth.Needs".localized, for: .normal)
+                    }
+                }
             }
         } else {
             UIView.animate(withDuration: 0.3) {
@@ -179,14 +186,7 @@ private extension SettingsViewController {
                 models.append(setting)
             }
         }
-        
-//        do {
-//            if let phone = user.phoneNumber {
-//                let setting = Setting(title: "Settings.Title.Phone".localized, value: phone, keyType: .phonePad)
-//                models.append(setting)
-//            }
-//        }
-        
+
         do {
             if let companyName = user.companyName {
                 let setting = Setting(title: "Settings.Title.CompanyName".localized, value: companyName)
@@ -284,7 +284,7 @@ private extension SettingsViewController {
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
-        adapter.events.didSelect = { [unowned self] ctx in
+        adapter.events.didSelect = { ctx in
             ctx.cell?.setFirstResponer()
             
             return .deselectAnimated
@@ -301,9 +301,7 @@ private extension SettingsViewController {
             ctx.cell?.render(props: ctx.element!)
         }
         
-        adapter.events.didSelect = { [unowned self] ctx in
-            let model = ctx.element!
-  
+        adapter.events.didSelect = {ctx in
             return .deselectAnimated
         }
         
@@ -316,6 +314,17 @@ private extension SettingsViewController {
         }
         
         return router
+    }
+
+    func setAuthStyle(hidden: Bool) {
+        if hidden {
+            autorizeIndicatorView.startAnimating()
+        } else {
+            autorizeIndicatorView.stopAnimating()
+        }
+
+        autorizeButton.alpha = hidden ? 0.2 : 1.0
+        autorizeButton.isEnabled = !hidden
     }
 }
 

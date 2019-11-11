@@ -214,8 +214,8 @@ private extension ProductView {
             self.type = type
         }
 
-        if let viewController = delegate as? ProductViewController {
-            switch viewController.type! {
+        if let viewController = delegate as? ProductViewController, let type = viewController.type {
+            switch type {
             case .ownProduct:
                 shopButton.setTitle("Product.Action.Shop".localized, for: .normal)
             case .product:

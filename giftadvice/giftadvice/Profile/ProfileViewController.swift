@@ -79,6 +79,11 @@ class ProfileViewController: GAViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
+        if let navBar = navigationController?.navigationBar {
+            let center = navBar.center.y
+            photoTopConstraint.constant = center - 35/2
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,6 +147,7 @@ class ProfileViewController: GAViewController {
     }
 
     private func configureNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -165,13 +171,7 @@ class ProfileViewController: GAViewController {
         changeButton.layer.cornerRadius = changeButton.frame.size.height / 2
         
         viewModel.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 18, right: 0)
-        
-        if let navBar = navigationController?.navigationBar {
-            let center = navBar.center.y
-            photoTopConstraint.constant = center - 35/2
-            view.layoutSubviews()
-        }
-        
+
         view.backgroundColor = AppColors.Common.active()
         changeButton.backgroundColor = AppColors.Common.active()
         titleLabel.textColor = AppColors.Common.active()

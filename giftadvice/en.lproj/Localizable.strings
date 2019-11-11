@@ -67,6 +67,9 @@
 "User.Field.RePassword"                 = "Repeat password";
 "User.Field.NewPassword"                = "Repeat new password";
 
+"User.Auth.Needs"                       = "Authorize";
+"User.Auth.NoNeeds"                     = "Logout";
+
 "Collection.Title.Editing"              = "Change";
 "Collection.Title.Done"                 = "Done";
 

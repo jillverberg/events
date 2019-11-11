@@ -65,6 +65,9 @@
 "User.Field.RePassword"                 = "Повторите пароль";
 "User.Field.NewPassword"                = "Повторите новый пароль";
 
+"User.Auth.Needs"                       = "Авторизоваться";
+"User.Auth.NoNeeds"                     = "Выйти";
+
 "Collection.Title.Editing"              = "Изменить";
 "Collection.Title.Done"                 = "Готово";
 

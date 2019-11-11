@@ -97,7 +97,7 @@
                     <navigationItem key="navigationItem" id="X67-sb-SwX">
                         <rightBarButtonItems>
                             <barButtonItem style="plain" id="SZ6-KX-nsC">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="X6H-TV-kO2">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="X6H-TV-kO2">
                                     <rect key="frame" x="323" y="4" width="36" height="36"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
@@ -499,7 +499,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="huG-Kq-sGR">
                                                     <rect key="frame" x="18" y="15.666666666666664" width="339" height="96"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgp-q3-XVQ" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
+                                                        <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgp-q3-XVQ" customClass="BorderedButton" customModule="giftadvice" customModuleProvider="target">
                                                             <rect key="frame" x="64.666666666666686" y="0.0" width="210" height="44"/>
                                                             <color key="backgroundColor" red="0.27450980392156865" green="0.50196078431372548" blue="0.76078431372549016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -568,11 +568,16 @@
                                                         </button>
                                                     </subviews>
                                                 </stackView>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="VnG-LG-fWT">
+                                                    <rect key="frame" x="330" y="0.0" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="VnG-LG-fWT" firstAttribute="centerY" secondItem="kgp-q3-XVQ" secondAttribute="centerY" id="4zu-LK-Kub"/>
                                                 <constraint firstAttribute="trailing" secondItem="huG-Kq-sGR" secondAttribute="trailing" constant="18" id="JYx-Ft-ozH"/>
                                                 <constraint firstItem="huG-Kq-sGR" firstAttribute="centerX" secondItem="Scp-3N-lGY" secondAttribute="centerX" id="Xha-Nf-gSR"/>
+                                                <constraint firstItem="VnG-LG-fWT" firstAttribute="centerX" secondItem="kgp-q3-XVQ" secondAttribute="centerX" id="Xin-5U-Lq6"/>
                                                 <constraint firstItem="huG-Kq-sGR" firstAttribute="centerY" secondItem="Scp-3N-lGY" secondAttribute="centerY" id="ZdA-fw-lMC"/>
                                                 <constraint firstItem="huG-Kq-sGR" firstAttribute="leading" secondItem="Scp-3N-lGY" secondAttribute="leading" constant="18" id="iEm-7e-26O"/>
                                             </constraints>
@@ -680,6 +685,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="autorizeButton" destination="kgp-q3-XVQ" id="zQJ-QI-W0g"/>
+                        <outlet property="autorizeIndicatorView" destination="VnG-LG-fWT" id="hTH-3Q-cfS"/>
                         <outlet property="editingImageView" destination="69e-ZW-iQp" id="3qo-2q-bNG"/>
                         <outlet property="loadingIndicatorView" destination="9KS-y1-cc9" id="KYA-XD-pEl"/>
                         <outlet property="placeholder" destination="XF6-It-agW" id="ETc-jP-H8T"/>
@@ -940,28 +946,28 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GL-eJ-HdC">
-                                <rect key="frame" x="0.0" y="582" width="375" height="230"/>
+                                <rect key="frame" x="0.0" y="664" width="375" height="148"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rhd-we-0Qx">
-                                <rect key="frame" x="0.0" y="582" width="375" height="196"/>
+                                <rect key="frame" x="0.0" y="664" width="375" height="114"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="97t-mD-EJa">
-                                        <rect key="frame" x="32" y="73" width="50" height="50"/>
+                                        <rect key="frame" x="32" y="44.666666666666629" width="25" height="25"/>
                                         <state key="normal" image="camera_image"/>
                                         <connections>
                                             <action selector="galleryButtonAction:" destination="Ge1-0o-Jp0" eventType="touchUpInside" id="7Dh-HC-Vc8"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aV-lB-b35">
-                                        <rect key="frame" x="285" y="74" width="58" height="48"/>
+                                        <rect key="frame" x="314" y="45" width="29" height="24"/>
                                         <state key="normal" image="camera_flip"/>
                                         <connections>
                                             <action selector="flipButtonAction:" destination="Ge1-0o-Jp0" eventType="touchUpInside" id="icw-nc-t3B"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkj-Hi-Lv8">
-                                        <rect key="frame" x="105.66666666666669" y="8" width="164" height="164"/>
+                                        <rect key="frame" x="146.66666666666666" y="8" width="82" height="82"/>
                                         <state key="normal" image="camera_picker"/>
                                         <connections>
                                             <action selector="cameraButtonAction:" destination="Ge1-0o-Jp0" eventType="touchUpInside" id="u5m-it-eoR"/>
@@ -980,7 +986,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PcN-ii-7xf">
-                                <rect key="frame" x="141.33333333333334" y="508" width="92.333333333333343" height="44"/>
+                                <rect key="frame" x="141.33333333333334" y="590" width="92.333333333333343" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;action&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yS-PZ-b4K">
                                         <rect key="frame" x="12" y="8" width="68.333333333333329" height="28"/>
@@ -1009,7 +1015,7 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h8m-aV-pHO">
-                                <rect key="frame" x="218.66666666666666" y="496" width="24" height="24"/>
+                                <rect key="frame" x="218.66666666666666" y="578" width="24" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVB-hr-OXm">
                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>

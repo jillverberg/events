@@ -197,7 +197,9 @@ extension LoginService: PublicMethods {
 
     func checkIntegrationStatus(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ()) {
         NetworkManager.shared.integrated(user: user) { (canceled, error, response) in
-            
+            if let response = response, let status = response["status"] as? String {
+                completion(nil, status == "OK")
+            }
         }
     }
 }

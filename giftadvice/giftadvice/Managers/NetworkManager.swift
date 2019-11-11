@@ -443,7 +443,11 @@ class NetworkManager: RequestAdapter {
     }
     
     private func fireRequest(withMethod method: String, type: HTTPMethod, parameters: [String : Any], accessToken: String?, queue: DispatchQueue, completion: @escaping NetworkCompletion) -> URLSessionTask? {
-        let urlString = methodPath(withMethod: method)
+        var urlString = methodPath(withMethod: method)
+        if method == Paths.GET.integration {
+            urlString = "https://ml.ideaback.net/check_auth_status"
+        }
+
         let url = URL(string: urlString)
         
         // TODO: Define api headers
