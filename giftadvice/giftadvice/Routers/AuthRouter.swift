@@ -51,7 +51,13 @@ class AuthRouter: GARouter, AuthRouterInput {
             }
         }
     }
-    
+
+    func showFriend() {
+        let viewController = setupFriendViewController()
+
+        self.rootNavigationController?.present(viewController, animated: true)
+    }
+
     // MARK: Private Methods
     
     private func setupViewController() -> UIViewController {
@@ -117,5 +123,12 @@ class AuthRouter: GARouter, AuthRouterInput {
         }
         
         assemblyManager.configure(viewController: viewController)
+    }
+
+    private func setupFriendViewController() -> UIViewController {
+        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .friend)
+        let viewController = self.createViewController(from: storyboardViewController)
+
+        return viewController
     }
 }

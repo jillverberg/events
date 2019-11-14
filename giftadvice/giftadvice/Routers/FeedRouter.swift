@@ -51,5 +51,4 @@ class FeedRouter: GARouter, FeedRouterInput {
         
         return viewController
     }
-
 }

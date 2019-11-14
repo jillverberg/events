@@ -124,6 +124,9 @@
 "Search.Section.Inner"                  = "Our products";
 "Search.Section.Outter"                 = "Other site";
 
+"Search.Error.Title"                    = "Erro";
+"Search.Error.Message"                  = "You must have friends and are authorized in VK in the profile settings";
+
 "Sorting"                               = "Sorting";
 "Sorting.Key.Likes.ASC"                 = "By likes (from smallest to largest)";
 "Sorting.Key.Date.ASC"                  = "By date (old first)";

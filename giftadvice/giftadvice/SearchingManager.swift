@@ -19,7 +19,7 @@ class SearchingManager {
         case initial
         case loading
         case error
-        case loaded(product: [Product])
+        case loaded
     }
     
     // MARK: - Public Properties
@@ -66,7 +66,7 @@ class SearchingManager {
                         return
                     }
                    strongSelf.searchingKeyWords = strongSelf.giftAdviser.keywords
-                    strongSelf.state = .loaded(product: [])
+//                    strongSelf.state = .loaded(product: [])
                     //strongSelf.delegate?.didChangeState(state: .loaded(keyWords: strongSelf.giftAdviser.keywords))
                 },
                 onError: { [weak self] (error) in

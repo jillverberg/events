@@ -41,12 +41,12 @@ class SettingsViewController: GAViewController {
 
         viewModel.setupTableView(adapters: [infoItemAdapter])
         viewModel.reloadData(sections: poluteInfo())
-        
-        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        setupViews()
     }
     
     override func inject(propertiesWithAssembly assembly: AssemblyManager) {
@@ -129,9 +129,20 @@ class SettingsViewController: GAViewController {
     }
 
     @IBAction func socialAction(_ sender: Any) {
-        let url = URL(string: "https://oauth.vk.com/authorize?client_id=7174687&redirect_uri=https://ml.ideaback.net/auth&display=mobile&scope=friends&response_type=code&v=5.102&state=\(loginService.userModel?.identifier ?? "")")!
-        let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
-        present(vc, animated: true)
+        if autorizeButton.title(for: .normal) == "User.Auth.NoNeeds".localized {
+            // If auth - logout
+            if let user = loginService.userModel, user.type! == .buyer {
+                loginService.removeIntegration(withUser: user) { [weak self] _, _ in
+                    DispatchQueue.main.async {
+                        self?.setupViews()
+                    }
+                }
+            }
+        } else {
+            let url = URL(string: "https://oauth.vk.com/authorize?client_id=7174687&redirect_uri=https://ml.ideaback.net/auth&display=mobile&scope=friends&response_type=code&v=5.102&state=\(loginService.userModel?.identifier ?? "")")!
+            let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+            present(vc, animated: true)
+        }
     }
 }
 

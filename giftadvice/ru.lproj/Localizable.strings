@@ -37,7 +37,7 @@
 "Title.Shops"                           = "Магазины";
 "Title.Settings"                        = "Настройки";
 "Title.Search"                          = "Поиск";
-"Title.Camera"                          = "Камера";
+"Title.Camera"                          = "Волшебство";
 "Title.Search.Placeholder"              = "Начните вводить ключевые слова";
 
 "Camera.Action"                         = "Уточнить рекомендацию";
@@ -120,6 +120,9 @@
 "Search.Product"                        = "Товары";
 "Search.Section.Inner"                  = "Наши товары";
 "Search.Section.Outter"                 = "Другие сайты";
+
+"Search.Error.Title"                    = "Ошибка";
+"Search.Error.Message"                  = "Вы должны иметь друзей и в настройках профиля авторизованы в ВК";
 
 "Sorting"                               = "Сортировка";
 "Sorting.Key.Likes.ASC"                 = "По лайкам (от меньшего к большему)";

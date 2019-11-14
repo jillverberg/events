@@ -18,6 +18,8 @@ class NetworkManager: RequestAdapter {
     
     private struct Keys {
         static let user = "user_id"
+        static let friend = "friend_id"
+
         static let number = "phone_number"
         static let password = "password"
 
@@ -74,6 +76,12 @@ class NetworkManager: RequestAdapter {
             static let code = "code"
             static let integration = "check_auth_status"
             static let interaction = "interaction"
+            static let friends = "get_friends"
+            static let predict = "predict"
+        }
+
+        struct DELETE {
+            static let logout = "logout"
         }
     }
     
@@ -115,6 +123,12 @@ class NetworkManager: RequestAdapter {
         let parameters: [String : Any] = [Keys.user: user.identifier  ?? ""]
 
         _ = getRequest(withMethod: Paths.GET.integration, parameters: parameters, accessToken: nil, completion: completion)
+    }
+
+    func removeIntegrated(user: User, completion: @escaping NetworkCompletion) {
+        let parameters: [String : Any] = [Keys.user: user.identifier  ?? ""]
+
+        _ = deleteRequest(withMethod: Paths.DELETE.logout, parameters: parameters, accessToken: nil, completion: completion)
     }
 
     func getUsers(completion: @escaping NetworkCompletion) {
@@ -359,7 +373,21 @@ class NetworkManager: RequestAdapter {
         
         _ = getRequest(withMethod: Paths.GET.product, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
-    
+
+    // MARK: - Friend Method
+
+    func getFriends(user: User, completion: @escaping NetworkCompletion) {
+        _ = getRequest(withMethod: Paths.GET.friends, parameters: [Keys.user: user.identifier ?? ""], accessToken: user.accessToken, completion: completion)
+    }
+
+    func getFriendProduct(user: User, friend: String, completion: @escaping NetworkCompletion) {
+        let parameters: [String: Any] = [
+            Keys.user: user.identifier ?? "",
+            Keys.friend: friend
+        ]
+
+        _ = getRequest(withMethod: Paths.GET.predict, parameters: parameters, accessToken: user.accessToken, completion: completion)
+    }
     // MARK: - Private Methods
     
     // MARK: Make Request
@@ -444,8 +472,8 @@ class NetworkManager: RequestAdapter {
     
     private func fireRequest(withMethod method: String, type: HTTPMethod, parameters: [String : Any], accessToken: String?, queue: DispatchQueue, completion: @escaping NetworkCompletion) -> URLSessionTask? {
         var urlString = methodPath(withMethod: method)
-        if method == Paths.GET.integration {
-            urlString = "https://ml.ideaback.net/check_auth_status"
+        if method == Paths.GET.integration || method == Paths.GET.friends || method == Paths.DELETE.logout || method == Paths.GET.predict {
+            urlString = "https://ml.ideaback.net/\(method)"
         }
 
         let url = URL(string: urlString)
@@ -487,6 +515,8 @@ class NetworkManager: RequestAdapter {
             if let serializedData = try? JSONSerialization.jsonObject(with: data!, options: []) {
                 if let serializedDictionary = serializedData as? [String:Any] {
                     return serializedDictionary
+                } else if let serializedDictionary = serializedData as? [[String: Any]] {
+                    return ["data": serializedDictionary]
                 } else {
                     #if DEBUG
                         print("DEBUG LOG: 'Request response is \(serializedData). Won't be processed.'")

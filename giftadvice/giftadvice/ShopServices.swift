@@ -15,6 +15,9 @@ private protocol PublicMethods {
     func isSubscribed(user: User, shop: String, completion: @escaping (_ error: String?, _ subscribed: Bool) -> ())
     func subscribeToggle(user: User, shop: String, subscribed: Bool)
     func searchShop(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [User]?) -> ())
+
+    func getFriends(user: User, completion: @escaping (_ error: String?, _ friends: [Friend]?) -> ())
+    func getFriendProduct(user: User, friend: String, completion: @escaping (_ error: String?, _ product: [Product]?) -> ())
 }
 
 class ShopService {
@@ -91,6 +94,30 @@ extension ShopService: PublicMethods {
             if let data = response?["data"] as? [[String: Any]] {
                 let models = Mapper<User>().mapArray(JSONArray: data)
                 
+                completion(error, models)
+            } else if let error = error {
+                completion(error, nil)
+            }
+        }
+    }
+
+    func getFriends(user: User, completion: @escaping (_ error: String?, _ friends: [Friend]?) -> ()) {
+        networkManager.getFriends(user: user) { (cancelled, error, response) in
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<Friend>().mapArray(JSONArray: data)
+
+                completion(error, models)
+            } else {
+                completion(nil, nil)
+            }
+        }
+    }
+
+    func getFriendProduct(user: User, friend: String, completion: @escaping (_ error: String?, _ product: [Product]?) -> ()) {
+        networkManager.getFriendProduct(user: user, friend: friend) { (cancelled, error, response) in
+            if let data = response?["data"] as? [[String: Any]] {
+                let models = Mapper<Product>().mapArray(JSONArray: data)
+
                 completion(error, models)
             } else if let error = error {
                 completion(error, nil)

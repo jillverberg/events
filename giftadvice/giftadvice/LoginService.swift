@@ -22,6 +22,7 @@ private protocol PublicMethods {
     func getAccessToken() -> String?
     func isFirstOpen() -> Bool
     func checkIntegrationStatus(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ())
+    func removeIntegration(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ())
 }
 
 class LoginService {
@@ -201,6 +202,13 @@ extension LoginService: PublicMethods {
                 completion(nil, status == "OK")
             }
         }
+    }
+
+    func removeIntegration(withUser user: User, completion: @escaping (_ error: String?, _ integrated: Bool?) -> ()) {
+        NetworkManager.shared.removeIntegrated(user: user) { (canceled, error, response) in
+            completion(nil, nil)
+        }
+
     }
 }
 

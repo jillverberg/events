@@ -29,13 +29,14 @@ protocol LoginRouterInput: InitiallyPresentationRouter {
 }
 
 protocol AuthRouterInput: InitiallyPresentationRouter {
-    func presentCamera()
+    func showFriend()
+    
 }
 
 protocol FeedRouterInput {
-   func showProduct(_ product: Product)
-   func showLogin()
-   func showFilter()
+    func showProduct(_ product: Product)
+    func showLogin()
+    func showFilter()
 }
 
 protocol ProfileRouterInput {

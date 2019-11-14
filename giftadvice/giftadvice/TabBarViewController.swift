@@ -70,7 +70,7 @@ extension TabBarViewController: UITabBarControllerDelegate {
             if let raw = UserDefaults.standard.string(forKey: "type"),
                 let type = LoginRouter.SignUpType(rawValue: raw),
                 type == .buyer {
-                router.presentCamera()
+                router.showFriend()
                 return false
             }
             

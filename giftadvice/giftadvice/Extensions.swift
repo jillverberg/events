@@ -311,7 +311,11 @@ extension UISearchBar {
     func setText(color: UIColor) { if let textField = getTextField() { textField.textColor = color } }
     func setPlaceholderText(color: UIColor) { getTextField()?.setPlaceholderText(color: color) }
     func setClearButton(color: UIColor) { getTextField()?.setClearButton(color: color) }
-    
+    func setPlaceholderBackground(color: UIColor) { getTextField()?.backgroundColor = color }
+    func removeBlur() {
+        getTextField()?.subviews.first?.subviews.first?.removeFromSuperview()
+    }
+
     func setTextField(color: UIColor) {
         guard let textField = getTextField() else { return }
         textField.tintColor = color

@@ -51,6 +51,9 @@ class SearchingViewController: GAViewController {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         
         setupViews()
+        subscribe()
+
+        searchBar.removeBlur()
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,6 +83,13 @@ class SearchingViewController: GAViewController {
 }
 
 private extension SearchingViewController {
+    func subscribe() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(performPredict(notification:)),
+                                               name: FriendsViewController.notification,
+                                               object: nil)
+    }
+
     func setupViews() {
 
         UILabel.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.white
@@ -88,26 +98,45 @@ private extension SearchingViewController {
         viewModel.collectionDirector.registerHeaderFooterAdapter(collectionHeader)
 
         searchBar.delegate = self
-        searchBar.setPlaceholderText(color: UIColor.white.withAlphaComponent(0.4))
-        searchBar.setSearchImage(color: .white)
-        searchBar.setClearButton(color: .white)
-        searchBar.setTextField(color: .white)
-        searchBar.setText(color: .white)
-        
+        searchBar.setPlaceholderText(color: UIColor.white.withAlphaComponent(0.7))
+        searchBar.setSearchImage(color: AppColors.Common.active())
+        searchBar.setClearButton(color: AppColors.Common.active())
+        searchBar.setTextField(color: AppColors.Common.active())
+        searchBar.setText(color: AppColors.Common.active())
+        searchBar.setPlaceholderBackground(color: UIColor.white)
+
         view.backgroundColor = AppColors.Common.active()
         
-        segmentedView.layer.cornerRadius = segmentedView.bounds.height / 2
-        segmentedView.layer.borderColor = UIColor.white.cgColor
-        segmentedView.layer.borderWidth = 1
-        segmentedView.layer.masksToBounds = true
-        
+
+
+        if #available(iOS 13.0, *) {
+            segmentedView.selectedSegmentTintColor = .white
+            segmentedView.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
+            segmentedView.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
+        } else {
+            segmentedView.layer.cornerRadius = segmentedView.bounds.height / 2
+            segmentedView.layer.borderColor = UIColor.white.cgColor
+            segmentedView.layer.borderWidth = 1
+            segmentedView.layer.masksToBounds = true
+        }
+        segmentedView.tintColor = .white
         segmentedView.setTitle("Search.Product".localized, forSegmentAt: 0)
         segmentedView.setTitle("Search.Shop".localized, forSegmentAt: 1)
         
         setInitialImage()
         configureNavigationBar()
     }
-    
+
+    @objc func performPredict(notification: Notification) {
+        let identifier = notification.object as? String
+
+        if let user = loginService.userModel {
+            shopService.getFriendProduct(user: user, friend: identifier ?? "") { (error, products) in
+                
+            }
+        }
+    }
+
     func setInitialImage() {
         initialImage.tintColor = UIColor.gray.withAlphaComponent(0.5)
 
@@ -130,11 +159,13 @@ private extension SearchingViewController {
         searchBar.isLoading = true
     }
     
-    func setToLoaded(products: [Product]) {
+    func setToLoaded() {
         searchBar.text = SearchingManager.shared.getKeyWords()
         searchBar.isLoading = false
         initialImage.removeFromSuperview()
         performSearch()
+
+        setupViews()
     }
     
     func setToError() {
@@ -151,8 +182,8 @@ extension SearchingViewController: SearchingManagerDelegate {
             setToLoading()
         case .error:
             setToError()
-        case .loaded(let product):
-            setToLoaded(products: product)
+        case .loaded:
+            setToLoaded()
         }
     }
 }
