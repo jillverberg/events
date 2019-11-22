@@ -115,7 +115,7 @@ private extension EditingViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "GalleryTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.element!, isEditing: true)
+            ctx.cell?.render(props: ctx.element, isEditing: true)
             ctx.cell?.delegate = self
         }
         
@@ -127,27 +127,26 @@ private extension EditingViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "EditingTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.valueTextField.tag = ctx.indexPath!.row
             ctx.cell?.valueTextField.isUserInteractionEnabled = true
             ctx.cell?.delegate = self
             
-            if let type = ctx.element?.type  {
-                if type == .category {
-                    ctx.cell?.accessoryType = .disclosureIndicator
-                    self.categoryPicker.textField = ctx.cell?.valueTextField
-                } else if type == .interest {
-                    ctx.cell?.accessoryType = .disclosureIndicator
-                    self.interestPicker.textField = ctx.cell?.valueTextField
-                } else if type == .country {
-                    ctx.cell?.valueTextField.isUserInteractionEnabled = false
-                    ctx.cell?.accessoryType = .disclosureIndicator
-                } else {
-                     ctx.cell?.accessoryType = .none
-                }
+            let type = ctx.element.type
+            
+            if type == .category {
+                ctx.cell?.accessoryType = .disclosureIndicator
+                self.categoryPicker.textField = ctx.cell?.valueTextField
+            } else if type == .interest {
+                ctx.cell?.accessoryType = .disclosureIndicator
+                self.interestPicker.textField = ctx.cell?.valueTextField
+            } else if type == .country {
+                ctx.cell?.valueTextField.isUserInteractionEnabled = false
+                ctx.cell?.accessoryType = .disclosureIndicator
             } else {
                 ctx.cell?.accessoryType = .none
             }
+
         }
         
         adapter.events.didSelect = { [unowned self] ctx in

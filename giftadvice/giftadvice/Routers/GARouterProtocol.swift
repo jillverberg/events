@@ -28,10 +28,7 @@ protocol LoginRouterInput: InitiallyPresentationRouter {
     func showSignUpStepsViewControllerWith(type: LoginRouter.SignUpType)
 }
 
-protocol AuthRouterInput: InitiallyPresentationRouter {
-    func showFriend()
-    
-}
+protocol AuthRouterInput: InitiallyPresentationRouter { }
 
 protocol FeedRouterInput {
     func showProduct(_ product: Product)
@@ -60,6 +57,12 @@ protocol SearchRouterInput {
     func showShop(_ shop: User)
     func showProduct(_ product: Product)
     func showInfo(shop: User)
+}
+
+protocol TaskRouterInput {
+    func showFriends()
+    func showRecomended(taskId: String)
+    func showProduct(_ product: Product)
 }
 
 // MARK: Common Protocols

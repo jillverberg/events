@@ -13,6 +13,7 @@ class AuthRouter: GARouter, AuthRouterInput {
     // MARK: Private Properties
     
     private var feedRouter: FeedRouter?
+    private var taskRouter: TaskRouter?
     private var profileRouter: ProfileRouter?
     private var shopsRouter: ShopsRouter?
     private var searchRouter: SearchRouter?
@@ -52,12 +53,6 @@ class AuthRouter: GARouter, AuthRouterInput {
         }
     }
 
-    func showFriend() {
-        let viewController = setupFriendViewController()
-
-        self.rootNavigationController?.present(viewController, animated: true)
-    }
-
     // MARK: Private Methods
     
     private func setupViewController() -> UIViewController {
@@ -86,7 +81,17 @@ class AuthRouter: GARouter, AuthRouterInput {
 
         navigationController.tabBarItem.title = "Title.Main".localized
     }
-    
+
+    func configure(taskRouterWith navigationController: UINavigationController, viewController: GAViewController) {
+        let taskRouter = TaskRouter(parentRouter: self, navigationController: navigationController)
+        self.taskRouter = taskRouter
+
+        viewController.router = taskRouter
+        configureViewControllerWithAssembly(viewController)
+
+        navigationController.tabBarItem.title = "Title.Main".localized
+    }
+
     func configure(searchRouterWith navigationController: UINavigationController, viewController: GAViewController) {
         let searchRouter = SearchRouter(parentRouter: self, navigationController: navigationController)
         self.searchRouter = searchRouter
@@ -123,12 +128,5 @@ class AuthRouter: GARouter, AuthRouterInput {
         }
         
         assemblyManager.configure(viewController: viewController)
-    }
-
-    private func setupFriendViewController() -> UIViewController {
-        let storyboardViewController = StoryboardViewController(storyboardName: .auth, identifier: .friend)
-        let viewController = self.createViewController(from: storyboardViewController)
-
-        return viewController
     }
 }

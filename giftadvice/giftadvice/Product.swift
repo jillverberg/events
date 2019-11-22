@@ -27,6 +27,7 @@ struct Product: Mappable, ElementRepresentable {
         static let photo = "photo"
         static let photos = "product_photos"
         static let event = "event_name"
+        static let interest = "interest"
         static let countries = "countries"
         static let webSite = "web_site"
         static let description = "description"
@@ -40,6 +41,7 @@ struct Product: Mappable, ElementRepresentable {
     var name: String?
     var photo: [Photo]?
     var event: String?
+    var interest: String?
     var countries: String?
     var webSite: String?
     var description: String?
@@ -68,6 +70,7 @@ struct Product: Mappable, ElementRepresentable {
         self.identifier <- map[Keys.identifier]
         self.shop <- map[Keys.shop]
         self.event <- map[Keys.event]
+        self.interest <- map[Keys.interest]
         self.countries <- map[Keys.countries]
         self.name <- map[Keys.name]
         self.photo <- map[Keys.photo]

@@ -83,12 +83,7 @@ class SearchingViewController: GAViewController {
 }
 
 private extension SearchingViewController {
-    func subscribe() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(performPredict(notification:)),
-                                               name: FriendsViewController.notification,
-                                               object: nil)
-    }
+    func subscribe() { }
 
     func setupViews() {
 
@@ -125,16 +120,6 @@ private extension SearchingViewController {
         
         setInitialImage()
         configureNavigationBar()
-    }
-
-    @objc func performPredict(notification: Notification) {
-        let identifier = notification.object as? String
-
-        if let user = loginService.userModel {
-            shopService.getFriendProduct(user: user, friend: identifier ?? "") { (error, products) in
-                
-            }
-        }
     }
 
     func setInitialImage() {

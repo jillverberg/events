@@ -48,14 +48,14 @@ struct PhoneAlertPresenter {
         adapter.reusableViewLoadSource = .fromXib(name: "PhoneTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
             if self.isPhonePrefixHidden {
                 ctx.cell?.prefixLabel.isHidden = true
             }
         }
 
         adapter.events.didSelect = { ctx in
-            let model = ctx.element!
+            let model = ctx.element
 
             self.itemSelected?(model)
 

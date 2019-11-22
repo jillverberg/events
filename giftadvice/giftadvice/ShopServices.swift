@@ -17,7 +17,8 @@ private protocol PublicMethods {
     func searchShop(user: User, value: String, completion: @escaping (_ error: String?, _ shops: [User]?) -> ())
 
     func getFriends(user: User, completion: @escaping (_ error: String?, _ friends: [Friend]?) -> ())
-    func getFriendProduct(user: User, friend: String, completion: @escaping (_ error: String?, _ product: [Product]?) -> ())
+    func getFriendProduct(user: User, friend: String, completion: ((_ error: String?, _ product: [Product]?) -> ())?, task: ((_ error: String?, _ task: String?) -> ())?)
+    func getTaskStatus(user: User, task: String, completion: ((_ error: String?, _ product: [Product]?) -> ())?)
 }
 
 class ShopService {
@@ -113,14 +114,35 @@ extension ShopService: PublicMethods {
         }
     }
 
-    func getFriendProduct(user: User, friend: String, completion: @escaping (_ error: String?, _ product: [Product]?) -> ()) {
+    func getFriendProduct(user: User, friend: String,
+                          completion: ((_ error: String?, _ product: [Product]?) -> ())? = nil,
+                          task:  ((_ error: String?, _ task: String?) -> ())? = nil) {
         networkManager.getFriendProduct(user: user, friend: friend) { (cancelled, error, response) in
             if let data = response?["data"] as? [[String: Any]] {
                 let models = Mapper<Product>().mapArray(JSONArray: data)
 
-                completion(error, models)
+                completion?(error, models)
+            } else if let taskIdentifier = response?["task_id"] as? String {
+                task?(nil, taskIdentifier)
             } else if let error = error {
-                completion(error, nil)
+                completion?(error, nil)
+                task?(error, nil)
+            }
+        }
+    }
+
+    func getTaskStatus(user: User, task: String, completion: ((_ error: String?, _ product: [Product]?) -> ())?) {
+        networkManager.getTaskStatus(user: user, task: task) { (cancelled, error, response) in
+            if let status = response?["status"] as? String, status == "waiting" {
+                completion?(nil, nil)
+            } else if let data = response?["result"] as? [[String: Any]] {
+                let models = Mapper<Product>().mapArray(JSONArray: data)
+
+                completion?(error, models)
+            } else if let error = error {
+                completion?(error, nil)
+            } else if let status = response?["status"] as? String, status == "error" {
+                completion?("error", nil)
             }
         }
     }

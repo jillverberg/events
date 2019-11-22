@@ -245,7 +245,7 @@ class EditingViewModel: NSObject {
     func getProduct() throws ->  Product? {
         var product = gallery.product
         
-        var models = tableDirector.section(at: 0)?.elements
+        var models = tableDirector.sectionAt(0)?.elements
         models?.removeFirst()
         
         if let models = models as? [Editing] {
@@ -268,9 +268,9 @@ class EditingViewModel: NSObject {
                     case .interest:
                         if value.count > 0 {
                             let event = Interest.value.filter({ $0.value == value }).first!.key
-                            product?.event = event.rawValue
+                            product?.interest = event.rawValue
                         } else {
-                            throw ProductError.category
+                            throw ProductError.interest
                         }
                     case .description:
                         if value.count >= Constant.minLeght {

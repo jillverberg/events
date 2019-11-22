@@ -37,7 +37,7 @@
 "Title.Shops"                           = "Магазины";
 "Title.Settings"                        = "Настройки";
 "Title.Search"                          = "Поиск";
-"Title.Camera"                          = "Волшебство";
+"Title.Recomended"                      = "Рекомендация";
 "Title.Search.Placeholder"              = "Начните вводить ключевые слова";
 
 "Camera.Action"                         = "Уточнить рекомендацию";
@@ -135,6 +135,12 @@
 "Filtering.Price"                       = "Фильтр по цене";
 "Filtering.Next"                        = "Далее (цена)";
 "Filtering.Save"                        = "Применить";
+
+"Title.Friends"                         = "Друзья";
+"Recomendation.Waiting.Title"           = "Выполняется";
+"Recomendation.Waiting.Message"         = "Подборка для %@ еще не готова, попробуйте обновить список позже.";
+"Recomendation.Error.Title"             = "Запрет";
+"Recomendation.Error.Message"           = "Из-за ограничений ВК мы не можем найти подходящие подарки, сожалеем.";
 
 "BIRTHDAY"                              = "День рождения";
 "NEW_YEAR"                              = "Новый год";

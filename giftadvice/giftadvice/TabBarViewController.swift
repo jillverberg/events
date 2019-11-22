@@ -21,7 +21,7 @@ class TabBarViewController: UITabBarController {
         delegate = self
         
         navigationController?.setNavigationBarHidden(true, animated: false)
-        tabBar.items?[2].title = "Title.Camera".localized
+        tabBar.items?[2].title = "Title.Recomended".localized
         
         tabBar.tintColor = AppColors.Common.active()
         
@@ -51,6 +51,8 @@ private extension TabBarViewController {
                 if let navigationController = viewController as? UINavigationController {
                     if let newsViewController = navigationController.viewControllers.first as? FeedViewController {
                         router.configure(newsRouterWith: navigationController, viewController: newsViewController)
+                    } else if let taskViewController = navigationController.viewControllers.first as? TaskListViewController {
+                        router.configure(taskRouterWith: navigationController, viewController: taskViewController)
                     } else if let profileViewController = navigationController.viewControllers.first as? ProfileViewController {
                         router.configure(profileRouterWith: navigationController, viewController: profileViewController)
                     } else if let shopViewController = navigationController.viewControllers.first as? ShopsViewController {
@@ -65,18 +67,5 @@ private extension TabBarViewController {
 }
 
 extension TabBarViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if let index = tabBarController.viewControllers?.lastIndex(of: viewController), index == 2 {
-            if let raw = UserDefaults.standard.string(forKey: "type"),
-                let type = LoginRouter.SignUpType(rawValue: raw),
-                type == .buyer {
-                router.showFriend()
-                return false
-            }
-            
-            return true
-        } else {
-            return true
-        }
-    }
+
 }

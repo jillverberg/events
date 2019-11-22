@@ -45,7 +45,9 @@ struct StoryboardViewController {
         case advice = "AdviceViewController"
         case filter = "FilterViewController"
 
+        case task = "TaskListViewController"
         case friend = "FriendsViewController"
+        case recomended = "RecomendedViewController"
     }
     
     var storyboardName: StoryboardName

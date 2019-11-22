@@ -37,7 +37,7 @@
 "Title.Shops"                           = "Shops";
 "Title.Settings"                        = "Settings";
 "Title.Search"                          = "Search";
-"Title.Camera"                          = "Camera";
+"Title.Recomended"                          = "Recomended";
 "Title.Search.Placeholder"              = "Start typing words";
 
 "Camera.Action"                         = "Clarify recommendation";
@@ -138,6 +138,12 @@
 "Filtering.Price"                       = "Filter by price";
 "Filtering.Next"                        = "Next (Price)";
 "Filtering.Save"                        = "Apply";
+
+"Title.Friends"                         = "Friends";
+"Recomendation.Waiting.Title"           = "Proccesing";
+"Recomendation.Waiting.Message"         = "The selection for %@ is not ready yet, try updating the list later.";
+"Recomendation.Error.Title"             = "Restiction";
+"Recomendation.Error.Message"           = "Due to VK restrictions, we cannot find suitable gifts, sorry.";
 
 "BIRTHDAY"                              = "Birthday";
 "NEW_YEAR"                              = "New Year";

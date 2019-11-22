@@ -282,7 +282,7 @@ private extension FeedViewController {
                                                         if ctx.sections.count == 0 {
                                                             ctx.add(section: TableSection(elements: models))
                                                         } else {
-                                                            ctx.section(at: 0)?.add(elements: models, at: nil)
+                                                            ctx.sectionAt(0)?.add(elements: models, at: nil)
                                                         }
                                                         return .none
                                                     }, completion: {
@@ -323,11 +323,11 @@ private extension FeedViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "ProductTableViewCell", bundle: nil)
         
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
         
         adapter.events.didSelect = { [unowned self] ctx in
-            let model = ctx.element!
+            let model = ctx.element
             
             self.feedRouter().showProduct(model)
             
@@ -367,14 +367,14 @@ private extension FeedViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "FilterTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { [unowned self] ctx in
-            ctx.cell?.render(props: ctx.element!, selected: self.sortingValue == ctx.element!)
+            ctx.cell?.render(props: ctx.element, selected: self.sortingValue == ctx.element)
         }
 
         adapter.events.didSelect = { [unowned self] ctx in
-            if self.sortingValue == ctx.element! {
+            if self.sortingValue == ctx.element {
                 self.sortingValue = nil
             } else {
-                self.sortingValue = ctx.element!
+                self.sortingValue = ctx.element
             }
 
             self.popupView?.tableDirector.reload()
@@ -392,21 +392,21 @@ private extension FeedViewController {
         adapter.events.dequeue = { [unowned self] ctx in
             let currentSelected = self.filterPage == 0 ? self.filterEventValue : [self.filterPriceValue].compactMap({ $0 })
 
-            ctx.cell?.render(props: ctx.element!, selected: currentSelected.contains(where: { ctx.element!.key == $0.key }))
+            ctx.cell?.render(props: ctx.element, selected: currentSelected.contains(where: { ctx.element.key == $0.key }))
         }
 
         adapter.events.didSelect = { [unowned self] ctx in
             if self.filterPage == 0 {
-                if self.filterEventValue.contains(where: { ctx.element!.key == $0.key }) {
-                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.element!.key == $0.key })!)
+                if self.filterEventValue.contains(where: { ctx.element.key == $0.key }) {
+                    self.filterEventValue.remove(at: self.filterEventValue.firstIndex(where: { ctx.element.key == $0.key })!)
                 } else {
-                    self.filterEventValue.append(ctx.element!)
+                    self.filterEventValue.append(ctx.element)
                 }
             } else {
-                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.element!.key {
+                if let filterPriceValue = self.filterPriceValue, filterPriceValue.key == ctx.element.key {
                     self.filterPriceValue = nil
                 } else {
-                    self.filterPriceValue = ctx.element!
+                    self.filterPriceValue = ctx.element
                 }
             }
 

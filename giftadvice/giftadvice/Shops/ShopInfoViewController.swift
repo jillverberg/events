@@ -64,7 +64,7 @@ class ShopInfoViewController: GAViewController {
         let section = TableSection(elements: models)
         
         showPopupView(title: "Settings.Title.Problem".localized, adapters: [reportItemAdapter], sections: [section], CommandWith<Any>(action: { [unowned self] some in
-            if let report = self.popupView?.tableDirector.sections[0].elements.first as? Report {
+            if (self.popupView?.tableDirector.sections[0].elements.first as? Report) != nil {
                 
             }
             self.hidePopupView()
@@ -99,7 +99,7 @@ private extension ShopInfoViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "SettingsTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
@@ -111,7 +111,7 @@ private extension ShopInfoViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "ReportTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
 
         return adapter

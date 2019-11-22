@@ -180,10 +180,10 @@ private extension SettingsViewController {
                 }
             }
         } else {
-            UIView.animate(withDuration: 0.3) {
-                self.autorizeButton.isHidden = true
-            }
+            autorizeButton.isHidden = true
         }
+
+        autorizeIndicatorView.isHidden = autorizeButton.isHidden
     }
     
     func poluteInfo() -> [TableSection] {
@@ -278,7 +278,7 @@ private extension SettingsViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "SettingsTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
@@ -291,7 +291,7 @@ private extension SettingsViewController {
 
         adapter.events.dequeue = { ctx in
             ctx.cell?.tableView = ctx.table
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
             ctx.cell?.valueLabel.isUserInteractionEnabled = false
         }
         
@@ -309,7 +309,7 @@ private extension SettingsViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "ReportTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
         
         adapter.events.didSelect = {ctx in

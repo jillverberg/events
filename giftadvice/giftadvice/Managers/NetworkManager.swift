@@ -15,10 +15,12 @@ class NetworkManager: RequestAdapter {
     
     let postQueue = DispatchQueue(label: "post-response-queue", qos: .utility, attributes: [.concurrent])
     let getQueue = DispatchQueue(label: "get-response-queue", qos: .utility, attributes: [.concurrent])
-    
+    let deleteQueue = DispatchQueue(label: "delete-response-queue", qos: .utility, attributes: [.concurrent])
+
     private struct Keys {
         static let user = "user_id"
         static let friend = "friend_id"
+        static let task = "task_id"
 
         static let number = "phone_number"
         static let password = "password"
@@ -78,6 +80,7 @@ class NetworkManager: RequestAdapter {
             static let interaction = "interaction"
             static let friends = "get_friends"
             static let predict = "predict"
+            static let status = "get_task_result"
         }
 
         struct DELETE {
@@ -128,7 +131,7 @@ class NetworkManager: RequestAdapter {
     func removeIntegrated(user: User, completion: @escaping NetworkCompletion) {
         let parameters: [String : Any] = [Keys.user: user.identifier  ?? ""]
 
-        _ = deleteRequest(withMethod: Paths.DELETE.logout, parameters: parameters, accessToken: nil, completion: completion)
+        _ = deleteRequest(withMethod: Paths.DELETE.logout, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
 
     func getUsers(completion: @escaping NetworkCompletion) {
@@ -388,6 +391,15 @@ class NetworkManager: RequestAdapter {
 
         _ = getRequest(withMethod: Paths.GET.predict, parameters: parameters, accessToken: user.accessToken, completion: completion)
     }
+
+    func getTaskStatus(user: User, task: String, completion: @escaping NetworkCompletion) {
+        let parameters: [String: Any] = [
+            Keys.task: task
+        ]
+
+        _ = getRequest(withMethod: Paths.GET.status, parameters: parameters, accessToken: user.accessToken, completion: completion)
+    }
+
     // MARK: - Private Methods
     
     // MARK: Make Request
@@ -467,12 +479,12 @@ class NetworkManager: RequestAdapter {
         print("\(Date()) DELETE \(method) with \(parameters)")
         #endif
 
-        return fireRequest(withMethod: method, type: .delete, parameters: parameters, accessToken: accessToken, queue: postQueue, completion: completion)
+        return fireRequest(withMethod: method, type: .delete, parameters: parameters, accessToken: accessToken, queue: deleteQueue, completion: completion)
     }
     
     private func fireRequest(withMethod method: String, type: HTTPMethod, parameters: [String : Any], accessToken: String?, queue: DispatchQueue, completion: @escaping NetworkCompletion) -> URLSessionTask? {
         var urlString = methodPath(withMethod: method)
-        if method == Paths.GET.integration || method == Paths.GET.friends || method == Paths.DELETE.logout || method == Paths.GET.predict {
+        if method == Paths.GET.integration || method == Paths.GET.friends || method == Paths.DELETE.logout || method == Paths.GET.predict || method == Paths.GET.status {
             urlString = "https://ml.ideaback.net/\(method)"
         }
 
@@ -484,7 +496,7 @@ class NetworkManager: RequestAdapter {
             headers[Keys.accessToken] = "Bearer " + token
         }
         //URLEncoding(destination: .queryString)
-        let request = Alamofire.request(url!, method: type, parameters: parameters, encoding: type == .get ? URLEncoding(destination: .queryString) : JSONEncoding.default, headers: headers).responseJSON(queue: queue) { [weak self] (result) in
+        let request = Alamofire.request(url!, method: type, parameters: parameters, encoding: type == .get || type == .delete ? URLEncoding(destination: .queryString) : JSONEncoding.default, headers: headers).responseJSON(queue: queue) { [weak self] (result) in
             self?.perform(completion: completion, data: result.data, response: result.response, error: result.error, method: method)
         }
         //request.task?.currentRequest?.

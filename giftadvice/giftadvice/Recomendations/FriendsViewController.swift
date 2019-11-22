@@ -8,6 +8,7 @@
 
 import UIKit
 import OwlKit
+import RealmSwift
 
 class FriendsViewController: GAViewController {
 
@@ -15,13 +16,15 @@ class FriendsViewController: GAViewController {
 
     // MARK: - IBOutlet Properties
 
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var placeholderView: UIView!
     @IBOutlet var viewModel: FriendViewModel!
+    @IBOutlet weak var searchBarView: UISearchBar!
 
     // MARK: Private Properties
 
     private var shopService: ShopService!
     private var loginService: LoginService!
+    private let realm = try! Realm()
 
     // MARK: Init Methods & Superclass Overriders
 
@@ -41,7 +44,7 @@ class FriendsViewController: GAViewController {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        self?.dismiss(animated: true)
+                        self?.navigationController?.popViewController(animated: true)
                         self?.showErrorAlertWith(title: "Search.Error.Title".localized,
                                                  message: "Search.Error.Message".localized)
                     }
@@ -60,27 +63,43 @@ class FriendsViewController: GAViewController {
 
 private extension FriendsViewController {
     func setupViews() {
-        containerView.layer.cornerRadius = 8.0
+        title = "Title.Friends".localized
+
+        placeholderView.layer.cornerRadius = 12
+
+        searchBarView.delegate = self
         viewModel.setupTableView(adapters: [friendCellAdapter])
         view.backgroundColor = AppColors.Common.active()
+
+        viewModel.tableView.keyboardDismissMode = .onDrag
     }
 
     func predict(friend: Friend) {
-        tabRouter().showSearchWith(keyword: [friend.name])
+        viewModel.tableView.isLoading = true
 
         DispatchQueue.main.async {
-            SearchingManager.shared.searchingKeyWords = [friend.name]
-            SearchingManager.shared.state = .loaded
+            if let user = self.loginService.userModel {
+                self.shopService.getFriendProduct(user: user, friend: friend.identifier.description, task: { [weak self] (error, taskIdentifier) in
+                    DispatchQueue.main.async {
+                        try! self?.realm.write {
+                            let task = Task()
+                            task.name = friend.name
+                            task.photo = friend.photo
+                            task.task = taskIdentifier ?? ""
+                            task.id = friend.identifier.description
 
-            NotificationCenter.default.post(name: FriendsViewController.notification, object: friend.identifier)
+                            self?.realm.add(task, update: .all)
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                })
+            }
         }
-
-        dismiss(animated: true)
     }
 
-    func tabRouter() -> AuthRouter {
-        guard let router = router as? AuthRouter else {
-            fatalError("\(self) router isn't AuthRouterInput")
+    func taskRouter() -> TaskRouterInput {
+        guard let router = router as? TaskRouterInput else {
+            fatalError("\(self) router isn't TaskRouterInput")
         }
 
         return router
@@ -99,13 +118,22 @@ private extension FriendsViewController {
         }
 
         adapter.events.didSelect = { [weak self] ctx in
-            if let friend = ctx.element {
-                self?.predict(friend: friend)
-            }
+            let friend = ctx.element
+            self?.predict(friend: friend)
 
             return .deselect
         }
 
         return adapter
+    }
+}
+
+extension FriendsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.filter(text: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
     }
 }

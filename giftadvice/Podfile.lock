@@ -14,14 +14,16 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
-  - Alamofire (4.8.2)
+  - Alamofire (4.9.1)
   - CameraManager (4.4.0)
   - Clarifai (2.3.2):
     - AFNetworking (~> 3.1)
-  - IQKeyboardManagerSwift (6.4.1)
-  - Kingfisher (5.7.1)
+  - IQKeyboardManagerSwift (6.5.4)
+  - Kingfisher (5.10.1):
+    - Kingfisher/Core (= 5.10.1)
+  - Kingfisher/Core (5.10.1)
   - ObjectMapper (3.5.1)
-  - OwlKit (1.0.5)
+  - OwlKit (1.1.0)
   - PhoneNumberKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.6.0)
     - PhoneNumberKit/UIKit (= 2.6.0)
@@ -29,18 +31,18 @@ PODS:
   - PhoneNumberKit/UIKit (2.6.0):
     - PhoneNumberKit/PhoneNumberKitCore
   - pop (1.0.12)
-  - PureLayout (3.1.4)
+  - PureLayout (3.1.5)
   - RSKGrowingTextView (5.0.2):
     - RSKPlaceholderTextView (= 5.0.2)
   - RSKPlaceholderTextView (5.0.2)
-  - RxCocoa (5.0.0):
+  - RxCocoa (5.0.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxRelay (5.0.0):
+  - RxRelay (5.0.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.0)
+  - RxSwift (5.0.1)
   - SwiftyJSON (5.0.0)
-  - "UITextView+Placeholder (1.3.1)"
+  - "UITextView+Placeholder (1.3.3)"
 
 DEPENDENCIES:
   - Alamofire
@@ -86,29 +88,29 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   OwlKit:
-    :commit: ee4ffff5cf7ec93df3a78901727760835019755a
+    :commit: 78fe88292b77ad66b7ef35db692de42facec4ddd
     :git: https://github.com/malcommac/Owl.git
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   CameraManager: 583710502c42178d12ef046d9d4f7893feff8354
   Clarifai: 6d6cce2b31aefcf33893f2c3a18588b266771d11
-  IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
-  Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
+  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
+  Kingfisher: eb36b7dfcc78d60877051c92c119a2865972961a
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
-  OwlKit: f4c2c711a9f1619a99b1060f94cd234a72704ebd
+  OwlKit: dee786376600fd47538955e0c357a3dfc6b6b109
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
+  PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
   RSKGrowingTextView: 9fdc68c8dabaacd54e23c316ff14b73aef034594
   RSKPlaceholderTextView: df72ca93edfac185b98f51cb85e445f54ce8a163
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  "UITextView+Placeholder": f23df8592290d8d06078072ae1a663e11ee07ff4
+  "UITextView+Placeholder": c407b27599ea23cca425946fee3cf1db5d547008
 
-PODFILE CHECKSUM: d5762296ba24b0c04dd3ae05714c27b2b44735a6
+PODFILE CHECKSUM: 1935c0167ee688d59b9c83304eebfaf3079e2868
 
-COCOAPODS: 1.8.1
+COCOAPODS: 1.8.4

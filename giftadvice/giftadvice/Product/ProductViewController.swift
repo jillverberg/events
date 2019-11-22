@@ -15,6 +15,7 @@ class ProductViewController: GAViewController {
         case ownProduct
         case product
         case productInShop
+        case outside
     }
 
     // MARK: Interface Builder Properties

@@ -54,7 +54,7 @@ private extension OnboardPageViewController {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
         let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         viewController.view.addSubview(imageView)
         
         imageView.autoPinEdgesToSuperviewEdges()

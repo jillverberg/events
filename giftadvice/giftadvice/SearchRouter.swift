@@ -19,7 +19,8 @@ class SearchRouter: GARouter, SearchRouterInput {
     func showProduct(_ product: Product) {
         let viewController = setupProductViewController() as! ProductViewController
         viewController.product = product
-
+        viewController.type = .outside
+        
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }
 

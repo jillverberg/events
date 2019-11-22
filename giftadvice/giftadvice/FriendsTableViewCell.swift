@@ -15,10 +15,10 @@ class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
 
-        photoImageView.layer.cornerRadius = 44 / 2
+        photoImageView.layer.cornerRadius = photoImageView.frame.width / 2
     }
 
     // MARK: - Public Methods

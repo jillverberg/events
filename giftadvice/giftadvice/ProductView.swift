@@ -118,7 +118,9 @@ class ProductView: UIView {
                     }
                     dispatch.leave()
                 })
-            }            
+            } else {
+                title = ProductTitle(price: product.price, title: product.name ?? "", country: code, isFavorite: false, shareCommand: nil, favoriteCommand: nil)
+            }
             
             let descriptiopn = ProductDescription(title: "Описание", description: product.description)
             
@@ -161,15 +163,10 @@ class ProductView: UIView {
             }
         case .productInShop:
             break
+        case .outside:
+            guard let url = URL(string: product?.identifier ?? "") else { return }
+            UIApplication.shared.open(url)
         }
-
-//       if product?.shop == nil, let urlString = product?.identifier, let url = URL(string: urlString) {
-//            if #available(iOS 10.0, *) {
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            } else {
-//                UIApplication.shared.openURL(url)
-//            }
-//        }
     }
 }
 
@@ -222,6 +219,8 @@ private extension ProductView {
                 shopButton.setTitle("Product.Action.Buyer".localized, for: .normal)
             case .productInShop:
                 shopButton.setTitle("Product.Action.Buy".localized, for: .normal)
+            case .outside:
+                shopButton.setTitle("Product.Action.Buyer".localized, for: .normal)
             }
         }
 
@@ -259,7 +258,7 @@ private extension ProductView {
         adapter.reusableViewLoadSource = .fromXib(name: "GalleryTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
         
         return adapter
@@ -270,7 +269,7 @@ private extension ProductView {
         adapter.reusableViewLoadSource = .fromXib(name: "ProductTitleTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { [unowned self] ctx in
-            ctx.cell?.setup(props: ctx.element!)
+            ctx.cell?.setup(props: ctx.element)
             
             ctx.cell?.favoriteToggleAction = { [unowned self] favorite in
                 if let user = self.loginService?.userModel, let identifier = self.product?.identifier {
@@ -290,7 +289,7 @@ private extension ProductView {
         adapter.reusableViewLoadSource = .fromXib(name: "RateTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.setup(props: ctx.element!)
+            ctx.cell?.setup(props: ctx.element)
         }
         
         return adapter
@@ -301,7 +300,7 @@ private extension ProductView {
         adapter.reusableViewLoadSource = .fromXib(name: "InfoTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.setup(props: ctx.element!)
+            ctx.cell?.setup(props: ctx.element)
         }
         
         return adapter

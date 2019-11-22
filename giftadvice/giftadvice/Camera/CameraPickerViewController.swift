@@ -127,7 +127,7 @@ private extension CameraPickerViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "HobbyTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
         
         return adapter
@@ -138,7 +138,7 @@ private extension CameraPickerViewController {
         adapter.reusableViewLoadSource = .fromXib(name: "PriceTableViewCell", bundle: nil)
 
         adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element!)
+            ctx.cell?.render(props: ctx.element)
         }
         
         return adapter

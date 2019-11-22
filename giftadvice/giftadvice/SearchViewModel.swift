@@ -33,7 +33,9 @@ class SearchViewModel: NSObject {
             noOrder.removeFromSuperview()
         }
 
+        collectionDirector.reload()
         self.collectionDirector.removeAll()
+        collectionDirector.reload()
         self.collectionDirector.add(sections: sections)
         collectionDirector.reload()
     }
