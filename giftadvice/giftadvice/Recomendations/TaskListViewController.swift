@@ -16,6 +16,7 @@ class TaskListViewController: GAViewController {
     @IBOutlet weak var placeholderView: UIView!
     @IBOutlet var viewModel: TaskViewModel!
     @IBOutlet weak var newRecommendationButton: UIView!
+    @IBOutlet weak var editingButton: UIButton!
 
     // MARK: Private Properties
 
@@ -58,14 +59,21 @@ class TaskListViewController: GAViewController {
     @IBAction func newTaskAction(_ sender: Any) {
         taskRouter().showFriends()
     }
+
+    @IBAction func editingAction(_ sender: Any) {
+        isEditing.toggle()
+        editingButton.setTitle(isEditing ? "Collection.Title.Done".localized : "Collection.Title.Editing".localized, for: .normal)
+        viewModel.collectionDirector.reload()
+    }
 }
 
 // MARK: - Private methods
 
 private extension TaskListViewController {
     @objc func reload() {
+        let results = Array(self.realm.objects(Task.self)).map({ TaskProps(task: $0) })
+
         DispatchWorkItem.performOnMainQueue(at: [.default]) {
-            let results = Array(self.realm.objects(Task.self))
 
             if let user = self.loginService.userModel {
 
@@ -144,15 +152,29 @@ private extension TaskListViewController {
 
 private extension TaskListViewController {
     var taskCollectionCellAdapter: CollectionCellAdapterProtocol {
-        let adapter = CollectionCellAdapter<Task, TaskCollectionViewCell>()
+        let adapter = CollectionCellAdapter<TaskProps, TaskCollectionViewCell>()
         adapter.reusableViewLoadSource = .fromXib(name: "TaskCollectionViewCell", bundle: nil)
         
         adapter.events.itemSize = { ctx in
             return CGSize(width: (self.viewModel.collectionView.frame.size.width - 22)/3, height: (self.viewModel.collectionView.frame.size.width - 22)/3)
         }
         
-        adapter.events.dequeue = { ctx in
-            ctx.cell?.render(props: ctx.element)
+        adapter.events.dequeue = { [unowned self] ctx in
+            ctx.cell?.render(props: ctx.element, editing: self.isEditing)
+            ctx.cell?.onDelete = { [unowned self] in
+                let id = ctx.element.id
+                self.viewModel.collectionDirector.reload(afterUpdate: { director in
+                    director.sectionAt(0)?.remove(at: ctx.indexPath?.item ?? 0)
+                }) {
+                    if let object = self.realm.object(ofType: Task.self, forPrimaryKey: id) {
+                        try! self.realm.write {
+                            self.realm.delete(object)
+                        }
+                    }
+
+                    self.viewModel.setEmpty()
+                }
+            }
         }
         
         adapter.events.didSelect = { [unowned self] ctx in

@@ -124,13 +124,14 @@ class ProfileViewController: GAViewController {
     private func reloadWith(product: [Product]) {
         var collectionSection = [CollectionSection]()
 
-        collectionSection.append(CollectionSection(elements:product.reversed()))
+        collectionSection.append(CollectionSection(elements: product.reversed()))
         
         _ = collectionSection.map({$0.sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) })
         
         _ = collectionSection.map({$0.minimumLineSpacing = 18 })
         
         viewModel.addCollectionData(sections: collectionSection)
+        viewModel.collectionDirector.reload()
     }
 
     func subscribeOnSccrollUpdate() {
@@ -273,9 +274,12 @@ class ProfileViewController: GAViewController {
         let alert = UIAlertController(title: "Alert.Remove.Accept".localized, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Alert.Remove".localized, style: .destructive, handler: { [unowned self] (alert) in
-
-            self.viewModel.collectionDirector.reload(afterUpdate: { _ in
-                self.viewModel.collectionDirector.sectionAt(0)?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
+            self.viewModel.collectionDirector.reload(afterUpdate: { director in
+                let section = director.sections.filter({ $0.elements.count > 0 }).first
+                section?.remove(atIndexes: IndexSet(self.selectedProducts.keys))
+                if (section?.elements.count ?? 0) == 0 {
+                    director.removeAll()
+                }
                 if let user = self.loginService.userModel {
                     self.productService.removeProductsFromFavorite(user: user, products: self.selectedProducts.values.map({ $0.identifier }))
                 }
@@ -329,6 +333,7 @@ class ProfileViewController: GAViewController {
             let completion: ((String?, [Product]?) -> ()) = { [unowned self] error, response in
                 if let response = response {
                     DispatchQueue.main.async {
+                        self.viewModel.collectionDirector.removeAll()
                         self.reloadWith(product: response)
                     }
                 }

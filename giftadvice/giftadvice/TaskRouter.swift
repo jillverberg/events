@@ -25,7 +25,7 @@ class TaskRouter: GARouter, TaskRouterInput {
     func showProduct(_ product: Product) {
         let viewController = setupViewController() as! ProductViewController
         viewController.product = product
-        viewController.type = .productInShop
+        viewController.type = .outside
 
         self.rootNavigationController?.parent?.present(viewController, animated: false, completion: nil)
     }

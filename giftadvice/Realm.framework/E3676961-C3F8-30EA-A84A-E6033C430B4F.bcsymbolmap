@@ -29,20 +29,20 @@ __ZTSNSt3__117bad_function_callE
 __ZTINSt3__117bad_function_callE
 __ZTSZN5realm13AsyncOpenTask5startENSt3__18functionIFvNS_19ThreadSafeReferenceINS_5RealmEEESt13exception_ptrEEEE3$_0
 __ZTIZN5realm13AsyncOpenTask5startENSt3__18functionIFvNS_19ThreadSafeReferenceINS_5RealmEEESt13exception_ptrEEEE3$_0
-Apple clang version 11.0.0 (clang-1100.0.33.8)
+Apple clang version 11.0.0 (clang-1100.0.33.12)
 /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/sync/async_open_task.cpp
 /Users/realm/workspace/cocoa-pipeline
 operator()
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/functional
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/functional
 __call<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/sync/async_open_task.cpp:41:43) &, std::__1::error_code>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__functional_base
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__functional_base
 __invoke<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/sync/async_open_task.cpp:41:43) &, std::__1::error_code>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/type_traits
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/type_traits
 Realm/ObjectStore/src/sync/async_open_task.cpp
 ~ThreadSafeReference
 Realm/ObjectStore/src/thread_safe_reference.hpp
 ~shared_ptr
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/memory
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/memory
 __release_shared
 __libcpp_atomic_refcount_decrement<long>
 unregister_download_progress_notifier
@@ -52,10 +52,10 @@ _GLOBAL__sub_I_async_open_task.cpp
 __cxx_global_var_init
 core/include/realm/util/serializer.hpp
 basic_string<nullptr_t>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/string
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/string
 __init
 assign
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__string
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__string
 copy
 __set_short_size
 __compressed_pair<true, void>
@@ -75,17 +75,17 @@ destroy
 target_type
 target
 operator==
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/typeinfo
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/typeinfo
 __compare_nonunique_names
 name
 ThreadSafeReference
 shared_ptr
 exception_ptr
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/exception
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/exception
 operator=
 make_exception_ptr<std::__1::system_error>
 system_error
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/system_error
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/system_error
 operator bool
 swap
 swap<realm::_impl::RealmCoordinator *>
@@ -93,7 +93,7 @@ get
 destroy_deallocate
 deallocate
 __libcpp_deallocate
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/new
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/new
 __do_deallocate_handle_size_align
 __do_deallocate_handle_size
 __do_call
@@ -190,7 +190,7 @@ __ZTIN5realm4util22ExceptionWithBacktraceISt11logic_errorEE
 __ZTIN5realm4util17BadOptionalAccessE
 /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp
 __insertion_sort_incomplete<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:830:15) &, (anonymous namespace)::RowInfo *>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/algorithm
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/algorithm
 operator()<(anonymous namespace)::RowInfo, (anonymous namespace)::RowInfo>
 Realm/ObjectStore/src/impl/collection_change_builder.cpp
 swap<(anonymous namespace)::RowInfo>
@@ -213,14 +213,14 @@ __sort<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/im
 __insertion_sort_3<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:778:47) &, (anonymous namespace)::RowInfo *>
 __rotate_forward<std::__1::__wrap_iter<realm::IndexSet *> >
 operator++
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iterator
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iterator
 operator==<realm::IndexSet *, realm::IndexSet *>
 swap<realm::IndexSet>
 ~IndexSet
 Realm/ObjectStore/src/index_set.hpp
 ~ChunkedRangeVector
 ~vector
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/vector
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/vector
 __move_assign
 __end_cap
 first
@@ -232,7 +232,7 @@ operator*
 base
 __swap_out_circular_buffer
 swap<realm::IndexSet *>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__split_buffer
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__split_buffer
 __construct_forward<realm::IndexSet *>
 construct<realm::IndexSet, realm::IndexSet>
 __construct<realm::IndexSet, realm::IndexSet>
@@ -253,9 +253,9 @@ __move_range
 __move_backward<realm::IndexSet *, realm::IndexSet *>
 move_backward<realm::IndexSet *, realm::IndexSet *>
 find<unsigned long>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__hash_table
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__hash_table
 __hash_iterator
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/unordered_map
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/unordered_map
 __constrain_hash
 __hash
 operator[]
@@ -267,8 +267,8 @@ reset<std::__1::__hash_node_base<std::__1::__hash_node<std::__1::__hash_value_ty
 rehash
 __next_hash_pow2
 __clz
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/bit
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/math.h
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/bit
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/math.h
 max_load_factor
 __is_hash_power2
 unique_ptr<true, void>
@@ -282,7 +282,7 @@ __construct_backward<std::__1::pair<unsigned long, unsigned long> >
 construct<std::__1::pair<unsigned long, unsigned long>, unsigned long, unsigned long &>
 __construct<std::__1::pair<unsigned long, unsigned long>, unsigned long, unsigned long &>
 pair<unsigned long, unsigned long &, false>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/utility
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/utility
 __recommend
 capacity
 __insertion_sort_incomplete<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:171:15) &, realm::CollectionChangeSet::Move *>
@@ -345,7 +345,7 @@ operator!=<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
 operator==<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row *, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
 end<std::__1::vector<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row, std::__1::allocator<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row> > >
 initializer_list
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/initializer_list
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/initializer_list
 __construct_backward<Length>
 construct<Length, Length>
 __construct<Length, Length>
@@ -365,7 +365,7 @@ begin<std::__1::vector<(anonymous namespace)::LongestCommonSubsequenceCalculator
 __insertion_sort_incomplete<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:736:33) &, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
 operator()<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row>
 operator<<unsigned long &, unsigned long &, unsigned long &, unsigned long &>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/tuple
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/tuple
 operator()<std::__1::tuple<unsigned long &, unsigned long &>, std::__1::tuple<unsigned long &, unsigned long &> >
 swap<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row>
 __sort5<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:736:33) &, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
@@ -380,7 +380,7 @@ __sort3<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/i
 __sort<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:716:33) &, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
 __insertion_sort_3<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_change_builder.cpp:716:33) &, (anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
 length_error
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/stdexcept
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/stdexcept
 __throw_length_error
 reserve
 swap<(anonymous namespace)::LongestCommonSubsequenceCalculator::Row *>
@@ -652,10 +652,10 @@ __compressed_pair<nullptr_t, std::__1::allocator<std::__1::shared_ptr<realm::_im
 __compressed_pair_elem<std::__1::allocator<std::__1::shared_ptr<realm::_impl::CollectionNotifier> > &, void>
 error
 unlock
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__mutex_base
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__mutex_base
 lock
 __fill_n_false<std::__1::vector<bool, std::__1::allocator<bool> > >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__bit_reference
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__bit_reference
 min<unsigned long>
 min<unsigned long, std::__1::__less<unsigned long, unsigned long> >
 __fill_n_true<std::__1::vector<bool, std::__1::allocator<bool> > >
@@ -787,7 +787,7 @@ Realm/ObjectStore/src/impl/realm_coordinator.hpp
 wait<(lambda at Realm/ObjectStore/src/impl/realm_coordinator.hpp:235:30)>
 all_of<std::__1::__wrap_iter<std::__1::shared_ptr<realm::_impl::CollectionNotifier> *>, (lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_notifier.cpp:440:66)>
 have_callbacks
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/atomic
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/atomic
 unique_lock
 NotifierPackage
 Optional
@@ -860,7 +860,7 @@ bind_ptr<realm::Table>
 is_null_link
 find_if<realm::_impl::DeepChangeChecker::Path *, (lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/collection_notifier.cpp:103:64)>
 operator()<realm::_impl::DeepChangeChecker::Path>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/array
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/array
 data
 end<std::__1::vector<realm::_impl::DeepChangeChecker::OutgoingLink, std::__1::allocator<realm::_impl::DeepChangeChecker::OutgoingLink> > >
 begin<std::__1::vector<realm::_impl::DeepChangeChecker::OutgoingLink, std::__1::allocator<realm::_impl::DeepChangeChecker::OutgoingLink> > >
@@ -914,7 +914,7 @@ Realm/ObjectStore/src/impl/apple/external_commit_helper.cpp
 notify_fd
 _GLOBAL__sub_I_external_commit_helper.cpp
 __thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, (lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/apple/external_commit_helper.cpp:171:28)> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread
 ~tuple
 ~__tuple_impl
 ~__tuple_leaf
@@ -922,7 +922,7 @@ __thread_execute<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::defau
 __invoke<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/apple/external_commit_helper.cpp:171:28)>
 set_pointer
 __libcpp_tls_set
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__threading_support
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__threading_support
 get<0, std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, (lambda at /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/impl/apple/external_commit_helper.cpp:171:28)>
 __hash_len_33_to_64
 __shift_mix
@@ -2749,7 +2749,7 @@ __compressed_pair<const (lambda at /Users/realm/workspace/cocoa-pipeline/Realm/O
 get_time_point<std::__1::chrono::system_clock, std::__1::chrono::duration<long long, std::__1::ratio<1, 1000000> > >
 core/include/realm/timestamp.hpp
 duration_cast<std::__1::chrono::duration<long long, std::__1::ratio<1, 1000000> >, long long, std::__1::ratio<1, 1000000000> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/chrono
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/chrono
 format<const std::__1::basic_string<char> &, realm::StringData &, const std::__1::basic_string<char> &>
 format<realm::StringData &, std::__1::basic_string<char> &, const std::__1::basic_string<char> &>
 core/include/realm/impl/transact_log.hpp
@@ -3289,9 +3289,9 @@ __distance<char *>
 ~SyncConfig
 Realm/ObjectStore/src/sync/sync_config.hpp
 ~map
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/map
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/map
 ~__tree
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__tree
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__tree
 __root
 __end_node
 destroy<std::__1::pair<const std::__1::basic_string<char>, std::__1::basic_string<char> > >
@@ -4000,7 +4000,7 @@ RLMTimestampForNSDate
 isnan
 __libcpp_isnan<double>
 __inline_isnand
-/Applications/Xcode-11.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/usr/include/math.h
+/Applications/Xcode-11.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/usr/include/math.h
 ___ZN12_GLOBAL__N_110makeSetterIU8__strongP6NSDateS3_EEP11objc_objectP11RLMProperty_block_invoke_2
 ___ZN12_GLOBAL__N_110makeSetterIU8__strongP6NSDateS3_EEP11objc_objectP11RLMProperty_block_invoke
 translateError<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/RLMAccessor.mm:80:20)>
@@ -4329,7 +4329,7 @@ __47-[RLMArray aggregateProperty:operation:method:]_block_invoke
 canAggregate
 __28-[RLMArray removeAllObjects]_block_invoke
 NSMakeRange
-/Applications/Xcode-11.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSRange.h
+/Applications/Xcode-11.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSRange.h
 __52-[RLMArray exchangeObjectAtIndex:withObjectAtIndex:]_block_invoke
 changeArray<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/RLMArray.mm:319:8)>
 __38-[RLMArray moveObjectAtIndex:toIndex:]_block_invoke
@@ -5407,7 +5407,7 @@ rawTypeShouldBeTreatedAsComputedProperty
 typeFromProtocolString
 RLMValidateSwiftPropertyName
 islower
-/Applications/Xcode-11.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/usr/include/_ctype.h
+/Applications/Xcode-11.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/usr/include/_ctype.h
 __istype
 RLMPropertyTypeIsComputed
 __ZL15RLMPreconditionbP8NSStringS0_z
@@ -7393,7 +7393,7 @@ emplace_back<realm::SubQueryCountHandoverPatch *>
 SubQueryCountHandoverPatch
 make_subexpr<realm::SubQueryCount, const realm::SubQueryCount &>
 accumulate<std::__1::__wrap_iter<unsigned long *>, unsigned long, (lambda at core/include/realm/query_expression.hpp:3601:79)>
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/numeric
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/numeric
 base_table
 get_table_ref
 column<realm::Link>
@@ -7545,16 +7545,16 @@ __copy<long long, long long>
 make_subexpr<realm::Value<int>, const realm::Value<int> &>
 print_value<int>
 ~basic_stringstream
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iosfwd
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iosfwd
 ~basic_stringbuf
 str
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/sstream
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/sstream
 basic_stringstream
 basic_stringbuf
 basic_iostream
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/istream
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/istream
 basic_istream
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ios
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ios
 basic_ios
 _ZThn24_N5realm5ValueIiE8evaluateEmRNS_9ValueBaseE
 _ZThn24_NK5realm5ValueIiE23has_constant_evaluationEv
@@ -7960,19 +7960,19 @@ basic_string<char *>
 __init<char *>
 __compressed_pair<const std::__1::allocator<char> &>
 egptr
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/streambuf
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/streambuf
 eback
 pbase
 pptr
 __pad_and_output<char, std::__1::char_traits<char> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/locale
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/locale
 width
 sputn
 __put_character_sequence<char, std::__1::char_traits<char> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ostream
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ostream
 setstate
 widen
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__locale
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__locale
 use_facet<std::__1::ctype<char> >
 eq_int_type
 flags
@@ -9047,7 +9047,7 @@ __destroy<std::__1::shared_ptr<realm::SyncSession> >
 destroy<std::__1::shared_ptr<realm::SyncUser> >
 __destroy<std::__1::shared_ptr<realm::SyncUser> >
 __call_once_proxy<std::__1::tuple<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/RLMSyncManager.mm:97:26) &&> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/mutex
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/mutex
 __execute<>
 __invoke<(lambda at /Users/realm/workspace/cocoa-pipeline/Realm/RLMSyncManager.mm:97:26)>
 _ZThn8_N12_GLOBAL__N_115CocoaSyncLogger6do_logEN5realm4util6Logger5LevelENSt3__112basic_stringIcNS5_11char_traitsIcEENS5_9allocatorIcEEEE
@@ -9419,7 +9419,7 @@ _ZZ38-[RLMSyncSession initWithSyncSession:]EN3$_0C2EOS_
 operator=<realm::SyncSession>
 weak_ptr<realm::SyncSession>
 __36+[RLMSyncSession notificationsQueue]_block_invoke
-/Applications/Xcode-11.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/usr/include/dispatch/once.h
+/Applications/Xcode-11.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.2.sdk/usr/include/dispatch/once.h
 -[RLMSyncSessionRefreshHandle initWithRealmURL:user:session:completionBlock:]
 -[RLMSyncSessionRefreshHandle dealloc]
 -[RLMSyncSessionRefreshHandle invalidate]
@@ -10236,7 +10236,7 @@ swap<std::__1::__function::__base<void (int, int)> *>
 core/include/realm/util/allocation_metrics.hpp
 destroy<std::__1::pair<const std::__1::basic_string<char>, std::__1::set<realm::sync::ObjectID, std::__1::less<void>, realm::util::STLAllocator<realm::sync::ObjectID, realm::util::MeteredAllocator> > > >
 ~set
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/set
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/set
 __destroy<std::__1::pair<const std::__1::basic_string<char>, std::__1::set<realm::sync::ObjectID, std::__1::less<void>, realm::util::STLAllocator<realm::sync::ObjectID, realm::util::MeteredAllocator> > > >
 ~PermissionsCache
 core/include/realm/sync/permissions.hpp
@@ -10344,7 +10344,7 @@ Realm/ObjectStore/src/sync/sync_config.cpp
 format<std::__1::basic_string<char> &, const std::__1::basic_string<char> &>
 partial_sync_identifier
 operator<<<char, std::__1::char_traits<char> >
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iomanip
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iomanip
 operator<<<std::__1::char_traits<char> >
 operator<<
 hex
@@ -11839,7 +11839,7 @@ UnsupportedSchemaChange
 __ZZN5realm4util11uuid_stringEvE6engine
 __ZGVZN5realm4util11uuid_stringEvE6engine
 /Users/realm/workspace/cocoa-pipeline/Realm/ObjectStore/src/util/uuid.cpp
-/Applications/Xcode-11.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/random
+/Applications/Xcode-11.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/random
 __rshift<18>
 __lshift<15>
 __lshift<7>
@@ -16162,7 +16162,7 @@ __ZL25original_protocol_getName
 __ZL36original_objc_copyClassNamesForImage
 __ZL12demangleLock
 __ZL9Demangled
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++ --target=arm64-apple-ios4.3 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -Wno-trigraphs -fno-exceptions -fno-rtti -fno-sanitize=vptr -mpascal-strings -Os -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-objc-interface-ivars -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-float-conversion -Wno-non-literal-null-conversion -Wno-objc-literal-conversion -Wshorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -D NDEBUG=1 -D OBJC_OLD_DISPATCH_PROTOTYPES=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.Internal.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -g -fno-threadsafe-statics -Wno-sign-conversion -Wno-infinite-recursion -Wno-move -Wno-comma -Wno-block-capture-autoreleasing -Wno-strict-prototypes -Wno-range-loop-analysis -Wno-semicolon-before-method-body -fembed-bitcode=all -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-generated-files.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-own-target-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-all-target-headers.hmap -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-project-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts/include -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources-normal/arm64 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources/arm64 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources -F/Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.Internal.sdk/System/Library/PrivateFrameworks -Wall -Wextra -Wno-gcc-compat -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -MMD -MT dependencies -MF /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.d --serialize-diagnostics /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.dia -c /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76/source/arclite.mm -o /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.o -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -mlinker-version=512.4
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++ --target=arm64-apple-ios4.3 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -Wno-trigraphs -fno-exceptions -fno-rtti -fno-sanitize=vptr -mpascal-strings -Os -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-objc-interface-ivars -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-float-conversion -Wno-non-literal-null-conversion -Wno-objc-literal-conversion -Wshorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -D NDEBUG=1 -D OBJC_OLD_DISPATCH_PROTOTYPES=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.Internal.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -g -fno-threadsafe-statics -Wno-sign-conversion -Wno-infinite-recursion -Wno-move -Wno-comma -Wno-block-capture-autoreleasing -Wno-strict-prototypes -Wno-range-loop-analysis -Wno-semicolon-before-method-body -fembed-bitcode=all -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-generated-files.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-own-target-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-all-target-headers.hmap -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-project-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts/include -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources-normal/arm64 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources/arm64 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources -F/Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/Symbols/BuiltProducts -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.0.Internal.sdk/System/Library/PrivateFrameworks -Wall -Wextra -Wno-gcc-compat -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -Wno-error=incomplete-umbrella -Wno-error=invalid-ios-deployment-target -Wno-error=deprecated-declarations -Wno-error=documentation -MMD -MT dependencies -MF /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.d --serialize-diagnostics /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.dia -c /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76/source/arclite.mm -o /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/install/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.o -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-extra-semi-stmt -Wno-quoted-include-in-framework-header -mlinker-version=520
 /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76/source/arclite.mm
 /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-76
 fixStringForCoreData

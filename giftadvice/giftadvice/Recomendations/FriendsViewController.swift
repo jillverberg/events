@@ -86,7 +86,7 @@ private extension FriendsViewController {
                             task.name = friend.name
                             task.photo = friend.photo
                             task.task = taskIdentifier ?? ""
-                            task.id = friend.identifier.description
+                            task.id = String(friend.identifier)
 
                             self?.realm.add(task, update: .all)
                             self?.navigationController?.popViewController(animated: true)

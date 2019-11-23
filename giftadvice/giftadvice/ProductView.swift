@@ -164,7 +164,7 @@ class ProductView: UIView {
         case .productInShop:
             break
         case .outside:
-            guard let url = URL(string: product?.identifier ?? "") else { return }
+            guard let url = URL(string: product?.webSite ?? "") else { return }
             UIApplication.shared.open(url)
         }
     }

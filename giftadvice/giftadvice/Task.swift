@@ -10,7 +10,19 @@ import RealmSwift
 import Foundation
 import OwlKit
 
-class Task: Object, ElementRepresentable {
+class Task: Object {
+    @objc dynamic var task = ""
+    @objc dynamic var name = ""
+    @objc dynamic var photo = ""
+    @objc dynamic var id = ""
+    @objc dynamic var number = 0
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class TaskProps: ElementRepresentable {
     func isContentEqual(to other: Differentiable) -> Bool {
         guard let other = other as? Task else {
             return false
@@ -23,13 +35,17 @@ class Task: Object, ElementRepresentable {
         return task
     }
 
-    @objc dynamic var task = ""
-    @objc dynamic var name = ""
-    @objc dynamic var photo = ""
-    @objc dynamic var id = ""
-    @objc dynamic var number = 0
+    var task = ""
+    var name = ""
+    var photo = ""
+    var id = ""
+    var number = 0
 
-    override static func primaryKey() -> String? {
-        return "id"
+    init(task: Task) {
+        self.task = task.task
+        self.name = task.name
+        self.photo = task.photo
+        self.id = task.id
+        self.number = task.number
     }
 }

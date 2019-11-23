@@ -56,6 +56,7 @@ struct Product: Mappable, ElementRepresentable {
     init(product: StoreProductInfo) {
         name = product.title
         identifier = product.storeURL.absoluteString
+        webSite = product.storeURL.absoluteString
         photo = [Photo(JSON: [Photo.Keys.identifier: product.imageURL.absoluteString,
                               Photo.Keys.photo: product.imageURL.absoluteString])!]
         price = product.price

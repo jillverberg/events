@@ -17,6 +17,11 @@ class TaskCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var blackView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var countContainerView: UIView!
+    @IBOutlet weak var closeContainerView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
+
+    // MARK: - Public Properties
+    var onDelete: (() -> Void)?
 
     // MARK: - Override and Init
     override func layoutSubviews() {
@@ -27,10 +32,11 @@ class TaskCollectionViewCell: UICollectionViewCell {
         containerView.layer.cornerRadius = containerView.frame.height / 2
         blackView.layer.cornerRadius = blackView.frame.height / 2
         countContainerView.layer.cornerRadius = countContainerView.frame.height / 2
+        closeContainerView.layer.cornerRadius = closeContainerView.frame.height / 2
     }
 
     // MARK: - Public Methods
-    func render(props: Task) {
+    func render(props: TaskProps, editing: Bool) {
         photoImageView.kf.setImage(with: URL(string: props.photo))
 
         nameLabel.text = props.name
@@ -51,6 +57,12 @@ class TaskCollectionViewCell: UICollectionViewCell {
             superView.backgroundColor = AppColors.Common.active()
         }
 
+        closeContainerView.isHidden = !editing
+        closeButton.isHidden = !editing
         layoutIfNeeded()
+    }
+
+    @IBAction func deleteAction(_ sender: Any) {
+        onDelete?()
     }
 }

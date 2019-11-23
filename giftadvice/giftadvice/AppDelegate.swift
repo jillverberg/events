@@ -9,8 +9,16 @@
 import UIKit
 import IQKeyboardManagerSwift
 
-@UIApplicationMain
+// Crash on OwlKit
+// Resolving:
+// Pass
+//
+//  guard indexPath.section < sections.count, indexPath.row < sections[indexPath.section].elements.count else {
+//    return
+//  }
+// At func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath)
 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Public Properties
